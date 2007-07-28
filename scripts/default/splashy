@@ -1,0 +1,20 @@
+# Splashy options
+# To change Splashy's theme run "splashy_config". See "man splashy_config"
+
+# splashy can be enabled by adding splash to your kernel's command line
+
+# Directory where Splashy will write files during boot (It will be created if doesn't exist)
+# defaults to: /lib/init/rw/splashy
+#STEPS_DIR=/dev/shm/splashy
+
+# Splashy will switch to this TTY after finishing at boot
+# When set to "auto" Splashy will automagically determine which TTY to switch to
+CHVT_TTY=auto
+
+# Set to "1" to allow Splashy to be put inside initramfs
+# Remember to run "update-initramfs" and read the README file carefully
+ENABLE_INITRAMFS=0
+
+# Enable/disable debug mode, use with extreme caution! See README.scripts
+DEBUG=0
+

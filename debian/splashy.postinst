@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -x "/etc/init.d/splashy" ]; then
+	# This is needed to put the splashy links in the new location
+	# if they exist already
+	update-rc.d -f splashy remove >/dev/null
+	update-rc.d splashy start 03 S . stop 01 6 0 . >/dev/null
+fi
+
+#DEBHELPER#

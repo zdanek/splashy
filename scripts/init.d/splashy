@@ -1,0 +1,143 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          splashy
+# Required-Start:    mountkernfs
+# Required-Stop:     $all
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: A script to calculate the progress percentage for init scripts
+# Description:       This calculates the progress percentage 
+#                    for the scripts in /etc/rcS.d and 
+#                    /etc/rc$CURRENT_RUNLEVEL.d.
+### END INIT INFO
+
+# Author: Tim Dijkstra <newsuser@famdijkstra.org>, 
+#         Luis Mondesi <lemsx1@gmail.com> 
+#
+# If called in the rc[06].d runlevels with the stop target it will start 
+# splashy in 'shutdown' mode. In the rcS.d runlevel it will try 
+# to start splashy if it didn't start yet from initramfs.
+#
+# When it decides to start splashy it will first calculate the 
+# progress percentage which will be used by the calls to splashy_update 
+# in the log_end_msg functions.
+# This is really simple. We just count them and put them
+# in alpha-numeric order. Their percentage is then just
+# int( their number on the list * ( 100 / total number on list) )
+#
+# Of course not all packages use log_end_msg yet, but that
+# doesn't matter. The packages that do, will trigger the update
+# anyway. This may result in big jumps in the percentage.
+# The more scripts start using it, the more granular it will become.
+#
+#
+# This script also needs to detect if Splashy is running and if not
+# start it. It's assumed that this will only be run while halt/reboot
+# and at RUNLEVEL S.
+#
+
+PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+NAME="splashy"
+DESC="Boot splash manager"
+STEPS_DIR="/lib/init/rw/$NAME"
+
+[ -r "/etc/default/$NAME" ] && . "/etc/default/$NAME"
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
+if [ -r "/lib/lsb/init-functions" ]; then
+    . "/lib/lsb/init-functions"
+else
+    echo "Could not read file /lib/lsb/init-functions. Please install lsb-base"
+    exit 1
+fi
+
+set -e
+
+[ "$ENABLE" = "1" ] && log_warning_message "To enable $NAME add 'splash' to the kernel command line. Use of ENABLE in /etc/$NAME/default is deprecated.";
+ENABLE=0
+# Enable splash parameter if it is set on the kernel command line.
+grep -q -e '[[:space:]]splash\([[:space:]]\|$\)' /proc/cmdline && ENABLE=1
+grep -q -e '[[:space:]]nosplash\([[:space:]]\|$\)' /proc/cmdline && ENABLE=0
+
+
+calculate_steps () {
+        log_daemon_msg "(Re)generating splash steps for"
+
+	[ -f /etc/inittab ] &&	RLVL=`sed -n 's/id:\([2345]\):initdefault:/\1/ p' /etc/inittab`
+
+        [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
+
+        TMP=`mktemp -p $STEPS_DIR`
+
+        # While booting rcS will also be executed
+        # we only care about the scripts that actually call log_end_msg
+        # if not we could end up never completing our progressbar!
+        grep -l log_end_msg /etc/rcS.d/S* > $TMP 2> /dev/null || /bin/true
+
+        for ILVL in ${RLVL:=2} 0 6; do
+            # in debian rc.local runs log_end_msg conditionally. we simply skip that
+            grep -l log_end_msg /etc/rc$ILVL.d/[KS]* 2> /dev/null | grep -v rc.local >> $TMP  || /bin/true
+            
+            NR=`sed -n -e '$=' $TMP`
+	    I=1
+	    for SCR in `cat $TMP`; do
+		echo "$SCR $(($I*100/$NR))"
+		I=$(($I+1))
+	    done > "$STEPS_DIR/$ILVL-progress"
+
+            # Truncate $TMP file
+            echo -n > $TMP
+            log_action_cont_msg " rc$ILVL.d"
+        done
+
+        # In the first stage of booting RUNLEVEL will be S
+        ln -sf "$STEPS_DIR/${RLVL:=2}-progress" "$STEPS_DIR/S-progress"
+        rm -f $TMP
+
+        log_action_end_msg 0
+}
+
+# Bug #400598,#401999
+if [ -z "${RUNLEVEL:-}" ]; then
+    # we need only the current level
+    RUNLEVEL=`runlevel | sed 's/^. //'`
+fi
+
+case "$1" in
+    start)
+        # We start splashy in rcS.d if we haven't already in initramfs
+        if [ "x$RUNLEVEL" = "xN S" -o "x$RUNLEVEL" = "xS" ]; then
+	    [ "$ENABLE" = "1" ] || exit 0;
+
+	    calculate_steps
+
+            log_daemon_msg "Starting $DESC" $NAME
+            pidof $NAME > /dev/null || /sbin/$NAME boot
+            log_end_msg $?
+        fi
+    ;;
+    stop)
+
+	[ "$ENABLE" = "1" ] || exit 0;
+	calculate_steps
+
+        log_daemon_msg "Starting $DESC" $NAME
+        pidof $NAME > /dev/null || /sbin/$NAME shutdown
+        log_end_msg $?
+
+    ;;
+
+    restart|force-reload)
+        calculate_steps $RUNLEVEL
+        ;;
+
+    *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
+

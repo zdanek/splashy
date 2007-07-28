@@ -1,0 +1,15 @@
+#!/bin/sh
+# $Revision: 1.2 $
+# Luis Mondesi < lemsx1@gmail.com >
+#
+# DESCRIPTION: checks to see if Splashy is running and exits
+# USAGE: $0
+# LICENSE: GPL
+
+NAME="splashy"
+[ -r "/etc/default/$NAME" ] && . "/etc/default/$NAME"
+
+if pidof $NAME > /dev/null; then
+    exit 0
+fi
+

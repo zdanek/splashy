@@ -1,0 +1,10 @@
+sbin/*
+etc/splashy/*
+etc/lsb-base-logging.sh
+etc/init.d/splashy
+etc/default/splashy
+etc/console-tools/config.d/splashy
+usr/share/splashy/schemas
+
+# initramfs support
+usr/share/initramfs-tools/*

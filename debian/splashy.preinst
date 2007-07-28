@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# There was a bug in 0.2.x, it didn't remove /lib/splashy in postrm
+if [ -d /lib/splashy ]; then
+	rm -fr /lib/splashy
+fi
+
+# Remove splashy-init if it is still here. It's a file from the 0.1.8 era
+if [ -f /etc/init.d/splashy-init ]; then
+	rm -f /etc/init.d/splashy-init
+	update-rc.d -f splashy-init remove >/dev/null
+fi
+
+#DEBHELPER#

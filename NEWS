@@ -1,0 +1,111 @@
+Send your Thanks emails to: 
+Splashy Developers <splashy-devel@lists.alioth.debian.org>
+-------------------------------------------------------------------------------
+
+Changes between 0.3.3 and 0.3.4
+-------------------------------
+
+ * Make init scripts consistent. STEPS_DIR can be defined in /etc/default/splashy
+
+Changes between 0.3.1 and 0.3.3 
+-------------------------------
+
+Changes between 0.3.0 and 0.3.1
+-------------------------------
+
+ * Drop JPEG support (use GIF or PNG instead)
+
+Changes between 0.2.3 and 0.3.0
+-------------------------------
+
+ * Themes schema stable (v1.1)
+ * Lots of changes in build system (autofoo, etc)
+ * Introduction of libsplashy, used by uswsusp
+ * Clean-up of initramfs-tools/*, lsb-base-logging.sh, init.d/splashy
+
+Changes between 0.2.2 and 0.2.3
+-------------------------------
+ 
+ * Minor bug fix:
+   - splashy_video.c used wrong name for font height
+ * drops splashy_pgrep as this is no longer used
+
+Changes between 0.2.1 and 0.2.2
+-------------------------------
+
+  * Minor bug fix:
+    - lsb-base-logging.sh needed RUNLEVEL to be defined always
+    - splashy-update-progress-steps needed RUNLEVEL to be defined
+    - splashy-update-progress-steps had a problem when scripts did not
+      all log_end_msg before the progressbar reached 100%
+    - creates /lib/splashy which is needed by our initrc scripts
+    - adds a script to prevent console-screen.sh from running
+
+Changes between 0.2.0 and 0.2.1
+-------------------------------
+
+  * Minor bug fix to allow compilation on 64bit platforms
+
+Changes between 0.1.8.1 and 0.2.0
+-------------------------------------
+
+  * allows to set the color of the progressbar background
+  * theme.xsd version 1.0.1
+  * separates extra themes from main splashy source
+  * splashy_update is called from log_end_msg () by lsb init scripts. 
+    This function is defined in /etc/lsb-base-logging.sh
+  * decomissioned splashy-init
+  * experimental support for Splashy from initramfs. This is work in progress.
+  * support for DirectFB 0.9.25 and up
+
+Changes between 0.1.8 and 0.1.8.1
+-----------------------------------
+
+  * a number of (minor) bug fix
+  * splashy_config -i option support archives like .tar.gz, .tar.bz or .tar
+    and it checks the archive
+  * /sbin/splashy can be used as /sbin/splashy_chvt: avoiding a dependancy 
+    on chvt from console-tools
+  * Directfb 0.9.24 supported, removing our custom directfb-config script
+
+Changes between 0.1.7 and 0.1.8
+-------------------------------
+
+  * Support for theme schemas
+  * Implements all usplash commands on the named pipe/fifo
+  * Splashy now runs from initramfs (experimental)
+  * Improved verbose mode, pressing F2 shows verbose as well as autoverbose
+    mode after detecting errors on the console (/dev/vcs* buffers). Text
+    now shows on a nice, overlay textbox.
+  * splashy-init replaces all initrc scripts. Allows to quickly update the
+    progressbar, detects when X11 is to be launched by gdm/kdm/xdm, among
+    many features
+  * Fully Linux Standard Base (LSB) compliance
+  * Text messages can be printed to the screen (for system messages) (Thanks
+    to Pat from Xandros.com for the patch)
+  * Multi-threaded, creating a very smooth progressbar and text reading from
+    the system consoles.
+
+Changes between 0.1.6 and 0.1.7
+-------------------------------
+
+  * Support for themes
+  * Support for new configuration options in /etc/splashy/config.xml
+  * Support for Splashy running as daemon (named pipe/fifo)
+  * /sbin/splashy test allows you to quickly preview themes without rebooting
+  * Animation support (Gif support part of directfb)
+  * Verbose mode when F2 is pressed
+  * splashy_config which allows Splashy to be configured easily from the command 
+    line (a GUI will follow shortly).
+  * Detects errors on consoles and falls back to verbose mode
+
+Changes between 0.1.0 and 0.1.6
+-------------------------------
+
+  * Splashy project re-written in C
+  * XML parser implemented in C
+  * Support for directfb library (0.9.20)
+  * Support for PNG as well as JPEG files (millions of colors)
+  * Resolution as high as VESA supports (1280x1024)
+  * Small and easily customizable
+  * No need to patch the Linux kernel

@@ -1,0 +1,2 @@
+usr/share/man/man1/splashy.1 usr/share/man/man1/splashy_chvt.1
+etc/console-tools/config.d/splashy etc/kbd/config.d/splashy

@@ -1,0 +1,5 @@
+debian/tmp/usr/share/man/man1/splashy.1
+debian/tmp/usr/share/man/man1/splashy_config.1
+debian/tmp/usr/share/man/man5/splashy-config.xml.5
+debian/tmp/usr/share/man/man5/splashy-theme.xml.5
+debian/tmp/usr/share/man/man1/splashy_update.1

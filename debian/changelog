@@ -1,0 +1,316 @@
+splashy (0.3.5) unstable; urgency=low
+
+  * /etc/lsb-base-logging.sh: GDM wouldn't start if splashy wasn't running
+    (closes: #433382)
+
+ -- Tim Dijkstra <tim@famdijkstra.org>  Mon, 16 Jul 2007 21:56:30 +0200
+
+splashy (0.3.4) unstable; urgency=low
+
+  * Conflict with usplash (closes: #424732)
+  * Stop splashy before ?dm starts (closes: 421441)
+  * Fix FTBFS with gcc-4.2 (closes: 424567)
+  * Mention website in README.Debian (closes: #422070)
+
+ -- Tim Dijkstra <tim@famdijkstra.org>  Fri, 18 May 2007 12:38:14 +0200
+
+splashy (0.3.3) unstable; urgency=low
+
+  * Add debhelper token to preinst
+  * Splashy depends on lsb-base (closes: #411062)
+  * libsplashy depends on libdirectfb-extra, needed for png support
+    (closes: #411523)
+  * Add XS-Vcs-* and Homepage fields to debian/control
+  * init_splashy in libsplashy has changed, bump soname.
+
+ -- Tim Dijkstra <tim@famdijkstra.org>  Wed, 14 Mar 2007 13:38:09 +0100
+
+splashy (0.3.2) unstable; urgency=low
+ 
+  The 'mbiebl is our favorite beta-tester' release
+
+  [ Tim Dijkstra ]
+  * Start /etc/init.d/splashy after we have /proc. That is at S03.
+    also first remove the links in postinst. We have changed the
+    location. (closes: #410897, #410623, #410861)
+  * Really remove splashy-init. (closes: #410898)
+  * Source lsb functions before using them (closes: #410896)
+  * Fix autogen.sh to also accept automake 10
+  * Install the right /etc/default/splashy
+  * Don't fade in the default theme
+  * initramfs-tools/hooks/libsplashy: don't yell if uswsusp.conf is not there
+
+ -- Tim Dijkstra <tim@famdijkstra.org>  Thu, 15 Feb 2007 00:39:39 +0100
+
+splashy (0.3.1) unstable; urgency=low
+
+  [ Otavio Salvador ]
+  * Disable JPEG support since doesn't make sense since we already do for
+    GIF and PNG:
+    - debian/control: libsplashy0 doesn't need libdirectfb-extra anymore;
+    - src/Makefile.am:
+      . remove jpeg com directfb-config calls;
+      . remove JPEG symbols from DFBHACK variable;
+    - themes/default:
+      . convert all jpeg files to png;
+      . themes.xml changed according;
+    - Makefile.am: change theme files according;
+    - scripts/initramfs-tools/hooks/libsplashy.in: remove jpeg library;
+  * debian/rules: create make-snapshot target to be easier to make
+    development snapshots;
+
+  [ Tim Dijkstra ]
+  * Add libsplashy to the depends of libsplashy-dev (closes: #410348)
+  * Fix 64bit build (Use socklen_t instead of size_t) (closes: #410395)
+  * Make init script trigger on (no)splash on the kernel command line
+    (closes: #410662)
+  * Remove GIF support too.
+  * Add a suspend.png image.
+
+ -- Tim Dijkstra <tim@famdijkstra.org>  Tue, 13 Feb 2007 17:12:15 +0100
+
+splashy (0.3.0) unstable; urgency=low
+
+  [ Otavio Salvador ]
+  * Drop all patches since they were merged in upstream repository.
+  * Don't use CDBS tarball mode anymore.
+  * Fix a control Depends invalid field.
+  * Stop using control.in file.
+  * Use debhelper compatibility level 5.
+  * Simplify initramfs support installation on package.
+  * Include libdirectfb-extra as dependency.
+  * Make this a native package
+  * Prevent kbd (a console-tools altenative) from being run when splashy
+    is running.
+
+  [ Tim Dijkstra ]
+  * Build libsplahy0 and libsplashy0-dev.
+  * Build only splashy statically
+  * Rewrite initramfs-scripts/hook to install all necessary
+    files and libraries.
+  * Fix install targets (closes: 404303)
+  * Use /lib/init/rw/splashy for storage of steps file (closes: 405240)
+  * Reimplement steps calculation with things present in /bin
+  * Prevent console-tools from being run when splashy is (closes: 405235)
+  * Install /etc/directfbrc on initramfs (closes:  406110)
+  * Remove splashy_pgrep, it is obsolete
+  * Install manpages in correct place
+  * Lots of autofoo cleanups
+  * The themes have a new XML schema
+
+ -- Tim Dijkstra <tim@famdijkstra.org>  Wed, 17 Jan 2007 15:10:56 +0100
+
+splashy (0.2.2) unstable; urgency=low
+
+  [ Luis Mondesi ]
+  * New upstream release:
+    - mysql-server-5.0: Fail to start or stop mysql-server with Splashy installed. RUNLEVEL not defined. Closes: #400598, #401324
+    - instead of showing a nice splash image, it just shows an error message. Closes: #381594
+    - progress bar doesn't work : "Cannot test file /proc/cmdline". Closes: #401270
+    - F2 doesn't work. Closes: #378322
+    - reboot from kde and kdm splashy not displayed, slow reboot. Closes: #352108
+    - lib/splashy added to debian/dirs and upstream sources Makefile.am. Closes: #401394
+  * debian/splashy.postrm: removes old init.d/splashy symlinks when purging package
+ 
+ -- Otavio Salvador <otavio@debian.org>  Sat, 5 Dec 2006 05:05:04 -0300
+
+splashy (0.2.1) unstable; urgency=low
+
+  [ Luis Mondesi ]
+  * Turns off splashy-themes package
+  * splashy.postinst:
+    - adds splashy to runlevel 0 and 6 at S01*
+
+  [ Otavio Salvador ]
+  * Fix compilation problem with GCC 4.2. Closes: #380235
+  * Remove doubled build-depends on debhelper.
+  * Remove build-essential from build-depends.
+  * New upstream version. Closes: #400347
+
+ -- Otavio Salvador <otavio@debian.org>  Fri, 28 Jul 2006 14:05:04 -0300
+
+splashy (0.1.9-1) unstable; urgency=low
+
+  [ Luis Mondesi ]
+  * Turns off splashy-themes package
+
+  [ Otavio Salvador ]
+  * Fix compilation problem with GCC 4.2. Closes: #380235
+  * Remove doubled build-depends on debhelper.
+  * Remove build-essential from build-depends.
+
+ -- Otavio Salvador <otavio@debian.org>  Fri, 28 Jul 2006 14:05:04 -0300
+
+splashy (0.1.8.1-3) unstable; urgency=low
+
+  [ Otavio Salvador ]
+  * Fix stupid error in rules file that made our binary empty.
+
+ -- Otavio Salvador <otavio@debian.org>  Wed, 26 Jul 2006 13:29:44 -0300
+
+splashy (0.1.8.1-2) unstable; urgency=low
+
+  [ Otavio Salvador ]
+  * Use DEB_UPSTREAM_VERSION to choose the directory to use while
+    building;
+  * Make package privides, conflicts and replaces 'bootsplash'. uplash is
+    going to be uploaded to Debian and will use same behaviour.
+  * Bump libdirectfb-dev build-dependency to 0.9.25.1-2 since it solved
+    some problems that we workarounded about static linking.
+  * Grab two minor fixes from SVN head.
+
+ -- Otavio Salvador <otavio@debian.org>  Wed, 26 Jul 2006 10:49:34 -0300
+
+splashy (0.1.8.1-1) experimental; urgency=low
+
+  [ Otavio Salvador ]
+  * Change splashy-themes to be architecture independent;
+  * New upstream version:
+    - Fix FTBFS on amd64. Closes: #354856
+    - Add possibility to behave as chvt;
+  * Remove console-tools dependency. Closes: #373987;
+  * Do not run update-initramfs on postinst since we can break the user
+    boot process. The users will need to take care of initramfs by themselves.
+  * Add libmagic-dev as build-dependency.
+
+ -- Otavio Salvador <otavio@debian.org>  Sat, 22 Jul 2006 15:23:25 -0300
+
+splashy (0.1.8-1) experimental; urgency=low
+
+  [ Jacobo Vilella ]
+  * Wrong test command. Closes: #365836
+  * No more use of /usr/bin/pgrep. Closes: #354027
+
+  [ Luis Mondesi ]
+  * new test package
+  * includes splashy_update
+    - adds man page for splashy_update
+  * debian/splashy.postrm/postinst/prerm:
+    - simplified
+    - adds initramfs support
+    - code cleanups
+    - Splashy is started in rcS (S01) and again in rc0 and rc6 (K01) only
+  * debian/control{,.in}:
+    - adds initramfs suggestion
+    - adds libsysfs-dev build-dep for dfb 0.9.24 support
+    - adds bzip2 to build-depends
+  * debian/splashy.default:
+    - initramfs turned off by default
+  * debian/splashy.README.Debian:
+    - removed old known bug
+    - adds information on initramfs support and README.gz instructions
+  * This release closes assorted bugs: Closes: #367571, #354856, #352109, #352109
+  * Sid installation problem fixed. Closes: #349517
+
+  [ Otavio Salvador ]
+  * Simplified splashy.postrm and splashy.postinst to remove a useless
+    function that will be used once.
+  * Add debhelper token in splashy.{pre,post}rm scripts.
+  * Remove lintian override since it isn't need anymore.
+  * Add console-tools as depends due our use of chvt.
+  * Bump Standards-Version to 3.7.2 (no changes).
+
+ -- Otavio Salvador <otavio@debian.org>  Wed,  7 Jun 2006 11:18:04 -0300
+
+splashy (0.1.7) experimental; urgency=low
+  
+  [Luis Mondesi]
+  * Remove "is" from message. Some themes need to retype the message. Closes: #325654
+  * Binary is compiled statically and does not depend on libdirectfb any more. Closes: #337486
+  * We don't patch grub's menu.lst file anymore. Closes: #309806, #314162
+  * Init scripts use LSB functions. Closes: #314474
+  * Fixes searching path for config.xml. Closes: #329436
+  * All themes and their files are self-contained in /etc/splashy/themes/*. Closes: #309715
+  * Splashy's threaded now and exits cleanly after boot is done. Closes: #319447
+  * splashy-init is used as init script. Closes: #339574
+  * splashy rebuilt using libdirectfb-dev 0.9.22. Also, the binary package doesn't depend on 
+    libdirectfb-0.9.x at all. Closes: #349520
+  * README includes information about what to append to Grub/Lilo. Closes: #349492
+  * debian/rules:
+    - removes dependency on libdirectfb.so and libglib-2.0.so
+  * debian/splashy.postrm:
+    - removes old splashy* and new splashy-init rc links from rc-levels
+  * debian/splashy.postinst:
+    - installs new splashy-init to rcS.d and rcN.d
+  * build against libdirectfb 0.9.24 on Ubuntu/Unstable on Sarge is 0.9.22
+  * debian/control{.in}:
+    - removed lsb dependency as splashy-init script doesn't depend on lsb's init-functions. 
+      This is now simply Recommended
+
+ -- Otavio Salvador <otavio@ossystems.com.br>  Mon,  6 Feb 2006 20:31:00 -0200
+
+splashy (0.1.6) experimental; urgency=low
+  
+  [Luis Mondesi]
+  * Edited previous changelog entry of 0.1.5 to fix the bug was close. We
+    closed the wrong but by mistake. The right one is #314162.
+  * debian/control.in:
+    - Replace all depends for ${shlibs:Depends} since it's auto-generated;
+    - Add build-dependency of libglib2.0-dev at least at version 2.0.1-2
+      since it included the static library needed for our build;
+    - Add build-dependency to use libdirectfb-dev at least at version 0.9.22
+      since it included the static library needed for our build;
+    - Add build-dependency on Perl because we need pod2man to generate man
+      pages
+    - Add build-dependency on libjpeg62-dev because libdirectfb-dev needs it
+      but it's missing from its dependancy list
+    - Add package splashy-themes
+    - Add Suggests: for the splashy-themes package
+    - splashy-themes package has no binaries
+  * debian/control: updated likewise;
+  * debian/rules: pod2man use to generate splashy man pages
+  * debian/splashy-themes.install: 
+    - themes we install. The default theme is installed together with 
+      the splashy package, so no need to mention it here.
+    - added debian4 and crux themes
+  * debian/splashy.postinst:
+    - smarter when editing grub files has been turned off until debconf question is set
+    - /etc/rcS.d/S01splashy -> /etc/rcS.d/S02splashy because it needs
+      mountvirtfs to run first.
+  * Little build system cleanup
+  * debian/splashy.install: since adding an extra package, cdbs puts sources
+    in debian/tmp causing the system to fail. This corrects that problem.
+ 
+ -- Otavio Salvador <otavio@debian.org>  Wed, 28 Dec 2005 14:10:59 -0200
+
+splashy (0.1.5) experimental; urgency=low
+
+  * debian/splashy.postinst:
+    - corrected comments;
+    - (really) fixed warning about grub not installed when it's indeed found;
+    - added support for 1280x1024 resolutions;
+    - fixes typo while checking for XFree86 config file. It's XF86Config-4.
+      Closes: #314162
+  * scripts/*: remove bashism. Closes: #314474;
+
+ -- Otavio Salvador <otavio@debian.org>  Thu, 16 Jun 2005 15:33:42 -0300
+
+splashy (0.1.4) experimental; urgency=low
+
+  * debian/splashy.postinst:
+    - changed less to use cat instead
+    - package attempts to find XF86Config-4 if xorg.conf is not found and then
+      falls back if everything fails. This can be done better i believe.
+    - check multiple patch to look for grub. Closes: #309806;
+  * debian/splashy.install: stop to install the images using it;
+  * Makefile.am: Change the place to install the image inside of
+    themes/default directory. Closes: #309715;
+  * debian/splashy.README.Debian: Added with know issues;
+
+ -- Otavio Salvador <otavio@debian.org>  Tue,  7 Jun 2005 12:34:48 -0300
+
+splashy (0.1.3) experimental; urgency=low
+
+  * debian/rules:
+    - Don't change debian/control on every build;
+    - Add 'update-control' target to allow us to update it;
+
+ -- Otavio Salvador <otavio@debian.org>  Wed, 18 May 2005 11:36:54 -0300
+
+splashy (0.1.2) experimental; urgency=low
+
+  * Initial release.
+    [ It'll be keep on experimental while we aren't sure about it's
+      stability ]
+
+ -- Otavio Salvador <otavio@debian.org>  Mon, 16 May 2005 17:43:20 -0300

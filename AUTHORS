@@ -1,0 +1,68 @@
+Authors
+*******
+
+Main Developers
+===============
+
+Jacobo Vilella <jacobo221@gmail.com>
+    * Master Jedi (Theme Validation Master)
+    * Init rc and sh* master
+    * Wiki genius
+    * Documentation Master
+
+Luis Mondesi <lemsx1@gmail.com>
+    * Master Jedi
+    * XML Parsing Ninja
+    * Jedi Bug Hunter
+    * Responsible for Elegant Code Design Policy
+
+Otavio Salvador <otavio@debian.org>
+    * Master Jedi
+    * Packaging Guru
+    * Jedi Bug Hunter
+    * C Genius
+    * Implements Elegant Code Design Policy
+
+Tim Dijkstra <newsuser@famdijkstra.org>
+    * Socket Master
+    * Master Bug Hunter
+    * C Genius
+    * Implements Elegant Code Design Policy
+
+Vicenzo Ampolo <Vicenzo.Ampolo@gmail.com>
+    * Ex-Master Jedi
+    * Jedi Bug Hunter
+    * Ubuntu Packaging Guru
+    * Implements Elegant Code Design Policy
+
+Vincent Amouret <vincent.amouret@gmail.com>
+    * Config and Theme Master
+    * XML Genius
+    * C Jedi
+
+Volatile Developers
+===================
+
+Andrew Williams <mistik1@geeksinthehood.net>
+    * splashy_update.c Master
+    * helped/inspired the initramfs integration
+
+Bas v D
+    * Graphics and Themes guru
+
+Goedson Teixeira Paixao
+
+Mario Izquierdo
+
+Pat Suwalski <pats@xandros.com>
+    * helped fixing the font issue with libdirectfb
+    * submitted patch for allowing borders in themes
+    
+Former Developers
+=================
+
+Alban Browaeys <prahal@yahoo.com>
+    * Static Link Master
+    * Jedi Bug Hunter
+    * C Genius
+

@@ -1,0 +1,91 @@
+#!/usr/bin/perl -w
+#
+# Luis Mondesi <lemsx1@gmail.com> 
+# a simple script to generate a man page for splashy
+#
+# use: pod2man splashy.pod
+#
+use Pod::Text;
+my $parser = Pod::Text->new (sentence => 0, width => 78);
+$parser->parse_from_file($0,\*STDOUT);
+exit 0;
+
+=head1 NAME
+
+B<Splashy> - a user-mode, POSIX and LSB compliant, boot splashing
+system for UNIX.
+
+=head1 SYNOPSIS
+
+B<splashy> { I<boot> | I<shutdown> | I<test> | I<preview> }
+
+B<splashy_chvt> { I<TTY_NUMBER> }
+
+=head1 DESCRIPTION 
+
+Splashy displays an image and a progress bar at boot time. When called as splashy_chvt, it allows the same functionality as the UNIX command chvt.
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<boot>
+
+Does boot sequence. See EXAMPLES.
+
+=item B<shutdown>
+
+Does shutdown sequence. See EXAMPLES.
+
+=item B<test>, B<preview>
+
+Use to test splashy without having to reboot the system. this shows a progressbar
+continuously moving as well as the current image for the currently selected theme.
+See EXAMPLES.
+
+=back
+
+=head1 EXAMPLES
+
+C</sbin/splashy test>
+
+Used to test splashy. Useful for testing new themes.
+
+C</sbin/splashy boot>
+
+Used when booting your system. This is run automatically by a initrc script during boot.
+
+
+C</sbin/splashy shutdown>
+
+Similar in spirit to B<boot>, but run during shutdown. This is run automatically by a initrc
+script during shutdown.
+
+=head1 FILES
+
+=over 8
+
+=item I</etc/splashy/config.xml>
+
+Main configuration. defines how splashy should be setup.
+
+=item I</etc/splashy/themes/default/config.xml>
+
+Default theme. defines how the images displayed by splashy should be setup, their location
+and other theme-related variables.
+
+=back
+
+=head1 NOTES
+
+To use splashy as chvt, make a symbolic link from splashy's location to a new path. i.e.: cd /sbin; ln -s splashy splashy_chvt
+
+=head1 SEE ALSO
+
+B<splashy_config>(1), B<splashy_update>(1), B<splashy-config.xml>(5), B<splashy-theme.xml>(5)
+
+=head1 AUTHORS
+
+Luis Mondesi <lemsx1@gmail.com>
+
+=cut

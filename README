@@ -1,0 +1,184 @@
+Readme
+******
+
+Thank you for trying Splashy!
+
+Features
+========
+
+What makes Splashy special over other boot-splash systems is:
+  * There is NO need to patch the kernel
+  * It supports millions of colors as well as alpha channels (transparency)
+  * All resolutions are supported
+  * It supports all the formats provided by directfb: jpg, png, gif, mpg, swf...
+  * It run in user-space as any other application. So, it can be run at any time
+    by simply typing "splashy" at the command prompt
+  * initramfs support, which allows Splashy to run early at boot [See Initram File System below]
+  * XML configuration
+  * Multiple and easy to create themes
+  * Lots of effects (animations, fade in/out, smooth progress, etc)
+  * TrueType2 fonts support
+  * And many other features, too numerous to list here...
+
+Requirements
+============
+
+In order to start using Splashy you will need to have the following:
+  * A video card
+  * A kernel that supports framebuffers (default for the mayority of Linux
+    distributors)
+  * On Linux, a 2.6 kernel or later is requiered (because directfb requires it)
+  * Splashy itself
+
+In order to compile Splashy you will also need to have the following:
+  * glib2
+  * directfb 0.9.22 or later
+  * libjpeg and/or libpng (optional)
+
+Installation (Quick)
+====================
+
+1. Install Splashy as you normally would (see INSTALL)
+
+2. Add "splash vga=791 quiet" to the append= line on your bootloader configuration
+
+  NOTE: For Grub, this is /boot/grub/menu.lst
+  For lilo you need "vga=791" in its own line before the kernel stanzas, and add
+  only "quiet splash" to append=
+  Other bootloaders will use the same options, but they need to be passed
+  differently. Check your bootloader's manual
+
+3. Make sure that /etc/init.d/splashy is symlinked from
+   /etc/rcS.d/S01splashy, or whatever the first script is when your computer boots.
+
+4. For /etc/lsb-base-logging.sh to work, make sure that /lib/lsb/init-functions
+   sources this file:
+    $> cat /lib/lsb/init-functions | tail -2
+
+    [ -e /etc/lsb-base-logging.sh ] && . /etc/lsb-base-logging.sh || true
+
+5. Reboot and have fun!
+
+Installation (Detailed)
+=======================
+
+1. Install Splashy as you normally would (see INSTALL)
+
+2. Edit your bootloader's configuration file to set up the framebuffer mode:
+  * In Grub, edit /boot/grub/menu.lst
+    HINT: In Debian, look for "#kopt" and append vga=0x317 to it.  Then run
+    update-grub. Other distros edit the kernel root= line appropriately
+  * In lilo, edit /etc/lilo.conf
+    HINT: Look for the default image= and edit append= by appending vga=0x317
+    to it
+  * In Quik, edit /etc/quik.conf and append vga=0x317 to the kernel argument
+    line
+
+If you use a different framebuffer driver, then you would need to tell the
+kernel, through the kernel's parameters, to use that other driver. For example,
+to use the radeonfb framebuffer driver:
+  * Grub: #kopt: quiet video=radeonfb:1024x768-32@100
+  * Lilo: append="quiet video=radeonfb:1024x768-32@100"
+For intel i810 internal cards the lilo line would look like:
+  append="video=i810fb:vram:2,xres:1024,yres:768,bpp:8,hsync1:30,hsync2:55, \
+    vsync1:50,vsync2:85,accel,mtrr"
+
+Splashy will support any video mode the framebuffer supports
+The following is a table for the vide modes and their corresponding codes
+
+                  640x480    800x600    1024x768       1280x1024       1600x1200
+ 256 colors (8b)    769        771         773            775             796
+ 32K colors (15b)   784        787         790            793             797
+ 64K colors (16b)   785        788         791            794             798
+ 16M colors (24b)   786        789         792            795             799
+
+For example, for 1024x768 at 16bit (64K colors or "thousands of colors"), you
+could pass an argument to the kernel like:
+  vga=791
+These values could be used in base16 (hexadecimal) also, like:
+  vga=0x317
+
+3. Make sure "scripts/splashy-update-progress-steps" is in /etc/init.d/splashy and 
+   /etc/rcS.d/S01splashy symlink that points there
+
+4. Copy scripts/lsb-base-logging.sh to /etc/ and make sure that /lib/lsb/init-functions
+   sources this file:
+    $> cat /lib/lsb/init-functions | tail -2
+
+    [ -e /etc/lsb-base-logging.sh ] && . /etc/lsb-base-logging.sh || true
+
+5. Reboot and have fun!
+
+Configuration
+=============
+
+Splashy's configuration file is /etc/splashy/config.xml
+
+To know about it read it's man page: man splashy-config.xml
+
+Initram File System
+===================
+
+In order to enable Splashy running early at the initramfs level, you need to
+ensure the following:
+
+1. Make sure that you edit /etc/default/splashy and set ENABLE_INITRAMFS= to 1
+like:
+  ENABLE_INITRAMFS=1
+2. From a terminal run:
+  update-initramfs -u -t -k `uname -r`
+
+
+Notes: (On Ubuntu and Debian) you might have to change /etc/init.d/keymap.sh like:
+#!/bin/sh
+pidof splashy > /dev/null && exit 0
+...
+In other words, if splashy is running, do not bother to run keymap.sh
+(which stops splashy and waits for input in tty2).
+/etc/lsb-base-logging.sh will do the right thing and run these scripts
+again when the percentage goes to 100% (when gdm/kdm/xdm calls
+log_msg_end() or when X is detected running, our percentage goes to
+100% automatically)
+
+Themes
+======
+
+To install a new theme, download it and install it with splashy_config:
+
+  splashy_config -i <theme>
+
+To use some theme as the default theme, run:
+
+  splashy_config -s <theme_name>
+
+You can get a list of available themes with:
+
+  splashy_config --info
+
+To create a theme, run "splashy_config -c" and answer all the questions
+
+Uninstallation
+==============
+
+See INSTALL document
+
+You might need to remove vga= and splash from your kernel parameters.
+
+Developers Information
+======================
+
+For making changes to Splashy sources or scripts, please refer to the HACKING
+file.
+
+Other (Links)
+=============
+
+Project page: http://alioth.debian.org/projects/splashy
+
+Documentation/Wiki: http://splashy.alioth.debian.org
+
+IRC: Channel #splashy on irc.freenode.net
+
+Mail list: splashy-users@lists.alioth.debian.org
+
+Development sources: svn://svn.debian.org/svn/splashy

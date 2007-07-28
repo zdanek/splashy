@@ -1,0 +1,52 @@
+To Do
+*****
+
+Bugs
+====
+
+* [DONE: Luis] Solve the problem why, on some card, splashy doesn't open at
+  fullscreen; (Luis: remember that some video cards can only be set
+  programmatically to a hard coded resolution and this cannot be changed after
+  the kernel has initialized the hardware. A good example of this is the most
+  common of all drivers: vesafb. The resolution of which can only be set at boot
+  time with "vga=0xXXX". Please refer to the README file for a nice table of
+  resolutions+color bits)
+* [DONE: Jacobo221] Read /dev/tty7 and see if X or any X-like program is holding it
+  when splashy exits. If it is. Attempt to switch to vt7 before splashy exits
+* splashy_config needs gen_theme_xml fixed
+* Extra themes must be moved out of the trunk
+* [DONE; Jacobo221] Extra themes must be updated according to the theme.xsd schema
+* [DONE: Luis] Fade-in effect saw twice when using with initramfs support
+* initramfs theme isn't functional if other than default is selected
+* When theme has shutdown image it's not used
+* Verbose mode doesn't seek to error place
+* [DONE] When we have console-tools installed and it's set to latin1 language, splashy
+  block to set the font in console. Probably something related to directfb font
+  now -- This is a bug in unicode_start and unicode_stop.
+* when splashy goes into verbose mode the progress bar is not setup correctly at
+  shutdown. video_update_progress_quick() needs fixing
+* Try compiling splashy withough libjpeg support and use that from initramfs
+* /etc/inittab does not exist on systems running upstart (Edgy and newer systems). Check source code for places were this file is used and deal accordingly with it
+
+Features
+========
+
+* [DONE: Luis] Add support to handle multiple themes
+* [DONE: Luis] Add support to annimations (gif files)
+* Add support to fsck (detects it already)
+* [DONE: Pat] Add support to log the boot
+* Add support to dump the boot on screen with background (??)
+* [DONE: Luis] Add handler for setting fb alpha levels on exit (instead of
+  exiting abruptly, set alpha levels from 255 to 0 and exit... this should be
+  pretty simple to implement)
+* [DONE: Luis] Let splashy link statically. hint:
+  http://directfb.org/docs/GTK_Embedded/static-linking2.html and
+  `ls /usr/lib/directfb-0.9.22/` and a NICE example:
+  http://www.directfb.org/index.php/viewcvs.cgi/DirectFB/tools/Attic/dfb_static_build_example?rev=HEAD&content-type=text/vnd.viewcvs-markup
+* [DONE: Luis] splashy_update needs to be used in splashy-init instead of
+  echo >> $FIFO
+* [DONE: Luis] Add extra themes to main Makefile.am
+* Make sure that splashy-init is generated with the right path to splashy from
+  a .in file (hint: confgure.ac AC_OUTPUT)
+* [DONE: Luis] We need an schema for theme.xml
+* [DONE: Jacobo221] We need a schema for config.xml

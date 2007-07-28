@@ -1,0 +1,52 @@
+#!/bin/sh
+
+test -r /etc/default/splashy &&
+    . /etc/default/splashy
+
+PREREQ=""
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+
+[ -r /etc/default/splashy ] &&  . /etc/default/splashy
+
+# Check if uswsusp wants to use libsplashy
+USWSUSP=$(grep -q '^splash[[:space:]]*[:=][[:space:]]*[yY]' /etc/uswsusp.conf 2> /dev/null && echo 1 )
+
+[ "${USWSUSP:-0}" = "0" ] && [ "${ENABLE_INITRAMFS:-0}" = "0" ] && exit 0;
+
+
+THEMES_DIR="$(splashy_config --get-key /splashy/themes)"
+CURRENT_THEME="$(splashy_config --get-key /splashy/current_theme)"
+CURRENT_THEME_DIR="${THEMES_DIR}/${CURRENT_THEME}"
+
+mkdir -p "${DESTDIR}/${CURRENT_THEME_DIR}"
+mkdir -p "${DESTDIR}/etc/splashy/"
+
+cp /etc/splashy/config.xml "${DESTDIR}/etc/splashy/"
+cp -r "${CURRENT_THEME_DIR}" "${DESTDIR}/${THEMES_DIR}/"
+
+if [ -f /etc/directfbrc ]; then
+    cp /etc/directfbrc "${DESTDIR}/etc"
+fi
+
+# These are the minimum number of DFB modules we need (I think)
+DFB_MODS="libdirectfb_fbdev.so libdirectfb_keyboard.so libdirectfbwm_default.so libidirectfbimageprovider_png.so libidirectfbfont_ft2.so libidirectfbfont_default.so"
+
+for L in $DFB_MODS; do
+	I=$(find @DFB_LIBDIR@/ -name $L)
+	[ -n "$I" ] || continue
+	mkdir -p $DESTDIR$(dirname $I)
+	copy_exec $I .`dirname $I`
+done

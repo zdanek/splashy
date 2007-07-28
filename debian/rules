@@ -1,0 +1,36 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+DEB_CONFIGURE_EXTRA_FLAGS := --prefix= --libdir=/lib --sbindir=/sbin --sysconfdir=/etc \
+				--includedir=/usr/include --datarootdir=/usr/share --mandir=/usr/share/man
+DEB_DH_SHLIBDEPS_ARGS := -L libsplashy1 -l debian/libsplashy1/lib
+DEB_DH_INSTALL_ARGS := --sourcedir=debian/tmp
+
+binary-predeb/splashy::
+	chmod 0755 \
+	    debian/splashy/usr/share/initramfs-tools/hooks/splashy \
+	    debian/splashy/usr/share/initramfs-tools/hooks/libsplashy \
+	    debian/splashy/usr/share/initramfs-tools/scripts/init-top/splashy \
+	    debian/splashy/etc/console-tools/config.d/splashy
+# VERY UGLY HACK! See #297741
+configure/splashy::
+	 sed s/old_library=\'\'/old_library=\'libglib-2.0.a\'/ /usr/lib/libglib-2.0.la > src/libglib-2.0.la
+
+make-snapshot:
+	if ! dpkg-parsechangelog | grep -q 'Distribution: UNRELEASED'; then \
+		echo 'Current release is not a unreleased version. Aborting...'; \
+		exit 1; \
+	elif dpkg-parsechangelog | grep -q 'Version:' | grep ~svn; then \
+		echo 'Your last release is already a development snapshot, edit' \
+		echo 'your changelog and remove that entry before continue'; \
+		exit 1; \
+	elif [ -d $(CURDIR)/.git ]; then \
+		REV=$(shell LC_ALL=C git log HEAD^..HEAD | grep svn.debian.org | sed 's,.*@\(.*\) .*,\1,g'); \
+	elif [ -d $(CURDIR)/.svn ]; then \
+		REV=$(shell LC_ALL=C svn info | grep Revision | sed 's,.*\: \(.*\),\1,g'); \
+	fi; \
+	dch -b -v $(shell dpkg-parsechangelog | grep Version | sed 's,.*\: \(.*\),\1,g')~svn.$$REV \
+		'New development snapshot.'; \
+	debian/rules binary

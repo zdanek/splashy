@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xml:lang="en">
+    <!-- vim: set ft=xml : -->
+    <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            Version 1.1
+            Use this to validate a theme.xml file as well as to generate the C API
+            By Luis Mondesi (lemsx1@gmail.com)
+        </xsd:documentation>
+    </xsd:annotation>
+    <!-- we will use the so-called Venetian Blind Pattern design to represent our XML file -->
+    <!-- http://devresource.hp.com/drc/slide_presentations/schemaWSDL/index.jsp -->
+
+    <!-- helpers -->
+    <xsd:complexType name="dimensionType">
+        <xsd:sequence>
+            <xsd:element name="x" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="y" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="width" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="height" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="colorType">
+        <xsd:sequence>
+            <xsd:element name="red" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="green" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="blue" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="alpha" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="borderType">
+        <xsd:sequence>
+            <xsd:element name="enable" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="color" type="colorType" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="complexColorType">
+        <xsd:sequence>
+            <xsd:element name="color" type="colorType" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="fontType">
+        <xsd:sequence>
+            <xsd:element name="file" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="height" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="textType">
+        <xsd:sequence>
+            <xsd:element name="font" type="fontType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="color" type="colorType" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="stageType">
+        <xsd:sequence>
+            <xsd:element name="boot" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="shutdown" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="resume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="suspend" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- end helpers -->
+    
+    <!-- start |info| tag -->
+    <xsd:complexType name="infoType">
+        <xsd:sequence>
+            <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="version" type="xsd:float" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="description" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="urls" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="author" type="xsd:string" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- end |info| -->
+    
+    <!-- start |progressbar| -->
+    <xsd:complexType name="progressbarType">
+        <xsd:sequence>
+            <xsd:element name="dimension" type="dimensionType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="color" type="colorType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="border" type="borderType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="background" type="complexColorType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="direction" type="stageType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="visibility" type="stageType" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- end |progressbar| -->
+    
+    <!-- start |background| -->
+    <xsd:complexType name="backgroundType">
+        <xsd:sequence>
+            <xsd:element name="boot" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="shutdown" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="resume" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="suspend" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="errorimg" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="dimension" type="dimensionType" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- end |backgrond| -->
+    
+    <!-- start |textbox| -->
+    <xsd:complexType name="textboxType">
+        <xsd:sequence>
+            <xsd:element name="enable" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="dimension" type="dimensionType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="color" type="colorType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="border" type="borderType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="text" type="textType" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- end |textbox| -->
+
+    <!-- start |splashy| tag -->
+    <xsd:complexType name="themeType">
+        <xsd:sequence>
+            <xsd:element name="info" type="infoType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="progressbar" type="progressbarType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="background" type="backgroundType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="textbox" type="textboxType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="autoverboseonerror" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="fadein" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="fadeout" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <!-- end |splashy| tag -->
+
+    <!-- our base tag name is |splashy| -->
+    <xsd:element name="splashy" type="themeType" />
+</xsd:schema>
