@@ -81,7 +81,6 @@ AC_OUTPUT(
           doc/theme.xml
           scripts/Makefile 
           scripts/initramfs-tools/hooks/libsplashy
-	  debian/Makefile
           Doxyfile
           )
 

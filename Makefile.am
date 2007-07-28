@@ -1,4 +1,4 @@
-SUBDIRS = doc src scripts debian
+SUBDIRS = doc src scripts
 
 pkgsysconfdir=$(sysconfdir)/@PACKAGE@
 
