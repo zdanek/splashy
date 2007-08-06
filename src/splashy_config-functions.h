@@ -41,21 +41,21 @@ extern "C"
 {
 #endif
 
-	void set_new_theme (gchar * theme_name);
+        void set_new_theme (gchar * theme_name);
 
-	void install_theme (gchar * tarball_path);
+        void install_theme (gchar * tarball_path);
 
-	void remove_theme (gchar * theme_name);
+        void remove_theme (gchar * theme_name);
 
-	void information (void);
+        void information (void);
 
-	void create_theme (XmlFields * options);
+        void create_theme (XmlFields * options);
 
-	XmlFields *get_fields (void);
+        XmlFields *get_fields (void);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif				/* _SPLASHY_CONFIG_FUNCTIONS_H */
+#endif        /* _SPLASHY_CONFIG_FUNCTIONS_H */

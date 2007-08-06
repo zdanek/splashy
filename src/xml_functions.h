@@ -32,39 +32,39 @@
 
 typedef struct _xml_fields
 {
-	gchar *name;
-	gchar *version;
-	gchar *description;
-	gchar *urls;
-	gchar *author;
-	/*
-	 * 0->100 
-	 */
-	guint pb_x;
-	guint pb_y;
-	guint pb_width;
-	guint pb_height;
-	/*
-	 * 0->255 
-	 */
-	guint pb_red;
-	guint pb_green;
-	guint pb_blue;
-	guint pb_alpha;
+        gchar *name;
+        gchar *version;
+        gchar *description;
+        gchar *urls;
+        gchar *author;
+        /*
+         * 0->100 
+         */
+        guint pb_x;
+        guint pb_y;
+        guint pb_width;
+        guint pb_height;
+        /*
+         * 0->255 
+         */
+        guint pb_red;
+        guint pb_green;
+        guint pb_blue;
+        guint pb_alpha;
 
-	gchar *pb_border_show;
-	/*
-	 * 0->255 
-	 */
-	guint pb_border_red;
-	guint pb_border_green;
-	guint pb_border_blue;
-	guint pb_border_alpha;
+        gchar *pb_border_show;
+        /*
+         * 0->255 
+         */
+        guint pb_border_red;
+        guint pb_border_green;
+        guint pb_border_blue;
+        guint pb_border_alpha;
         
         guint pb_bg_red;
-	guint pb_bg_green;
-	guint pb_bg_blue;
-	guint pb_bg_alpha;
+        guint pb_bg_green;
+        guint pb_bg_blue;
+        guint pb_bg_alpha;
 
         gchar *pb_dir_boot; 
         gchar *pb_dir_shutdown;
@@ -76,52 +76,52 @@ typedef struct _xml_fields
         gchar *pb_on_resume;
         gchar *pb_on_suspend;
  
-	gchar *bg_boot;
+        gchar *bg_boot;
         gchar *bg_shutdown;
         gchar *bg_resume;
         gchar *bg_suspend;
-	gchar *bg_error;
+        gchar *bg_error;
 
-	guint bg_x;
-	guint bg_y;
-	guint bg_width;
-	guint bg_height;
+        guint bg_x;
+        guint bg_y;
+        guint bg_width;
+        guint bg_height;
 
-	gchar *textbox_show;
-	/*
-	 * 0->100 
-	 */
-	guint textbox_x;
-	guint textbox_y;
-	guint textbox_width;
-	guint textbox_height;
-	/*
-	 * 0->255 
-	 */
-	guint textbox_red;
-	guint textbox_green;
-	guint textbox_blue;
-	guint textbox_alpha;
+        gchar *textbox_show;
+        /*
+         * 0->100 
+         */
+        guint textbox_x;
+        guint textbox_y;
+        guint textbox_width;
+        guint textbox_height;
+        /*
+         * 0->255 
+         */
+        guint textbox_red;
+        guint textbox_green;
+        guint textbox_blue;
+        guint textbox_alpha;
 
-	gchar *textbox_border_show;
-	/*
-	 * 0->255 
-	 */
-	guint textbox_border_red;
-	guint textbox_border_green;
-	guint textbox_border_blue;
-	guint textbox_border_alpha;
+        gchar *textbox_border_show;
+        /*
+         * 0->255 
+         */
+        guint textbox_border_red;
+        guint textbox_border_green;
+        guint textbox_border_blue;
+        guint textbox_border_alpha;
 
-	gchar *textfont_file;
-	guint textfont_height;
-	guint textfont_red;
-	guint textfont_green;
-	guint textfont_blue;
-	guint textfont_alpha;
+        gchar *textfont_file;
+        guint textfont_height;
+        guint textfont_red;
+        guint textfont_green;
+        guint textfont_blue;
+        guint textfont_alpha;
 
-	gchar *verbose;
-	gchar *fadein;
-	gchar *fadeout;
+        gchar *verbose;
+        gchar *fadein;
+        gchar *fadeout;
 } XmlFields;
 
 #ifdef __cplusplus
@@ -130,14 +130,15 @@ extern "C"
 #endif
 
 
-	void gen_config_xml (gchar * spl_theme_path,
-			     gchar * spl_current_path,
-			     gchar * spl_pid_path);
+        void gen_config_xml (gchar * spl_theme_path,
+                             gchar * spl_current_path,
+                             gchar * spl_pid_path);
 
-	int gen_theme_xml (gchar * theme_file, XmlFields * spl_theme);
+        int gen_theme_xml (gchar * theme_file, XmlFields * spl_theme);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif				/* _XML_FUNCTIONS_H */
+#endif        /* _XML_FUNCTIONS_H */
+
