@@ -151,7 +151,7 @@ main (gint argc, gchar * argv[])
                 ERROR_PRINT ("%s",
                              _("Error occured while starting Splashy\n"
                                "Make sure that you can read Splashy's configuration file\n"));
-                return 1;
+                return RETURN_ERROR;
         }
         g_set_prgname (PROGNAME);
 
@@ -166,25 +166,27 @@ main (gint argc, gchar * argv[])
         {
                 printf (_("Missing arguments\n"));
                 printf (USAGE, g_get_prgname ());
-                return 0;
+                return R_OK;
         }
+        
+        gint ret = RETURN_ERROR;
         switch (retopt)
         {
         case 's':
-                set_new_theme (optarg);
+                ret = set_new_theme (optarg);
                 break;
         case 'i':
-                install_theme (optarg);
+                ret = install_theme (optarg);
                 break;
         case 'r':
-                remove_theme (optarg);
+                ret = remove_theme (optarg);
                 break;
         case 'a':
-                information ();
+                ret = information ();
                 break;
         case 'c':
                 if (argv[optind] == NULL)        // interactive mode */
-                        create_theme (get_fields ());
+                       ret = create_theme (get_fields ());
                 else                // inline mode
                 {
 
@@ -440,7 +442,7 @@ main (gint argc, gchar * argv[])
 
                                 }
                         }
-                        create_theme (inline_theme);
+                        ret = create_theme (inline_theme);
 
                         /*
                          * memory free up 
@@ -496,5 +498,5 @@ main (gint argc, gchar * argv[])
                 break;
         }
 
-        return (0);
+        return ret;
 }

@@ -34,22 +34,24 @@
 #define PRINT_DONE g_print(_("          [ DONE ]\n"))
 #define PRINT_FAIL g_print(_("          [ FAIL ]\n"))
 
-
+#define RETURN_OK 0
+#define RETURN_ERROR 1
+#define RETURN_NEED_ROOT 2
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-        void set_new_theme (gchar * theme_name);
+        gint set_new_theme (gchar * theme_name);
 
-        void install_theme (gchar * tarball_path);
+        gint install_theme (gchar * tarball_path);
 
-        void remove_theme (gchar * theme_name);
+        gint remove_theme (gchar * theme_name);
 
-        void information (void);
+        gint information (void);
 
-        void create_theme (XmlFields * options);
+        gint create_theme (XmlFields * options);
 
         XmlFields *get_fields (void);
 

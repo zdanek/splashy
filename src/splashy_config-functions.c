@@ -60,10 +60,11 @@ gint tar (gchar * argv[]);
  ** arg: The name of the theme to apply
  ** desc: Change the theme used by Splashy
  */
-void
+gint
 set_new_theme (gchar * theme_name)
 {
         need_root ();
+        gint ret = RETURN_ERROR;
         GString *new_theme =
                 g_string_new (splashy_get_config_string (SPL_THEMES_DIR));
         g_string_append (new_theme, G_DIR_SEPARATOR_S);
@@ -87,15 +88,16 @@ set_new_theme (gchar * theme_name)
                                 (gchar *)
                                 splashy_get_config_string (SPL_PID_FILE));
 
+                ret = RETURN_OK;
+        }
+
+        if (ret == RETURN_OK)
                 PRINT_DONE;
-
-        }
         else
-        {
                 PRINT_FAIL;
-        }
-
+              
         g_string_free (new_theme, TRUE);
+        return ret;
 }
 
 /*
@@ -103,11 +105,11 @@ set_new_theme (gchar * theme_name)
  ** desc: install a theme from a tarball 
  ** arg: the tarball path 
  */
-void
+gint
 install_theme (gchar * tarball_path)
 {
         need_root ();
-
+        gint ret = RETURN_ERROR;
         g_print (_(">Install theme"));
 
         if (g_file_test (tarball_path, G_FILE_TEST_EXISTS))
@@ -125,13 +127,13 @@ install_theme (gchar * tarball_path)
                 if (cookie == NULL)
                 {
                         ERROR_PRINT ("Out of memory\n");
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 if (magic_load (cookie, NULL) == -1)
                 {
                         ERROR_PRINT ("%s", magic_error (cookie));
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 mime_type = magic_file (cookie, tarball_path);
@@ -152,7 +154,7 @@ install_theme (gchar * tarball_path)
                                 PRINT_FAIL;
                                 g_print (_
                                          ("Did you really give me a tarball ?\n"));
-                                return;
+                                return RETURN_ERROR;
                         }
                 }
 
@@ -189,7 +191,7 @@ install_theme (gchar * tarball_path)
                                 g_print ("%s", msg_invalid_format);
                                 fprintf (stderr, "%s\n", ErrorDir->message);
                                 g_error_free (ErrorDir);
-                                return;
+                                return RETURN_ERROR;
                         }
                         _theme = g_strdup (g_dir_read_name (_dir));
                         g_dir_close (_dir);
@@ -214,7 +216,7 @@ install_theme (gchar * tarball_path)
                                 g_print ("%s", msg_invalid_format);
                                 fprintf (stderr, "%s\n", ErrorDir->message);
                                 g_error_free (ErrorDir);
-                                return;
+                                return RETURN_ERROR;
                         }
                         while ((file = g_dir_read_name (_dir)))
                         {
@@ -245,7 +247,7 @@ install_theme (gchar * tarball_path)
                                         g_print (_
                                                  ("This theme already exists\n"));
                                         rmdir (tmp_dir);
-                                        return;
+                                        return RETURN_ERROR;
                                 }
                         }
 
@@ -260,7 +262,7 @@ install_theme (gchar * tarball_path)
                         tar_options[i] = g_strdup( splashy_get_config_string (SPL_THEMES_DIR));
                       
                         // Really install the theme
-                if (tar(tar_options) != 0)
+                        if (tar(tar_options) != 0)
                         {
                                 PRINT_FAIL;
                                 g_print (_
@@ -269,6 +271,7 @@ install_theme (gchar * tarball_path)
                         else
                         {
                                 PRINT_DONE;
+                                ret = RETURN_OK;
                         }
                 }
                 else
@@ -283,6 +286,7 @@ install_theme (gchar * tarball_path)
                 PRINT_FAIL;
                 g_print (_("The tarball doesn't exist !\n"));
         }
+        return ret;
 }
 
 /*
@@ -290,10 +294,11 @@ install_theme (gchar * tarball_path)
  ** desc: Remove a theme deleting his directory
  ** arg: the theme name
  */
-void
+gint
 remove_theme (gchar * theme_name)
 {
         need_root ();
+        gint ret = RETURN_ERROR;
         g_print (_(">Remove theme"));
         GString *path =
                 g_string_new (splashy_get_config_string (SPL_THEMES_DIR));
@@ -329,7 +334,7 @@ remove_theme (gchar * theme_name)
                         PRINT_FAIL;
                         fprintf (stderr, "%s\n", ErrorDir->message);
                         g_error_free (ErrorDir);
-                        return;
+                        return RETURN_ERROR;
                 }
                 while ((file = g_dir_read_name (_dir)))
                 {
@@ -354,18 +359,20 @@ remove_theme (gchar * theme_name)
                 else
                 {
                         PRINT_DONE;
+                        ret = RETURN_OK;
                 }
         }
 
         g_string_free (buf, TRUE);
         g_string_free (path, TRUE);
+        return ret;
 }
 
 /*
  ** information
  ** desc: Display some informations
  */
-void
+gint
 information (void)
 {
         g_print (_(">Theme currently used:\n"));
@@ -392,7 +399,7 @@ information (void)
                 g_assert (_dir == NULL);
                 fprintf (stderr, "%s\n", ErrorDir->message);
                 g_error_free (ErrorDir);
-                return;
+                return RETURN_ERROR;
         }
         while ((_theme = g_dir_read_name (_dir)))
         {
@@ -408,6 +415,7 @@ information (void)
                 }
         }
         g_dir_close (_dir);
+        return RETURN_OK;
 }
 
 /*
@@ -420,7 +428,7 @@ need_root (void)
         {
                 g_print (_
                          ("<!> Insufficient priviledges <!>\nRoot priviledges required for this function\n"));
-                exit (0);
+                exit (RETURN_NEED_ROOT);
         }
 }
 
@@ -428,9 +436,10 @@ need_root (void)
  ** create_theme
  ** desc: create a new theme in an interactive mode
  */
-void
+gint
 create_theme (XmlFields * NewTheme)
 {
+
         g_print (_(">Create theme "));
         if (NewTheme->name != NULL)
         {
@@ -449,7 +458,7 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (_("This theme already exists\n"));
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 // Check the boot image
@@ -458,14 +467,14 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (msg_file_doesnot_exists, NewTheme->bg_boot);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (chk == 2)
                 {
                         PRINT_FAIL;
                         g_print (_
                                  ("The boot image doesn't seem to be an image\n"));
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 // Check the shutdown image
@@ -475,14 +484,14 @@ create_theme (XmlFields * NewTheme)
                         PRINT_FAIL;
                         g_print (msg_file_doesnot_exists,
                                  NewTheme->bg_shutdown);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (chk == 2)
                 {
                         PRINT_FAIL;
                         g_print (_
                                  ("The shutdown image doesn't seem to be an image\n"));
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 // Check the error image
@@ -491,14 +500,14 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (msg_file_doesnot_exists, NewTheme->bg_error);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (chk == 2)
                 {
                         PRINT_FAIL;
                         g_print (_
                                  ("The error image doesn't seem to be an image\n"));
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 // Check the resume image
@@ -508,14 +517,14 @@ create_theme (XmlFields * NewTheme)
                         PRINT_FAIL;
                         g_print (msg_file_doesnot_exists,
                                  NewTheme->bg_resume);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (chk == 2)
                 {
                         PRINT_FAIL;
                         g_print (_
                                  ("The resume image doesn't seem to be an image\n"));
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 // Check the suspend image
@@ -525,14 +534,14 @@ create_theme (XmlFields * NewTheme)
                         PRINT_FAIL;
                         g_print (msg_file_doesnot_exists,
                                  NewTheme->bg_suspend);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (chk == 2)
                 {
                         PRINT_FAIL;
                         g_print (_
                                  ("The suspend image doesn't seem to be an image\n"));
-                        return;
+                        return RETURN_ERROR;
                 }
 
                 // Check the font file
@@ -551,7 +560,7 @@ create_theme (XmlFields * NewTheme)
                                 PRINT_FAIL;
                                 g_print (msg_file_doesnot_exists,
                                          NewTheme->textfont_file);
-                                return;
+                                return RETURN_ERROR;
                         }
                         else
                         {
@@ -574,7 +583,7 @@ create_theme (XmlFields * NewTheme)
                                 g_print (_
                                          ("Error! Can't create directory %s\n"),
                                          NewTheme->name);
-                                exit (1);
+                                exit (RETURN_ERROR);
                         }
                         else
                         {
@@ -595,7 +604,7 @@ create_theme (XmlFields * NewTheme)
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (g_path_is_absolute (dest))
                 {
@@ -619,7 +628,7 @@ create_theme (XmlFields * NewTheme)
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (g_path_is_absolute (dest))
                 {
@@ -643,7 +652,7 @@ create_theme (XmlFields * NewTheme)
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (g_path_is_absolute (dest))
                 {
@@ -667,7 +676,7 @@ create_theme (XmlFields * NewTheme)
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (g_path_is_absolute (dest))
                 {
@@ -691,7 +700,7 @@ create_theme (XmlFields * NewTheme)
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
-                        return;
+                        return RETURN_ERROR;
                 }
                 else if (g_path_is_absolute (dest))
                 {
@@ -718,7 +727,7 @@ create_theme (XmlFields * NewTheme)
                                          ("Error! Unable to use the picture %s.\nAborting\n"),
                                          dest);
                                 remove_theme (NewTheme->name);
-                                return;
+                                return RETURN_ERROR;
                         }
                         else
                         {
@@ -734,21 +743,25 @@ create_theme (XmlFields * NewTheme)
 
                 g_print (NewTheme->name);
 
-
+                gint ret = RETURN_ERROR;
                 if (gen_theme_xml (theme_file_path, NewTheme) == 0)
+                {
                         PRINT_DONE;
+                        ret = RETURN_OK;
+                }
                 else
                         PRINT_FAIL;
 
                 g_free (theme_file_path);
                 g_free (dest);
                 g_free (theme_path);
+                return ret;
         }
         else
         {
                 PRINT_FAIL;
                 g_print (_("You try to create a theme without a name\n"));
-                return;
+                return RETURN_ERROR;
         }
 }
 
