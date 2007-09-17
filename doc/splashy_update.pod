@@ -21,7 +21,7 @@ B<splashy_update> "<text>"
 
 =head1 DESCRIPTION 
 
-Splashy displays an image and a progress bar at boot time. splashy_update is used to send commands to the running Splashy daemon.
+Splashy displays an image and a progress bar at boot time. splashy_update is used to send commands to the running Splashy daemon. See "COMMANDS" below to know which commands Splashy understands.
 
 =head1 OPTIONS
 
@@ -30,6 +30,52 @@ Splashy displays an image and a progress bar at boot time. splashy_update is use
 =item B<text>
 
 Sends text to Splashy socket.
+
+=back
+
+=head1 COMMANDS
+
+=over 8
+
+=item B<progress NN>
+
+Example:
+
+splashy_update progress 20
+
+Sets the progress bar to 20%
+
+=item B<print STRING>
+
+Tells Splashy to print the given message to an overlayed window. Useful when displaying status.
+
+Alias: text
+
+=item B<clrprint>
+
+Clears the text box
+
+Alias: clear
+
+=item B<repaint>
+
+Tells Splashy to redraw the background image. Useful when removing overlayed windows.
+
+=item B<chvt N>
+
+Switch working console to N. Needs "allowchvt"
+
+=item B<allowchvt>
+
+Tells Splashy that is Ok to allow itself to be removed from focus by other applications
+
+=item B<timeout N>
+
+This tells Splashy to exit if it has not received any input for N seconds
+
+=item B<exit>
+
+Quits Splashy
 
 =back
 
