@@ -44,7 +44,7 @@ When talking to the Splashy server you can use the following commands:
   chvt <number>      Switch to vt <number>. See "allowchvt"
   allowchvt          Splashy ignores all "chvt" commands until this command is
                      sent
-  timeout            Sets the amount of seconds splashy waits for new commands
+  timeout <number>   Sets the amount of seconds splashy waits for new commands
                      in the fifo file. If that time is exceeded, it exits
   exit               Exits Splashy server
   QUIT               Same as "exit". For compatibility with usplash
