@@ -1,3 +1,43 @@
+commit 92691fe10b481635ca1a6ae9739eaca28b9f2b21
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 22 20:50:10 2007 -0400
+
+    changelog file is needed for release ./autogen.sh
+    
+    We cannot ignore this file
+
+commit 07f921f5c2443361d7a2d411c8c31a4a7e9666de
+Author: Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
+Date:   Sat Sep 22 20:48:26 2007 -0400
+
+    ensures that Splashy exits before gdm/kdm/xdm
+    
+    do not rely solely on X/Xgl processes running, set progress to 100% as soon as gdm starts and exit
+
+commit 9e1cc3057ebe5910def90b63acadfbfd37999fdc
+Author: Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
+Date:   Sat Sep 22 20:33:45 2007 -0400
+
+    tmpfs needed to fix steps
+    
+    On Ubuntu there is no /lib/init/rw/ directory. We are creating one and mounting a tmpfs on it so we can do our steps
+
+commit 37fb3cd23cfd036e3a0cd7407e8b6f574c2d85ac
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 22 19:55:21 2007 -0400
+
+    ready for next release
+    
+    getting ready for next release
+
+commit 43ac3514435e7feb62f8b3da77555b3b0ff6b71b
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 22 19:53:20 2007 -0400
+
+    ChangeLog added
+    
+    ChangeLog is needed in order to compile Splashy from revision-control repo
+
 commit c4d531c5915c08f25f2ee6c7c6ff2b0ecbec56db
 Author: Luis Mondesi <lemsx1@gmail.com>
 Date:   Mon Sep 17 09:17:12 2007 -0400
