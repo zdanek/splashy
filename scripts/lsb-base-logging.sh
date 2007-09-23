@@ -64,7 +64,7 @@ log_end_msg () {
     #
     # Actually we should have already been stopped by log_daemon_msg
     # in ?dm
-    #echo ${0} | egrep -q '(gdm$|kdm$|xdm$)' && PER=100
+    echo ${0} | egrep -q '((gdm$)|(kdm$)|(xdm$))' && PER=100
 
     pidof X > /dev/null && PER=100
     pidof Xgl > /dev/null && PER=100
