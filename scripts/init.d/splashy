@@ -67,6 +67,14 @@ calculate_steps () {
 	[ -f /etc/inittab ] &&	RLVL=`sed -n 's/id:\([2345]\):initdefault:/\1/ p' /etc/inittab`
 
         [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
+	#
+	# Mount a tmpfs on $STEPS_DIR
+	#
+	# on Ubuntu our Steps dir gets umounted if using /dev/shm/splashy
+	# we will always use /lib/init/rw/splashy and mount a tmpfs there
+	SHM_OPT=
+	[ "${SHM_SIZE:=$TMPFS_SIZE}" ] && SHM_OPT="-osize=$SHM_SIZE"
+	mount -n -t tmpfs shmfs $STEPS_DIR
 
         TMP=`mktemp -p $STEPS_DIR`
 
