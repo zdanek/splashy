@@ -22,7 +22,7 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
 #Buildarch:      noarch
 BuildRequires:  DirectFB-devel file-devel
 BuildRequires:  glib2-devel
-BuildRequires:  ImageMagick-devel
+#BuildRequires:  ImageMagick-devel
 #BuildRequires:	procps-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libjpeg-devel
@@ -121,7 +121,7 @@ Authors:
 
 %prep
 %setup -q
-%patch0 -p1 -b .noWerror
+#%patch0 -p1 -b .noWerror
 find . -type f | xargs perl -pi -e "s|/usr/lib/|%{_libdir}/|g"
 find . -type f | xargs perl -pi -e "s|/lib/|/%{_lib}/|g"
 
