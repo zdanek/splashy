@@ -14,7 +14,7 @@ Source: %{name}_%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 Buildarch: noarch
-BuildRequires: directfb-devel, glib2-static
+BuildRequires: directfb-devel, glib2-static, libpng-static, file-devel
 Requires:
 
 %description
