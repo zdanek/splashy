@@ -27,7 +27,7 @@ BuildRequires:  glib2-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  freetype2-devel
-Requires:
+#Requires:
 
 %description
 Splashy is a next generation boot splashing system for Linux systems.
@@ -131,6 +131,7 @@ NOCONFIGURE=1 ./autogen.sh
 make
 
 %install
+%{__rm} -rf %{buildroot}
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL="1"
 %makeinstall
 rm %{buildroot}/usr/lib*/libsplashy*.la
