@@ -100,6 +100,41 @@ To validate all themes against our themes.xsd schema, do:
 
 ./scripts/xml-validator -S schemas/theme.xsd themes/*/theme.xml
 
+or simply:
+
+xmllint --schema schemas/theme.xsd themes/default/theme.xml
+
+Theme Specifications:
+---------------------
+
+  * theme name should contain alphanumeric chacters only (avoid white spaces). 
+    This will be referred to from an XML file (/etc/splashy/config.xml).
+
+  * theme folder name is the "name" of the theme
+    ls default/
+    theme.xml
+    background.png
+
+    cat default/theme.xml
+    ...
+    <name>default</name>
+
+  * inside the theme directory there should be:
+    - theme.xml file describing the theme itself
+    - at least one image (conventionally called "background.png") which will be 
+      used as background during the boot process
+
+  * All images should be in PNG format. Other formats are supported by directfb 
+    but you will need to modify src/Makefile.am to include them. The official 
+    Splashy binary packages only include support for PNG.
+
+  * Size depends on user. Image size 1024x768 is what we ship with Splashy 
+    default theme as most users will use vga=791 or so as boot kernel param
+  
+  * Theme.xml must validate against the latest version of theme schema file 
+    (found under http://splashy.alioth.debian.org/schemas/)
+
+
 PROCEDURES
 ==========
 
