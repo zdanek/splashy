@@ -128,7 +128,7 @@ find . -type f | xargs perl -pi -e "s|/lib/|/%{_lib}/|g"
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure --prefix=/ --disable-static
-make
+%{__make} %{?_smp_mflags}
 
 %install
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL="1"
