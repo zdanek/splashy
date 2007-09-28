@@ -4,7 +4,7 @@
 
 Summary: A complete user-space boot splash system 
 Name: splashy
-Version: 0.1.6 
+Version: 0.3.6 
 Release: 1
 License: GPL
 Group: 
@@ -14,7 +14,7 @@ Source: %{name}_%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 Buildarch: noarch
-BuildRequires: directfb-devel-0.9.22, glib2-devel
+BuildRequires: directfb-devel, glib2-static
 Requires:
 
 %description
