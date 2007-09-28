@@ -131,7 +131,6 @@ NOCONFIGURE=1 ./autogen.sh
 make
 
 %install
-%{__rm} -rf %{buildroot}
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL="1"
 %makeinstall
 rm %{buildroot}/usr/lib*/libsplashy*.la
@@ -175,7 +174,7 @@ rm -f .%{_sysconfdir}/init.d/splashy
 %{_libdir}/lib%{name}*.so
 
 %changelog
-* Son Jan 19 2005 Dag Wieers <dag@wieers.com> - 
+* Sun Jan 19 2005 Dag Wieers <dag@wieers.com> - 
 - Initial package. (using DAR)
 * Mon Jan 04 2006 Luis Mondesi <lemx1@gmail.com> -
 - Modified _template.spec for splashy
