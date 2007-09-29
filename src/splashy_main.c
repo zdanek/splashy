@@ -47,8 +47,9 @@ main (int argc, char *argv[])
         /* 
          * we are a daemon ... no need for STDOUT or STDIN
          */
-        freopen("/dev/null","r+",stdin);
-        freopen("/dev/null","r+",stdout);
+	FILE *fp;
+        fp = freopen("/dev/null","r+",stdin);
+        fp = freopen("/dev/null","r+",stdout);
 	DEBUG_PRINT ("main() invoked %d", argc);
 
 	/* grep single /proc/cmdline */
