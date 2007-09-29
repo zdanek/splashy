@@ -79,7 +79,7 @@ log_end_msg () {
 
     # Write to log (for testing)
     if [ "x$DEBUG" != "x0" ]; then
-	uptime >> $STEPS_DIR/splashy.log 2>&1
+	cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
 	echo "print ${0##*/} $PER" >> $STEPS_DIR/splashy.log
     fi
 
@@ -131,7 +131,7 @@ stop_splashy () {
     # Write to log (for testing)
     if [ "x$DEBUG" != "x0" ]; then
 	echo "calling exit" >> $STEPS_DIR/splashy.log
-	uptime >> $STEPS_DIR/splashy.log 2>&1
+	cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
     fi
 
     # wait until splashy exits before changing tty's
@@ -141,17 +141,18 @@ stop_splashy () {
 
     # FIXME what if splashy never exits? infinite loop!
     while `pidof splashy > /dev/null`; do
-	sleep 0.2
         if [ "x$DEBUG" != "x0" ]; then
 	    echo "Splashy didn't die!" >> $STEPS_DIR/splashy.log
 	fi
+
+        killall -15 splashy > /dev/null 2>&1
+	sleep 0.2
+
 	#echo "calling killall -9 splashy" >> $STEPS_DIR/splashy.log
 	killall -9 splashy > /dev/null 2>&1
     done
-
     # Do some magic with the TTYs
     [ -z "$CHVT_TTY" ] || splashy_chvt $CHVT_TTY || true
-
     # Bug #400598
     # if Splashy was running from initramfs,
     # and our runlevel is currently a number between 2 and 5,
@@ -159,14 +160,14 @@ stop_splashy () {
     if [ $RUNLEVEL -gt 1 -a $RUNLEVEL -lt 6 ]; then 
 	if [ -x "/etc/init.d/keymap.sh" ]; then
 	    if [ "x$DEBUG" != "x0" ]; then
-		uptime >> $STEPS_DIR/splashy.log 2>&1
+		cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
 		echo "calling keymap.sh" >> $STEPS_DIR/splashy.log
 	    fi
 	    /etc/init.d/keymap.sh start
 	fi
 	if [ -x "/etc/init.d/console-screen.sh" ]; then
 	    if [ "x$DEBUG" != "x0" ]; then
-		uptime >> $STEPS_DIR/splashy.log 2>&1
+		cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
 		echo "calling console-screen.sh" >> $STEPS_DIR/splashy.log
 	    fi
 	    /etc/init.d/console-screen.sh start
