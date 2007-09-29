@@ -1,3 +1,131 @@
+commit f79a7530cbc6bdbb22642d9123a5ff2d62183078
+Author: root <root@localhost.localdomain>
+Date:   Sat Sep 29 02:44:42 2007 -0400
+
+    fixes %post macro
+    
+    fixes a problem when installing/removing the package
+
+commit 5f4e07735f92fe45c01fff08294f121a04cadb7c
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 29 01:57:29 2007 -0400
+
+    rpm packages supported
+    
+    now we are able to support RPM packages
+
+commit 07b78eff971e33b43e09b2e4b6d24348531beb96
+Author: root <root@localhost.localdomain>
+Date:   Sat Sep 29 01:44:44 2007 -0400
+
+    on Fedora we do not like -all-static
+    
+    helps the creation of Splashy packages for RPM-based systems. the directfb-devel package does not include the required .a files (or .o for that matter)
+
+commit 974b56307b7fa5e2c05afbb7408bedd500e6f25f
+Author: root <root@localhost.localdomain>
+Date:   Sat Sep 29 01:43:32 2007 -0400
+
+    compiles on Fedora Core 7
+    
+    RPM package is now built correctly. A macro in ~/.rpmmacros was needed to avoid  stupid warning: %debug_package %{nil}
+
+commit 673285a36553b06e3b6f21e514bdb11b412a25a6
+Author: root <root@localhost.localdomain>
+Date:   Sat Sep 29 01:42:21 2007 -0400
+
+    on Fedora gcc throws warn
+    
+    freopen() returns a FILE*. catch this
+
+commit 507f405a3074b52ebf127b8777047e0f83cbbcaf
+Author: root <root@localhost.localdomain>
+Date:   Sat Sep 29 00:56:56 2007 -0400
+
+    ignore binaries
+    
+    ignore all binaries build under src/
+
+commit 1f576360ec5679396f5f2ecb698c23a57755fee9
+Author: root <root@localhost.localdomain>
+Date:   Sat Sep 29 00:33:00 2007 -0400
+
+    yet more to ignore
+    
+    ignore build objects and other automagically generated files
+
+commit e7d22bcca59172b414fd3726f9eecac9cd32cf4f
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 18:39:19 2007 -0400
+
+    adds make macro
+    
+    adds make macro back
+
+commit 68f3d06d6be401dc7d9fa577ed8b955122d4af7b
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 18:36:40 2007 -0400
+
+    fixes date
+    
+    fixes date in changelog portion
+
+commit af0ea32a8a1c66c62b61c100b5164337a2a5d449
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 18:21:41 2007 -0400
+
+    fixes minor issue
+    
+    Package already exists: %package debuginfo
+
+commit 9b911c94f105d7f0d053aa230658ffd4a848c478
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 18:12:54 2007 -0400
+
+    cleanups
+    
+    removes patch0 and other lines
+
+commit 93b60c7f514d065e412c6df5605c692d82fe6937
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 17:48:27 2007 -0400
+
+    better compilation steps for RPM-based systems
+    
+    Copies ideas from the OpenSUSE spec file
+
+commit 502598e741d2e0f5eaebc9feebef78c84f966688
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 16:23:01 2007 -0400
+
+    Theme specifications included
+    
+    This should give an idea to non-programmers what is needed to build a theme for Splashy
+
+commit 3c1b4c357be43581fcf6b80a494326f7145d22ac
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 16:02:31 2007 -0400
+
+    dependencies added
+    
+    libpng-static and file-devel are also needed
+
+commit 3dc65ed7740ac81ef6d77f68135313a5271edd93
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Fri Sep 28 14:02:06 2007 -0400
+
+    revised: glib2-static
+    
+    added build dependency on glib2-static
+
+commit e312fe325a83e79f003ff7b2aaaddbc337a96e8e
+Author: Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
+Date:   Sat Sep 22 20:51:00 2007 -0400
+
+    updated
+    
+    latest and greatest changes
+
 commit 92691fe10b481635ca1a6ae9739eaca28b9f2b21
 Author: Luis Mondesi <lemsx1@gmail.com>
 Date:   Sat Sep 22 20:50:10 2007 -0400
