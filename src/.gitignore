@@ -4,3 +4,6 @@ xml_format.h
 *.o
 *.so
 *.lo
+splashy
+splashy_config
+splashy_update
