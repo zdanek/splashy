@@ -1,1 +1,6 @@
 xml_format.h
+.libs
+*.la
+*.o
+*.so
+*.lo
