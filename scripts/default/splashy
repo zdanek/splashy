@@ -5,11 +5,11 @@
 
 # Directory where Splashy will write files during boot (It will be created if doesn't exist)
 # defaults to: /lib/init/rw/splashy
-#STEPS_DIR=/dev/shm/splashy
+#STEPS_DIR=/lib/splashy/rw
 
 # Splashy will switch to this TTY after finishing at boot
-# When set to "auto" Splashy will automagically determine which TTY to switch to
-CHVT_TTY=auto
+# gdm/kdm/xdm should switch to 7 automatically. Splashy should exit before them
+CHVT_TTY=1
 
 # Set to "1" to allow Splashy to be put inside initramfs
 # Remember to run "update-initramfs" and read the README file carefully
