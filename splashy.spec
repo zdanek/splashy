@@ -16,17 +16,17 @@ License:    GPL
 Group:      System/Boot
 URL:        http://splashy.alioth.debian.org
 
-Source:     %{name}_%{version}.tar.gz
+Source:     %{name}-%{version}.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
 
 #Buildarch:      noarch
-BuildRequires:  DirectFB-devel file-devel
+BuildRequires:  directfb-devel file-devel
 BuildRequires:  glib2-devel
 #BuildRequires:  ImageMagick-devel
 #BuildRequires:	procps-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libjpeg-devel
-BuildRequires:  freetype2-devel
+BuildRequires:  freetype-devel
 #Requires:
 
 %description
@@ -156,7 +156,7 @@ rm -f .%{_sysconfdir}/init.d/splashy
 
 %files
 %defattr(-, root, root, 0755)
-%doc AUTHORS ChangeLog COPYING INSTALL LICENSE NEWS README TODO
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README TODO
 %doc %{_mandir}/man?/*
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/default/*
 %dir %{_sysconfdir}/splashy
@@ -174,9 +174,8 @@ rm -f .%{_sysconfdir}/init.d/splashy
 %{_libdir}/lib%{name}*.so
 
 %changelog
-* Sun Jan 19 2005 Dag Wieers <dag@wieers.com> - 
-- Initial package. (using DAR)
-* Mon Jan 04 2006 Luis Mondesi <lemx1@gmail.com> -
-- Modified _template.spec for splashy
-* Fri Sep 28 2007 Luis Mondesi <lemsx1@gmail.com> -
+* Fri Sep 28 2007 Luis Mondesi <lemsx1@gmail.com>
 - Copied steps from OpenSUSE's spec file
+* Wed Jan 04 2006 Luis Mondesi <lemx1@gmail.com>
+- Initial package. (using DAR)
+- Modified _template.spec for splashy
