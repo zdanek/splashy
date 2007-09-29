@@ -148,11 +148,9 @@ rm -f .%{_sysconfdir}/init.d/splashy
 %clean
 %{__rm} -rf %{buildroot}
 
-%post
-%run_ldconfig
+%post -p /sbin/ldconfig
 
-%postun
-%run_ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(-, root, root, 0755)
