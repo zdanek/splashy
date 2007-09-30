@@ -45,7 +45,7 @@ splashy_SOURCES = splashy_main.c splashy_functions.c
 splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lm  -lglib-2.0
 #splashy_LDFLAGS = -static
 # Debian:
-splashy_LDFLAGS = -all-static $(shell directfb-config  --libs --input=keyboard --imageprovider=png --font=ft2,default) $(DFBHACK)
+splashy_LDFLAGS = -all-static -static-libgcc $(shell directfb-config  --libs --input=keyboard --imageprovider=png --font=ft2,default) $(DFBHACK)
 # Fedora:
 #splashy_LDFLAGS = $(shell directfb-config --libs) $(DFBHACK) -rpath $(libdir)/directfb-1.0-0/systems:$(libdir)/directfb-1.0-0/wm:/usr/lib64/directfb-1.0-0/interfaces/IDirectFBFont/:$(libdir)/directfb-1.0-0/interfaces/IDirectFBImageProvider:$(libdir)/directfb-1.0-0/inputdrivers
 
