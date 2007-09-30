@@ -40,6 +40,7 @@ PATH="/sbin:/bin:/usr/sbin:/usr/bin"
 NAME="splashy"
 DESC="Boot splash manager"
 STEPS_DIR="/lib/init/rw/$NAME"
+DEBUG=0
 
 [ -r "/etc/default/$NAME" ] && . "/etc/default/$NAME"
 
@@ -54,7 +55,7 @@ fi
 
 set -e
 
-[ "$ENABLE" = "1" ] && log_warning_message "To enable $NAME add 'splash' to the kernel command line. Use of ENABLE in /etc/$NAME/default is deprecated.";
+[ "$ENABLE" = "1" ] && log_warning_message "To enable $NAME add 'splash' to the kernel command line. Use of ENABLE in /etc/default/$NAME is deprecated.";
 ENABLE=0
 # Enable splash parameter if it is set on the kernel command line.
 grep -q -e '[[:space:]]splash\([[:space:]]\|$\)' /proc/cmdline && ENABLE=1
@@ -121,6 +122,10 @@ case "$1" in
 	    calculate_steps
 
             log_daemon_msg "Starting $DESC" $NAME
+            if [ "$DEBUG" = "1" ]; then
+                pidof $NAME > /dev/null || \
+                echo "$0: Splashy not running?" >> $STEPS_DIR/splashy.log
+            fi
             pidof $NAME > /dev/null || /sbin/$NAME boot
             log_end_msg $?
         fi
