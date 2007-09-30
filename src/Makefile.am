@@ -27,14 +27,8 @@ DFBHACK = \
 
 libsplashy_la_SOURCES = splashy_video.c
 libsplashy_la_LIBADD = -lglib-2.0 -lsplashycnf -ldirectfb
-# I had to remove '-lgcc_s' there is no static version for it
-# You I'll have to make sure it is available by explicitly linking to it.
 libsplashy_la_LDFLAGS = -export-symbols-regex splashy_.* \
 			-version-info $(SPL_SONAME) 
-#libsplashy_la_LDFLAGS = -export-symbols-regex splashy_.* \
-#			-version-info $(SPL_SONAME) \
-#			-all-static $(shell directfb-config  --libs --input=keyboard --imageprovider=png --font=ft2,default) $(DFBHACK)
-
 
 libsplashycnf_la_SOURCES = xml_config.c xml_parser.c 
 libsplashycnf_la_LIBADD = -lglib-2.0
@@ -43,7 +37,8 @@ libsplashycnf_la_LDFLAGS = -export-symbols-regex splashy_.*\
 
 splashy_SOURCES = splashy_main.c splashy_functions.c
 splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lm  -lglib-2.0
-#splashy_LDFLAGS = -static
+
+# '-lgcc_s' is provided with -static-libgcc
 # Debian:
 splashy_LDFLAGS = -all-static -static-libgcc $(shell directfb-config  --libs --input=keyboard --imageprovider=png --font=ft2,default) $(DFBHACK)
 # Fedora:
