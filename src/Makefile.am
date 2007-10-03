@@ -26,7 +26,8 @@ DFBHACK = \
 	-Wl,-uIDirectFBImageProvider_PNG 
 
 libsplashy_la_SOURCES = splashy_video.c
-libsplashy_la_LIBADD = -lglib-2.0 -lsplashycnf -ldirectfb
+# adding -ldirectfb here breaks the build process. Luis
+libsplashy_la_LIBADD = -lglib-2.0 -lsplashycnf
 libsplashy_la_LDFLAGS = -export-symbols-regex splashy_.* \
 			-version-info $(SPL_SONAME) 
 
