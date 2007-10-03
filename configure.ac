@@ -59,7 +59,7 @@ DFB_VERSION=`eval  directfb-config --version`
 AC_DEFINE([DFB_VERSION], [$DFB_VERSION], [directfb version])
 AC_SUBST(DFB_VERSION)
 
-DFB_LIBDIR="$(eval  directfb-config --prefix)/lib/directfb-$(eval directfb-config --version)"
+DFB_LIBDIR="$(eval pkg-config directfb-internal --variable=moduledir)"
 AC_DEFINE([DFB_LIBDIR], [$DFB_LIBDIR], [directfb libdir])
 AC_SUBST(DFB_LIBDIR)
 
