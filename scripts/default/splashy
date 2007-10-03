@@ -9,7 +9,7 @@
 
 # Splashy will switch to this TTY after finishing at boot
 # gdm/kdm/xdm should switch to 7 automatically. Splashy should exit before them
-CHVT_TTY=1
+CHVT_TTY=8
 
 # Set to "1" to allow Splashy to be put inside initramfs
 # Remember to run "update-initramfs" and read the README file carefully
