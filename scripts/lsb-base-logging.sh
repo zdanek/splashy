@@ -188,7 +188,7 @@ stop_splashy () {
 
     # when not in debug mode, umount our tmpfs
     if [ "x$DEBUG" = "x0" ]; then
-        umount $STEPS_DIR
+        umount $STEPS_DIR 2> /dev/null
     fi
 }
 
