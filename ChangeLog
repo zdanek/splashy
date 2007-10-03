@@ -1,3 +1,123 @@
+commit bd82f2b3a717b16c07f40f8df1ff1407b4b7ae6c
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 08:36:59 2007 -0400
+
+    run from initramfs by default
+    
+    now that we know what the problem with directfb was, we can set this to a sane default
+
+commit 852202124d13b469943aeebf8a96982116008ba4
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 08:36:26 2007 -0400
+
+    note on fixing keyboard event issue
+    
+    this should allow anybody to use init and directfb to start splashy from initramfs
+
+commit 3091ccc1c60053ea5e72eae0ca307b99158fa50d
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 08:11:32 2007 -0400
+
+    disable console reading text
+    
+    the thread that reads messages from the console is buggy and not used. this code actually slows down Splashy and causes SEGV and ABRT signals to be caught when exiting with ESC while in Splashy "test" mode. We need to revisit this feature later. splashy_update "text foo" should still work and allow users to send messages to the text overlay. F2 also works
+
+commit f338d7747e72bc1feff8920b2e477b3e8a66177d
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 08:09:20 2007 -0400
+
+    print debugging info when releasing
+    
+    get more information about what's being released when running in debug mode
+
+commit b580ad006f08c3176e2f5a05613d22da6ec12a93
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 07:06:51 2007 -0400
+
+    gets rid of tmpfs when done
+    
+    when done with Splashy, get rid of tmpfs if not in debug mode
+
+commit c8b64e595cc6579dea168c2d55fd8713541e420f
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Tue Oct 2 22:07:49 2007 -0400
+
+    adding -ldirectfb breaks the build process
+    
+    there does not seem to be a need to add -ldirectfb on Directfb 1.0.1 from experimental
+
+commit 448f0a2679b5b2465a62d7b18dd3fb4f660ca901
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Mon Oct 1 12:33:47 2007 -0400
+
+    directfb 1.x supported
+    
+    Now we can say that we officially support dfb 1.x. Older version of the library still work fine (0.9.25 in particular)
+
+commit f9bb629227f18c49579dd7055d04b129fde29525
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Mon Oct 1 12:29:08 2007 -0400
+
+    this file does not belong in Splashy
+    
+    ditto
+
+commit 6bf49fe290b1a84de4f50d5ca85d0abcff93311f
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sun Sep 30 18:05:45 2007 -0400
+
+    cleanups
+    
+    removes old comments and added new (cleaner) ones
+
+commit 4ccfc01022219c1078fc7a3cbd62ae6fb123b104
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sun Sep 30 18:02:56 2007 -0400
+
+    adds -static-libgcc option to gcc
+    
+    this avoids having a binary that cannot find pthread cancel calls from libgcc_s
+
+commit 4446d18533c4d5aef2ab5c17ae1e2156e2092de9
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sun Sep 30 17:19:28 2007 -0400
+
+    adds debug string
+    
+    add ways to know if splashy has been launched multiple times
+
+commit d67d7f613254c26b4b0e4dc55c80888e95201f9c
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 29 19:22:47 2007 -0400
+
+    uptime is not available at times
+    
+    this makes sure that we always get the loadavergage readings during boot (in DEBUG mode)
+
+commit e4e72a336dbdbc9f01d806d97831e5be80bbcdda
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 29 13:46:58 2007 -0400
+
+    we need to switch to tty1
+    
+    using "auto" is not a good default now. when gdm is not installed, we need to go back to tty1
+
+commit 481ee660e123edb26c1b91f35174ae471bf8ec22
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 29 13:17:25 2007 -0400
+
+    put back the static compilation
+    
+    splashy works fine without being -static, however, if we are going to enable initramfs by default, then it's better to just keep the things in initrd to a minimun
+
+commit 937bf327cebb40ebd6ee5db1b238d46ed73597fc
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Sep 29 02:59:19 2007 -0400
+
+    new log
+    
+    new changes
+
 commit f79a7530cbc6bdbb22642d9123a5ff2d62183078
 Author: root <root@localhost.localdomain>
 Date:   Sat Sep 29 02:44:42 2007 -0400
