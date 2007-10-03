@@ -1168,11 +1168,11 @@ _splashy_child (const gchar * seq)
                                                  * to manage  our keyboard  
                                                  * events and SplashyClient */
 
-        gint thr_id_f;          /* Handles /dev/vcs1 text to be displayed to
+        /*gint thr_id_f;          * Handles /dev/vcs1 text to be displayed to
                                  * splashy overlay textbox ... when pressing
                                  * F2 we launch a thread to handle the
                                  * console text */
-        pthread_t p_thread_f;
+        /*pthread_t p_thread_f;*/
 
         gboolean _preview = FALSE;
 
@@ -1246,8 +1246,8 @@ _splashy_child (const gchar * seq)
          */
         thr_id_d = pthread_create (&p_thread_d, NULL, keyevent_loop, NULL);
 
-        thr_id_f =
-                pthread_create (&p_thread_f, NULL, verbose_text_loop, NULL);
+        /*thr_id_f =
+                pthread_create (&p_thread_f, NULL, verbose_text_loop, NULL);*/
 
         /*
          * Wait till thread is finished reading the socket... ie 'forever' 
