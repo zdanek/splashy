@@ -60,15 +60,6 @@ log_end_msg () {
     # This can not happen ...
     [ -n "$PER" ] || return $1;
 
-    # Set $PER to 100% if X is started or about to be started
-    #
-    # Actually we should have already been stopped by log_daemon_msg
-    # in ?dm
-    echo ${0} | egrep -q '((gdm$)|(kdm$)|(xdm$))' && PER=100
-
-    pidof X > /dev/null && PER=100
-    pidof Xgl > /dev/null && PER=100
-
     # in Sid 2006-10-08 05:57 EDT the scripts after S99rc.local
     # do not call lsb* functions. So we don't know when the boot process 
     # is done
@@ -76,6 +67,23 @@ log_end_msg () {
 
     # Update progress bar 
     $SPL_UPD "progress $PER" || true
+
+    if [ "x$PER" != "x100" ]; then
+        # Set $PER to 100% if X is started or about to be started
+        #
+        # Actually we should have already been stopped by log_daemon_msg
+        case ${0} in 
+	    ?dm) PER=100;;
+        esac
+    fi
+
+    if [ "x$PER" != "x100" ]; then
+        pidof X > /dev/null && PER=100
+    fi
+
+    if [ "x$PER" != "x100" ]; then
+        pidof Xgl > /dev/null && PER=100
+    fi
 
     # Write to log (for testing)
     if [ "x$DEBUG" != "x0" ]; then
@@ -113,24 +121,19 @@ log_daemon_msg () {
 
 
 stop_splashy () { 
-    # Bug #400598,#401999
-    if [ -z "${RUNLEVEL:-}" ]; then
-        # we need only the current level
-        RUNLEVEL=`runlevel | sed 's/^. //'`
-    fi
-
     STEPS_DIR=/lib/init/rw/splashy
     SPL_UPD=/sbin/splashy_update
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
-    
+
+    # now we can exit Splashy:
+    $SPL_UPD "exit" 2> /dev/null || true
+
     [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
 
-    # Do some special things in the last update
-    $SPL_UPD "exit" 2> /dev/null || true # && return $1 || sleep 1
     # Write to log (for testing)
     if [ "x$DEBUG" != "x0" ]; then
-	echo "calling exit" >> $STEPS_DIR/splashy.log
+	echo "exit was called" >> $STEPS_DIR/splashy.log
 	cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
     fi
 
@@ -151,8 +154,15 @@ stop_splashy () {
 	#echo "calling killall -9 splashy" >> $STEPS_DIR/splashy.log
 	killall -9 splashy > /dev/null 2>&1
     done
+
     # Do some magic with the TTYs
     [ -z "$CHVT_TTY" ] || splashy_chvt $CHVT_TTY || true
+
+    # Bug #400598,#401999
+    if [ -z "${RUNLEVEL:-}" ]; then
+        # we need only the current level
+        RUNLEVEL=`runlevel | sed 's/^. //'`
+    fi
     # Bug #400598
     # if Splashy was running from initramfs,
     # and our runlevel is currently a number between 2 and 5,
@@ -165,12 +175,14 @@ stop_splashy () {
 	    fi
 	    /etc/init.d/keymap.sh start
 	fi
+
+        # console-screen.sh still stops Splashy at this point. Do we still need to run this?? - Luis
 	if [ -x "/etc/init.d/console-screen.sh" ]; then
 	    if [ "x$DEBUG" != "x0" ]; then
 		cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
 		echo "calling console-screen.sh" >> $STEPS_DIR/splashy.log
 	    fi
-	    /etc/init.d/console-screen.sh start
+	    #FIXME /etc/init.d/console-screen.sh start
 	fi
     fi 
 
