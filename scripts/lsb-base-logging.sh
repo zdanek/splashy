@@ -173,5 +173,10 @@ stop_splashy () {
 	    /etc/init.d/console-screen.sh start
 	fi
     fi 
+
+    # when not in debug mode, umount our tmpfs
+    if [ "x$DEBUG" = "x0" ]; then
+        umount $STEPS_DIR
+    fi
 }
 
