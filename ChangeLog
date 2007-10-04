@@ -1,3 +1,55 @@
+commit d3e444a3aa10d12e511ad81d38e73ccc7d5710ac
+Author: Tim Dijkstra <tdykstra@commensaal.drs.p>
+Date:   Wed Oct 3 21:50:32 2007 +0200
+
+    Make configure.ac use pkg-config to pick up the correct path to the modules.
+
+commit fc994221e962d53c004eb3192a71aea51c65aa1c
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 11:39:51 2007 -0400
+
+    do not complaint if tmpfs not mounted
+    
+    if user exits gdm, do not complaint about umounting the tmpfs we created and umounted during boot
+
+commit 95f4f762295adcd925f29a59b801b08143567395
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 11:35:31 2007 -0400
+
+    attempts to make Splashy exit faster
+    
+    do not check for things that are not necessary. just get out quickly
+
+commit ed3d0f62b3efe3611ff1974653686a0f737dc674
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 11:34:35 2007 -0400
+
+    use tty6 by default after Splashy exits
+    
+    tty6 should not have any weird messages and it will also work fine if gdm/kdm/xdm fails to start X
+
+commit d7f7628e2f29f2dfb47645aaefcf701487d64420
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 09:57:22 2007 -0400
+
+    switch to tty8 by default
+    
+    since this is a desktop, we default to a tty that has no text on it after Splashy is done. It should allow gdm/kdm/xdm to start and switch to tty7
+
+commit fdedf9743a81831e5e7474946f7f971adf08f970
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 09:17:46 2007 -0400
+
+    create a symlink in /etc/splashy/themes -> /usr/share/splashy/themes
+    
+    this allows Splashy to work normally during shutdown (i.e. not running from initramfs)
+
+commit bc58d54912227de802193859cc7feef71ea2b667
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 08:40:16 2007 -0400
+
+    getting ready to release
+
 commit bd82f2b3a717b16c07f40f8df1ff1407b4b7ae6c
 Author: Luis Mondesi <lemsx1@gmail.com>
 Date:   Wed Oct 3 08:36:59 2007 -0400
