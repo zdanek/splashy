@@ -1,3 +1,17 @@
+commit e0ee440ed1cab1edf17330a3f25aad4471779f4f
+Author: Luis Mondesi <lmondesi@zod.(none)>
+Date:   Mon Oct 15 12:02:36 2007 -0400
+
+    adds notes about moving themes to /usr/share/splashy/themes
+    
+    Ready to release
+
+commit f9cb65508698716a6f38d50ffa3a36d8afffcff1
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Wed Oct 3 21:48:08 2007 -0400
+
+    minor stuff added
+
 commit d3e444a3aa10d12e511ad81d38e73ccc7d5710ac
 Author: Tim Dijkstra <tdykstra@commensaal.drs.p>
 Date:   Wed Oct 3 21:50:32 2007 +0200
