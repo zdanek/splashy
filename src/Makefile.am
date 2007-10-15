@@ -47,7 +47,7 @@ splashy_LDFLAGS = -all-static -static-libgcc $(shell directfb-config  --libs --i
 
 splashy_config_SOURCES = splashy_config-main.c splashy_config-functions.c \
 	xml_functions.c
-splashy_config_LDFLAGS = -lglib-2.0 -lmagic -lz -lsplashycnf
+splashy_config_LDFLAGS = -lsplashycnf -lglib-2.0 -lmagic -lz
 
 splashy_update_SOURCES = splashy_update.c
 
