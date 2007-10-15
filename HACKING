@@ -141,31 +141,31 @@ PROCEDURES
 RELEASE
 -------
 
-   1. Tag the repository.
+   1. Make sure you have the latest code:
+      
+      git status # and commit your local changes
+      git fetch origin
+      git rebase origin
+
+   2. Tag the repository.
       
       export VERSION=0.3.4
-      svn cp trunk tags/$VERSION
+      git tag v$VERSION
 
-   2. Copy the tagged code
-
-      svn export tags/$VERSION /usr/src/splashy-$VERSION
-
-   3. Run ./autogen.sh on /usr/src/splashy-$VERSION
+   3. Copy splashy tree to /usr/src/splashy-$VERSION and run 
+      ./autogen.sh on /usr/src/splashy-$VERSION
    4. Run make dist
-   5. Run gzip -d -c splashy-$VERSION.tar.gz | bzip2 > splashy-$VERSION.tar.bz2
-   6. (Optional) Sign the two tarballs
+   5. (Optional) Sign the two tarballs
 
       gpg -ab splashy-$VERSION.tar.gz
-      gpg -ab splashy-$VERSION.tar.bz2
       gpg --verify splashy-$VERSION.tar.gz.asc splashy-$VERSION.tar.gz
-      gpg --verify splashy-$VERSION.tar.bz2.asc splashy-$VERSION.tar.bz2
 
-   7. (Optional) Build the SRPM
+   6. (Optional) Build the SRPM
 
-      rpmbuild -ts --sign --with ... splashy-$VERSION.tar.bz2
+      rpmbuild -ts --sign --with ... splashy-$VERSION.tar.gz
 
-   8. Upload the two tarballs, the two signatures, and the src.rpm
-   9. Update the splashy website
+   7. Upload the tarball (if applicable: the signature, and the src.rpm)
+   8. Update the splashy website
          1. Change http://splashy.alioth.debian.org (only for full releases, not for betas)
 
 POST RELEASE 
