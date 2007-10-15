@@ -176,6 +176,8 @@ You can get a list of available themes with:
 
 To create a theme, run "splashy_config -c" and answer all the questions
 
+Themes are now located on /usr/share/splashy/themes. If /usr is mounted from a different partition/drive, you might want to put Splashy on initramfs or remove the symlink /etc/splashy/themes and copy the /usr/share/splashy/themes directory in this place. We felt that having so much data on /etc is a burden for sysadmins and other people who backup their system directories regularly.
+
 Uninstallation
 ==============
 

@@ -8,6 +8,8 @@ Changes between 0.3.5 and 0.3.6
  * Documentation updates
  * Support for OpenSuSE/Fedora and other RPM-based systems
  * Splashy now works with Directfb 1.x
+ * Splashy runs from initramfs under Init again (Thanks to RPath Linux and Directfb Dev Team) (upstart works just like before)
+ * Themes are now in /usr/share/splashy/themes and a symlink from /etc/splashy/themes points to that location (See README for more)
 
 Changes between 0.3.4 and 0.3.5
 -------------------------------
