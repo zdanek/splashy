@@ -1,3 +1,25 @@
+commit 3555f091a76b6a97dbf4de469f05daf19a6efd5e
+Author: Luis Mondesi <lmondesi@zod.(none)>
+Date:   Mon Oct 15 12:19:44 2007 -0400
+
+    no more svn
+    
+    notes about sources from Git repo
+
+commit 4ba8a07c15d70b5a8b1a7a34b5e7db4b1de02e6d
+Author: Luis Mondesi <lmondesi@zod.(none)>
+Date:   Mon Oct 15 12:18:24 2007 -0400
+
+    updated the release procedure
+    
+    we are using git now, which makes things a bit easier (and with less storage need)
+
+commit 72ebfaeb677a8830933c46443b506693984221fe
+Author: Luis Mondesi <lmondesi@zod.(none)>
+Date:   Mon Oct 15 12:03:20 2007 -0400
+
+    new release
+
 commit e0ee440ed1cab1edf17330a3f25aad4471779f4f
 Author: Luis Mondesi <lmondesi@zod.(none)>
 Date:   Mon Oct 15 12:02:36 2007 -0400
