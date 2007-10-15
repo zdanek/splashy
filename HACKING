@@ -150,7 +150,13 @@ RELEASE
    2. Tag the repository.
       
       export VERSION=0.3.4
-      git tag v$VERSION
+      # make sure you use the right information on your ~/.gitconfig. i.e.:
+      # [user]
+      #  name = Luis Mondesi
+      #  email = lemsx1@gmail.com
+      #  signingkey = <gpg-key-id>
+
+      git tag -s v$VERSION
 
    3. Copy splashy tree to /usr/src/splashy-$VERSION and run 
       ./autogen.sh on /usr/src/splashy-$VERSION
