@@ -27,7 +27,7 @@ DFBHACK = \
 
 libsplashy_la_SOURCES = splashy_video.c
 # adding -ldirectfb here breaks the build process. Luis
-libsplashy_la_LIBADD = -lglib-2.0 -lsplashycnf
+libsplashy_la_LIBADD = -lglib-2.0 -lsplashycnf -ldirectfb
 libsplashy_la_LDFLAGS = -export-symbols-regex splashy_.* \
 			-version-info $(SPL_SONAME) 
 
@@ -36,12 +36,11 @@ libsplashycnf_la_LIBADD = -lglib-2.0
 libsplashycnf_la_LDFLAGS = -export-symbols-regex splashy_.*\
 			   -version-info $(SPL_SONAME)
 
-splashy_SOURCES = splashy_main.c splashy_functions.c
-splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lm  -lglib-2.0
-
 # '-lgcc_s' is provided with -static-libgcc
+splashy_SOURCES = splashy_main.c splashy_functions.c
+splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lm  -lglib-2.0 @DFB_LIBS@
 # Debian:
-splashy_LDFLAGS = -all-static -static-libgcc $(shell directfb-config  --libs --input=keyboard --imageprovider=png --font=ft2,default) $(DFBHACK)
+splashy_LDFLAGS = -all-static -static-libgcc $(DFBHACK)
 # Fedora:
 #splashy_LDFLAGS = $(shell directfb-config --libs) $(DFBHACK) -rpath $(libdir)/directfb-1.0-0/systems:$(libdir)/directfb-1.0-0/wm:/usr/lib64/directfb-1.0-0/interfaces/IDirectFBFont/:$(libdir)/directfb-1.0-0/interfaces/IDirectFBImageProvider:$(libdir)/directfb-1.0-0/inputdrivers
 

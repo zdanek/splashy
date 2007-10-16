@@ -63,6 +63,10 @@ DFB_LIBDIR="$(eval pkg-config directfb-internal --variable=moduledir)"
 AC_DEFINE([DFB_LIBDIR], [$DFB_LIBDIR], [directfb libdir])
 AC_SUBST(DFB_LIBDIR)
 
+DFB_LIBS="$(eval directfb-config --libs --input=keyboard --imageprovider=png --font=ft2,default | sed 's/$/ \\/')"
+#AC_DEFINE([DFB_LIBS], [$DFB_LIBS], [directfb libs])
+AC_SUBST(DFB_LIBS)
+
 # TODO slurp the doc/*.xml.in or .xml files and create xml_format.h
 # EXPANDED_XML_CONFIG_FORMAT="`cat doc/config.xml`"
 # AC_DEFINE([EXPANDED_XML_CONFIG_FORMAT], [$EXPANDED_XML_CONFIG_FORMAT], [our xml configuration])
