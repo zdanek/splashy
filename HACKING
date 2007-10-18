@@ -188,6 +188,9 @@ TROUBLESHOOTING
     - Error is fixed by adding /lib to /etc/ld.so.conf and running ldconfig. Which is done by
       default in current distros. Splashy needs to be linked against this file with: -lgcc_s.
       which is already in src/Makefile.am: splashy_LDFLAGS = -lgcc_s ...
+  * -lsplashycnf link (ld) errors are found when "make -jN" is used (say: make -j8). Make sure
+    that you don't use "parallel" builds or anything that alters the precedence of the build
+    process.
 
 APPENDIX A - Debian Packaging
 ==========
