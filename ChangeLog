@@ -1,3 +1,37 @@
+commit 6c7a53bd844772f2aa7c9a544c23de6ec1ea1c4a
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Thu Oct 18 00:44:17 2007 -0400
+
+    make -j8 breaks build
+    
+    notes about -lsplashycnf link errors (ld) when using parallel builds (multiple make instances)
+
+commit 121add80ba0c2f71e6fcdafe7005dfee8b37bf79
+Author: Tim Dijkstra <tdykstra@commensaal.drs.p>
+Date:   Tue Oct 16 22:55:19 2007 +0200
+
+    Add d-c --libs to splashy_LDADD, this fixes the issue of building a properly linked dynamic and static version of libsplashy
+
+commit 42216b86ffe74e86bf90b550a5df2f377c6e4a82
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Mon Oct 15 13:57:16 2007 -0400
+
+    order of library link was wrong
+    
+    -lsplashycnf must not be the first to link for splashy_config. This makes it "last" in the list
+
+commit a5aaddce9abd7b26a082495167c4d0adec4099f7
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Mon Oct 15 12:36:37 2007 -0400
+
+    signed tags are needed
+
+commit cfb25993d3e6602a9a2bce2747e537e992ab8ea1
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Mon Oct 15 12:25:22 2007 -0400
+
+    notes
+
 commit 4e235751925770daeeebb76d451ecf4aedcd5fd3
 Author: Luis Mondesi <lmondesi@zod.(none)>
 Date:   Mon Oct 15 12:20:12 2007 -0400
