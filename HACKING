@@ -157,6 +157,7 @@ RELEASE
       #  signingkey = <gpg-key-id>
 
       git tag -s v$VERSION
+      git push --tags
 
    3. Copy splashy tree to /usr/src/splashy-$VERSION and run 
       ./autogen.sh on /usr/src/splashy-$VERSION
@@ -177,7 +178,7 @@ RELEASE
 POST RELEASE 
 ------------
 
-   1. Increment version number in configure.ac 
+   1. Increment version number in configure.ac and add new entry on NEWS
    2. Update freshmeat.net
    3. (Optional) Update #splashy topic
 
