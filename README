@@ -159,6 +159,8 @@ The simplest solution is to patch directfb with the following:
 if (readlen <= 0 && errno != EINTR)
 ----- END DIFF -----
 
+Note that this last patch was applied to upstream sources. Try updating directfb to the latest version supplied by your distribution.
+
 Themes
 ======
 
