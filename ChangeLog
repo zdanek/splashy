@@ -1,3 +1,27 @@
+commit a414af2c44c2a66db45e049a9c8edad5574ab32d
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Sat Oct 20 22:05:25 2007 -0400
+
+    deprecated function
+    
+    this assumes a Linux system and it's simply not used any more. Exit -2 means that the framebuffer wasn't init'd by the kernel. On BSD* and other *NIX this might be done differently...
+
+commit 3165457d717d8ead571da57f516d8b70c6eefbbc
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Thu Oct 18 01:09:24 2007 -0400
+
+    Splashy 0.3.7 begins
+    
+    The cycle starts here
+
+commit 57ae7d0e421982168139d25da5c4a0524fe87bf2
+Author: Luis Mondesi <lemsx1@gmail.com>
+Date:   Thu Oct 18 00:45:20 2007 -0400
+
+    new release 0.3.6
+    
+    Splashy 0.3.6 is here
+
 commit 6c7a53bd844772f2aa7c9a544c23de6ec1ea1c4a
 Author: Luis Mondesi <lemsx1@gmail.com>
 Date:   Thu Oct 18 00:44:17 2007 -0400
