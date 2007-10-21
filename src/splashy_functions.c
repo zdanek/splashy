@@ -117,53 +117,6 @@ splashy_chvt (gint vt_no)
         close (fd);
 }
 
-inline gboolean
-test_env_pattern (const gchar * perr_pattern, const gchar * filename)
-{
-        regex_t preg;
-        gint max_buf = 1024;    /* we need at least this number of characters 
-                                 * to check */
-        gboolean ret = FALSE;   /* assumes we will fail */
-        if (!g_file_test (filename, G_FILE_TEST_EXISTS))
-        {
-                ERROR_PRINT ("Cannot test file %s\n", filename);
-                return FALSE;
-        }
-        FILE *fp;
-        gchar *buffer = g_try_malloc (max_buf);
-        if (buffer && (fp = g_fopen (filename, "r")))
-        {
-                fread_unlocked (buffer, max_buf, 1, fp);        /* *_unlocked 
-                                                                 * are a GNU
-                                                                 * extension: 
-                                                                 * makes
-                                                                 * function
-                                                                 * fread()
-                                                                 * thread
-                                                                 * safe */
-                fclose (fp);
-                buffer[max_buf - 1] = '\0';
-                if (regcomp (&preg, perr_pattern,
-                             REG_EXTENDED | REG_ICASE | REG_NEWLINE |
-                             REG_NOSUB) == 0)
-                {
-                        if (regexec (&preg, buffer, 0, NULL, 0) == 0)
-                        {
-                                ret = TRUE;
-                        }
-                        else
-                        {
-                                g_printerr
-                                        ("WARN: %s was not found in %s. Did you append vga=0x317 to your kernel parameters? See README for more\n",
-                                         perr_pattern, filename);
-                        }
-                        regfree (&preg);
-                }
-        }
-        if (buffer)
-                g_free (buffer);
-        return ret;
-}
 /**
  * @desc looks for pattern in string ignoring known failure text messages
  * @param perr_pattern a valid regular expression pattern. @see man regex
