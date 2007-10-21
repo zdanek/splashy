@@ -318,6 +318,13 @@ cmd_print (void **args)
 }
 
 gint
+cmd_print_scroll (void **args)
+{
+        splashy_printline_s (args[0]);
+        return 0;
+}
+
+gint
 cmd_print_clear (void **args)
 {
         splashy_printline ("");
@@ -421,7 +428,11 @@ struct
         {
         .cmd = "print",.handler = cmd_print,.args = 1,.specs = "s"},
         {
-        .cmd = "TEXT",.handler = cmd_print,.args = 1,.specs = "s"},
+        .cmd = "TEXT",.handler = cmd_print,.args = 1,.specs = "s"}, 
+        {
+        .cmd = "print_scroll",.handler = cmd_print_scroll,.args = 1,.specs = "s"},
+        {
+        .cmd = "TEXT_SCROLL",.handler = cmd_print_scroll,.args = 1,.specs = "s"},
         {
         .cmd = "CLEAR",.handler = cmd_print_clear,.args =
                         0,.specs = NULL},
