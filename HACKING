@@ -28,26 +28,31 @@ A few things to keep in mind while reading Splashy sources:
   * When in doubt, ask in splashy-devel@lists.alioth.debian.org or in #splashy
     at irc.freenode.net
 
-FIFO COMMANDS
-=============
+SPLASHY_UPDATE COMMANDS
+=======================
 
 When talking to the Splashy server you can use the following commands:
-
-  progress <number>  Updates the progress bar to <number>%, where N is a number
-                     between 0 and 100
-  PROGRESS <number>  Same as "progress". For compatibility with usplash
-  print <string>     Print <string> in the text box
-  TEXT <string>      Same as "print". For compatibility with usplash
-  clrprint           Clears the text box area
-  CLEAR              Same as "clrprint". For compatibility with usplash
-  repaint            Redraw the background image
-  chvt <number>      Switch to vt <number>. See "allowchvt"
-  allowchvt          Splashy ignores all "chvt" commands until this command is
-                     sent
-  timeout <number>   Sets the amount of seconds splashy waits for new commands
-                     in the fifo file. If that time is exceeded, it exits
-  exit               Exits Splashy server
-  QUIT               Same as "exit". For compatibility with usplash
+  ------------+----------+----------------------------------------------------------
+  COMMAND       ARGS      NOTE
+  ------------+----------+----------------------------------------------------------
+  progress      <number>  Updates the progress bar to <number>%, where N is a number
+                          between 0 and 100
+  PROGRESS      <number>  Same as "progress". For compatibility with usplash
+  print         <string>  Print <string> in the text box
+  TEXT          <string>  Same as "print". For compatibility with usplash
+  print_scroll  <string>  Print <string> in the text box and scroll down
+  TEXT_SCROLL   <string>  Same as "print_scroll"
+  clrprint                Clears the text box area
+  CLEAR                   Same as "clrprint". For compatibility with usplash
+  repaint                 Redraw the background image
+  chvt          <number>  Switch to vt <number>. See "allowchvt"
+  allowchvt               Splashy ignores all "chvt" commands until this command is
+                          sent
+  timeout       <number>  Sets the amount of seconds splashy waits for new commands
+                          in the fifo file. If that time is exceeded, it exits
+  exit                    Exits Splashy server
+  QUIT                    Same as "exit". For compatibility with usplash
+  ------------+----------+----------------------------------------------------------
 
 Sending commands to the Splashy server is then as simple as:
 
