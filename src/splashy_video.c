@@ -1027,11 +1027,6 @@ start_text_area ()
                                            green, blue, 255);
 
         video.textbox->surface->SetFont (video.textbox->surface, video.font);
-
-        /*
-         * Set the position of the text line
-         */
-        last_text_y_position = abs (video.fontdesc.height);
 }
 
 int
@@ -1362,11 +1357,6 @@ splashy_printline (const char * string)
         if (video.textbox == NULL)
                 return;
 
-        /*
-         * TODO 
-         * we want to make sure (for now) that we don't make the textbox area
-         * too dark. @see splashy_printline_s()
-         */
         if (last_text_y_position > 0)
         {
                 _clear_offscreen (video);
@@ -1391,9 +1381,6 @@ splashy_printline (const char * string)
         /*
          * Draw string to the clipped surface 
          */
-		//FIXME, check if stringExtent.w > textarea.w
-		//if ( video.textbox.area.h < (y+ls) ) 
-
 		video.textbox->surface->DrawString (
 				    video.textbox->surface, tok,
 				    -1, x, (y+=ls),
@@ -1411,49 +1398,45 @@ splashy_printline (const char * string)
 void
 splashy_printline_s (const char * string)
 {
+        char *str;
+	DFBRectangle rect;
+	int x, y=0, ls;
+
         if (video.textbox == NULL)
                 return;
 
-        /*
-         * at the last line of the area minus one text line, we clear up 
-         * our offscreen screen
-         *
-         * TODO 
-         * we are double-copying this buffer, once from offscreen, once to
-         * offscreen. which makes the background darker and darker...
-         */
-        if (last_text_y_position >=
-            (video.textbox->area.h -
-             abs (video.fontdesc.height * 2)))
+        if (last_text_y_position >= (video.textbox->area.h - abs (video.fontdesc.height/2)))
         {
                 _clear_offscreen (video);
                 last_text_y_position = 0;
         }
+
         /*
          * Copy the textbox background from off-screen surface 
          */
-        video.textbox->offscreen->Blit (video.textbox->surface,
-                                         video.textbox->offscreen,
-                                         NULL, 0, 0);
+	video.textbox->offscreen->Blit (video.textbox->surface,
+					 video.textbox->offscreen,
+					 NULL, 0, 0);
 
-        last_text_y_position += abs (video.fontdesc.height * 2);
+	video.font-> GetStringExtents(video.font, "_", -1, NULL, &rect);
+	video.font-> GetHeight(video.font, &ls);
+	x = rect.w;
+	y = ls/2 + last_text_y_position;
 
+	str=strdup(string); 
         /*
          * Draw string to the clipped surface 
          */
-        video.textbox->surface->DrawString (video.textbox->surface, string,
-                                             -1, 4,
-                                             last_text_y_position, DSTF_LEFT);
-        /*
-         * Save the textbox background to off-screen surface 
-         * Note, we clean, blend and save
-         */
-        video.textbox->offscreen->Blit (video.textbox->offscreen,
-                                         video.primary_surface,
-                                         &video.textbox->area, 0, 0);
-        video.primary_surface->Blit (video.textbox->offscreen,
-                                      video.textbox->surface, NULL, 0, 0);
+        video.textbox->surface->DrawString (
+		video.textbox->surface, str,
+		-1, x, (y+=ls), DSTF_BOTTOM);
+        last_text_y_position = y;
+	free(str);
 
+        /* save our textbox for the next scroll */
+        video.textbox->offscreen->Blit (video.textbox->offscreen,
+                                        video.textbox->surface,
+					 NULL, 0, 0);
 }
 
 int splashy_getchar () {

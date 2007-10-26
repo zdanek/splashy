@@ -4,7 +4,10 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 
 Changes between 0.3.6 and 0.3.7
 -------------------------------
-
+ 
+ * scrolls text during boot (splashy_update "scroll text to display")
+ * splashy_update commands print_scroll is now just scroll. Same for its alias "TEXT_SCROLL->SCROLL)
+ * splashy_update command clrprint is now just "clear"
 
 Changes between 0.3.5 and 0.3.6
 -------------------------------
