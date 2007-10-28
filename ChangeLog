@@ -1,519 +1,362 @@
-commit a414af2c44c2a66db45e049a9c8edad5574ab32d
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Oct 20 22:05:25 2007 -0400
+2007-10-26  Luis Mondesi <lemsx1@gmail.com>
 
-    deprecated function
-    
-    this assumes a Linux system and it's simply not used any more. Exit -2 means that the framebuffer wasn't init'd by the kernel. On BSD* and other *NIX this might be done differently...
+	* HACKING, NEWS, src/splashy_functions.c, src/splashy_video.c: text
+	scrolling complete Now we are able to have messages scroll during boot: splashy_update
+	"scroll TEXT TO DISPLAY" splashy_update "scroll TEXT CONTINUES ON
+	NEW LINE" ...  We need an option in /etc/splashy/config.xml to
+	enable/disable this feature. lsb-* initrc functions should check for
+	this option when using splashy_update to display text during boot.
 
-commit 3165457d717d8ead571da57f516d8b70c6eefbbc
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Thu Oct 18 01:09:24 2007 -0400
+2007-10-21  Tim Dijkstra <tdykstra@commensaal.drs.p>
 
-    Splashy 0.3.7 begins
-    
-    The cycle starts here
+	* HACKING: Added some comments about the undocumented `getstring'
+	and `getpass' commands of splashy_update. Also removed the paragraph
+	about writing to a fifo, that is no longer true.
 
-commit 57ae7d0e421982168139d25da5c4a0524fe87bf2
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Thu Oct 18 00:45:20 2007 -0400
+2007-10-21  Luis Mondesi <lemsx1@gmail.com>
 
-    new release 0.3.6
-    
-    Splashy 0.3.6 is here
+	* src/splashy_functions.c: cmd_print_scroll uses splashy print scroll function
 
-commit 6c7a53bd844772f2aa7c9a544c23de6ec1ea1c4a
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Thu Oct 18 00:44:17 2007 -0400
+2007-10-21  Luis Mondesi <lemsx1@gmail.com>
 
-    make -j8 breaks build
-    
-    notes about -lsplashycnf link errors (ld) when using parallel builds (multiple make instances)
+	* HACKING: new command print_scroll makes it easier to implement VERBOSE from initrc scripts
 
-commit 121add80ba0c2f71e6fcdafe7005dfee8b37bf79
-Author: Tim Dijkstra <tdykstra@commensaal.drs.p>
-Date:   Tue Oct 16 22:55:19 2007 +0200
+2007-10-21  Luis Mondesi <lemsx1@gmail.com>
 
-    Add d-c --libs to splashy_LDADD, this fixes the issue of building a properly linked dynamic and static version of libsplashy
+	* README: note on patch this patch was applied upstream
 
-commit 42216b86ffe74e86bf90b550a5df2f377c6e4a82
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Oct 15 13:57:16 2007 -0400
+2007-10-20  Luis Mondesi <lemsx1@gmail.com>
 
-    order of library link was wrong
-    
-    -lsplashycnf must not be the first to link for splashy_config. This makes it "last" in the list
+	* ChangeLog: perhaps time for a new API (code cleanups)
 
-commit a5aaddce9abd7b26a082495167c4d0adec4099f7
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Oct 15 12:36:37 2007 -0400
+2007-10-20  Luis Mondesi <lemsx1@gmail.com>
 
-    signed tags are needed
+	* src/splashy_functions.c: deprecated function this assumes a Linux system and it's simply not used any more. Exit
+	-2 means that the framebuffer wasn't init'd by the kernel. On BSD*
+	and other *NIX this might be done differently...
 
-commit cfb25993d3e6602a9a2bce2747e537e992ab8ea1
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Oct 15 12:25:22 2007 -0400
+2007-10-18  Luis Mondesi <lemsx1@gmail.com>
 
-    notes
+	* HACKING, NEWS, configure.ac: Splashy 0.3.7 begins The cycle starts here
 
-commit 4e235751925770daeeebb76d451ecf4aedcd5fd3
-Author: Luis Mondesi <lmondesi@zod.(none)>
-Date:   Mon Oct 15 12:20:12 2007 -0400
+2007-10-18  Luis Mondesi <lemsx1@gmail.com>
 
-    new notes
+	* ChangeLog: new release 0.3.6 Splashy 0.3.6 is here
 
-commit 3555f091a76b6a97dbf4de469f05daf19a6efd5e
-Author: Luis Mondesi <lmondesi@zod.(none)>
-Date:   Mon Oct 15 12:19:44 2007 -0400
+2007-10-18  Luis Mondesi <lemsx1@gmail.com>
 
-    no more svn
-    
-    notes about sources from Git repo
+	* HACKING: make -j8 breaks build notes about -lsplashycnf link errors (ld) when using parallel builds
+	(multiple make instances)
 
-commit 4ba8a07c15d70b5a8b1a7a34b5e7db4b1de02e6d
-Author: Luis Mondesi <lmondesi@zod.(none)>
-Date:   Mon Oct 15 12:18:24 2007 -0400
+2007-10-16  Tim Dijkstra <tdykstra@commensaal.drs.p>
 
-    updated the release procedure
-    
-    we are using git now, which makes things a bit easier (and with less storage need)
+	* configure.ac, src/Makefile.am: Add d-c --libs to splashy_LDADD,
+	this fixes the issue of building a properly linked dynamic and
+	static version of libsplashy
 
-commit 72ebfaeb677a8830933c46443b506693984221fe
-Author: Luis Mondesi <lmondesi@zod.(none)>
-Date:   Mon Oct 15 12:03:20 2007 -0400
+2007-10-15  Luis Mondesi <lemsx1@gmail.com>
 
-    new release
+	* src/Makefile.am: order of library link was wrong -lsplashycnf must not be the first to link for splashy_config. This
+	makes it "last" in the list
 
-commit e0ee440ed1cab1edf17330a3f25aad4471779f4f
-Author: Luis Mondesi <lmondesi@zod.(none)>
-Date:   Mon Oct 15 12:02:36 2007 -0400
+2007-10-15  Luis Mondesi <lemsx1@gmail.com>
 
-    adds notes about moving themes to /usr/share/splashy/themes
-    
-    Ready to release
+	* HACKING: signed tags are needed
 
-commit f9cb65508698716a6f38d50ffa3a36d8afffcff1
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 21:48:08 2007 -0400
+2007-10-15  Luis Mondesi <lemsx1@gmail.com>
 
-    minor stuff added
+	* ChangeLog: notes
 
-commit d3e444a3aa10d12e511ad81d38e73ccc7d5710ac
-Author: Tim Dijkstra <tdykstra@commensaal.drs.p>
-Date:   Wed Oct 3 21:50:32 2007 +0200
+2007-10-15  Luis Mondesi <lmondesi@zod.(none)>
 
-    Make configure.ac use pkg-config to pick up the correct path to the modules.
+	* ChangeLog: new notes
 
-commit fc994221e962d53c004eb3192a71aea51c65aa1c
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 11:39:51 2007 -0400
+2007-10-15  Luis Mondesi <lmondesi@zod.(none)>
 
-    do not complaint if tmpfs not mounted
-    
-    if user exits gdm, do not complaint about umounting the tmpfs we created and umounted during boot
+	* README: no more svn notes about sources from Git repo
 
-commit 95f4f762295adcd925f29a59b801b08143567395
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 11:35:31 2007 -0400
+2007-10-15  Luis Mondesi <lmondesi@zod.(none)>
 
-    attempts to make Splashy exit faster
-    
-    do not check for things that are not necessary. just get out quickly
+	* HACKING: updated the release procedure we are using git now, which makes things a bit easier (and with less
+	storage need)
 
-commit ed3d0f62b3efe3611ff1974653686a0f737dc674
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 11:34:35 2007 -0400
+2007-10-15  Luis Mondesi <lmondesi@zod.(none)>
 
-    use tty6 by default after Splashy exits
-    
-    tty6 should not have any weird messages and it will also work fine if gdm/kdm/xdm fails to start X
+	* ChangeLog: new release
 
-commit d7f7628e2f29f2dfb47645aaefcf701487d64420
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 09:57:22 2007 -0400
+2007-10-15  Luis Mondesi <lmondesi@zod.(none)>
 
-    switch to tty8 by default
-    
-    since this is a desktop, we default to a tty that has no text on it after Splashy is done. It should allow gdm/kdm/xdm to start and switch to tty7
+	* NEWS, README: adds notes about moving themes to
+	/usr/share/splashy/themes Ready to release
 
-commit fdedf9743a81831e5e7474946f7f971adf08f970
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 09:17:46 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    create a symlink in /etc/splashy/themes -> /usr/share/splashy/themes
-    
-    this allows Splashy to work normally during shutdown (i.e. not running from initramfs)
+	* ChangeLog: minor stuff added
 
-commit bc58d54912227de802193859cc7feef71ea2b667
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 08:40:16 2007 -0400
+2007-10-03  Tim Dijkstra <tdykstra@commensaal.drs.p>
 
-    getting ready to release
+	* configure.ac: Make configure.ac use pkg-config to pick up the
+	correct path to the modules.
 
-commit bd82f2b3a717b16c07f40f8df1ff1407b4b7ae6c
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 08:36:59 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    run from initramfs by default
-    
-    now that we know what the problem with directfb was, we can set this to a sane default
+	* scripts/lsb-base-logging.sh: do not complaint if tmpfs not mounted if user exits gdm, do not complaint about umounting the tmpfs we
+	created and umounted during boot
 
-commit 852202124d13b469943aeebf8a96982116008ba4
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 08:36:26 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    note on fixing keyboard event issue
-    
-    this should allow anybody to use init and directfb to start splashy from initramfs
+	* scripts/lsb-base-logging.sh: attempts to make Splashy exit faster do not check for things that are not necessary. just get out quickly
 
-commit 3091ccc1c60053ea5e72eae0ca307b99158fa50d
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 08:11:32 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    disable console reading text
-    
-    the thread that reads messages from the console is buggy and not used. this code actually slows down Splashy and causes SEGV and ABRT signals to be caught when exiting with ESC while in Splashy "test" mode. We need to revisit this feature later. splashy_update "text foo" should still work and allow users to send messages to the text overlay. F2 also works
+	* scripts/default/splashy: use tty6 by default after Splashy exits tty6 should not have any weird messages and it will also work fine
+	if gdm/kdm/xdm fails to start X
 
-commit f338d7747e72bc1feff8920b2e477b3e8a66177d
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 08:09:20 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    print debugging info when releasing
-    
-    get more information about what's being released when running in debug mode
+	* scripts/default/splashy: switch to tty8 by default since this is a desktop, we default to a tty that has no text on it
+	after Splashy is done. It should allow gdm/kdm/xdm to start and
+	switch to tty7
 
-commit b580ad006f08c3176e2f5a05613d22da6ec12a93
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Wed Oct 3 07:06:51 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    gets rid of tmpfs when done
-    
-    when done with Splashy, get rid of tmpfs if not in debug mode
+	* Makefile.am: create a symlink in /etc/splashy/themes ->
+	/usr/share/splashy/themes this allows Splashy to work normally during shutdown (i.e. not
+	running from initramfs)
 
-commit c8b64e595cc6579dea168c2d55fd8713541e420f
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Tue Oct 2 22:07:49 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    adding -ldirectfb breaks the build process
-    
-    there does not seem to be a need to add -ldirectfb on Directfb 1.0.1 from experimental
+	* ChangeLog: getting ready to release
 
-commit 448f0a2679b5b2465a62d7b18dd3fb4f660ca901
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Oct 1 12:33:47 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    directfb 1.x supported
-    
-    Now we can say that we officially support dfb 1.x. Older version of the library still work fine (0.9.25 in particular)
+	* scripts/default/splashy: run from initramfs by default now that we know what the problem with directfb was, we can set this
+	to a sane default
 
-commit f9bb629227f18c49579dd7055d04b129fde29525
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Oct 1 12:29:08 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    this file does not belong in Splashy
-    
-    ditto
+	* README: note on fixing keyboard event issue this should allow anybody to use init and directfb to start splashy
+	from initramfs
 
-commit 6bf49fe290b1a84de4f50d5ca85d0abcff93311f
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sun Sep 30 18:05:45 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    cleanups
-    
-    removes old comments and added new (cleaner) ones
+	* src/splashy_functions.c: disable console reading text the thread that reads messages from the console is buggy and not
+	used. this code actually slows down Splashy and causes SEGV and ABRT
+	signals to be caught when exiting with ESC while in Splashy "test"
+	mode. We need to revisit this feature later. splashy_update "text
+	foo" should still work and allow users to send messages to the text
+	overlay. F2 also works
 
-commit 4ccfc01022219c1078fc7a3cbd62ae6fb123b104
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sun Sep 30 18:02:56 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    adds -static-libgcc option to gcc
-    
-    this avoids having a binary that cannot find pthread cancel calls from libgcc_s
+	* src/splashy_video.c: print debugging info when releasing get more information about what's being released when running in
+	debug mode
 
-commit 4446d18533c4d5aef2ab5c17ae1e2156e2092de9
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sun Sep 30 17:19:28 2007 -0400
+2007-10-03  Luis Mondesi <lemsx1@gmail.com>
 
-    adds debug string
-    
-    add ways to know if splashy has been launched multiple times
+	* scripts/lsb-base-logging.sh: gets rid of tmpfs when done when done with Splashy, get rid of tmpfs if not in debug mode
 
-commit d67d7f613254c26b4b0e4dc55c80888e95201f9c
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 29 19:22:47 2007 -0400
+2007-10-02  Luis Mondesi <lemsx1@gmail.com>
 
-    uptime is not available at times
-    
-    this makes sure that we always get the loadavergage readings during boot (in DEBUG mode)
+	* src/Makefile.am: adding -ldirectfb breaks the build process there does not seem to be a need to add -ldirectfb on Directfb 1.0.1
+	from experimental
 
-commit e4e72a336dbdbc9f01d806d97831e5be80bbcdda
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 29 13:46:58 2007 -0400
+2007-10-01  Luis Mondesi <lemsx1@gmail.com>
 
-    we need to switch to tty1
-    
-    using "auto" is not a good default now. when gdm is not installed, we need to go back to tty1
+	* NEWS: directfb 1.x supported Now we can say that we officially support dfb 1.x. Older version of
+	the library still work fine (0.9.25 in particular)
 
-commit 481ee660e123edb26c1b91f35174ae471bf8ec22
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 29 13:17:25 2007 -0400
+2007-10-01  Luis Mondesi <lemsx1@gmail.com>
 
-    put back the static compilation
-    
-    splashy works fine without being -static, however, if we are going to enable initramfs by default, then it's better to just keep the things in initrd to a minimun
+	* src/libglib-2.0.la: this file does not belong in Splashy ditto
 
-commit 937bf327cebb40ebd6ee5db1b238d46ed73597fc
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 29 02:59:19 2007 -0400
+2007-09-30  Luis Mondesi <lemsx1@gmail.com>
 
-    new log
-    
-    new changes
+	* src/Makefile.am: cleanups removes old comments and added new (cleaner) ones
 
-commit f79a7530cbc6bdbb22642d9123a5ff2d62183078
-Author: root <root@localhost.localdomain>
-Date:   Sat Sep 29 02:44:42 2007 -0400
+2007-09-30  Luis Mondesi <lemsx1@gmail.com>
 
-    fixes %post macro
-    
-    fixes a problem when installing/removing the package
+	* src/Makefile.am: adds -static-libgcc option to gcc this avoids having a binary that cannot find pthread cancel calls
+	from libgcc_s
 
-commit 5f4e07735f92fe45c01fff08294f121a04cadb7c
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 29 01:57:29 2007 -0400
+2007-09-30  Luis Mondesi <lemsx1@gmail.com>
 
-    rpm packages supported
-    
-    now we are able to support RPM packages
+	* scripts/init.d/splashy: adds debug string add ways to know if splashy has been launched multiple times
 
-commit 07b78eff971e33b43e09b2e4b6d24348531beb96
-Author: root <root@localhost.localdomain>
-Date:   Sat Sep 29 01:44:44 2007 -0400
+2007-09-29  Luis Mondesi <lemsx1@gmail.com>
 
-    on Fedora we do not like -all-static
-    
-    helps the creation of Splashy packages for RPM-based systems. the directfb-devel package does not include the required .a files (or .o for that matter)
+	* scripts/lsb-base-logging.sh: uptime is not available at times this makes sure that we always get the loadavergage readings during
+	boot (in DEBUG mode)
 
-commit 974b56307b7fa5e2c05afbb7408bedd500e6f25f
-Author: root <root@localhost.localdomain>
-Date:   Sat Sep 29 01:43:32 2007 -0400
+2007-09-29  Luis Mondesi <lemsx1@gmail.com>
 
-    compiles on Fedora Core 7
-    
-    RPM package is now built correctly. A macro in ~/.rpmmacros was needed to avoid  stupid warning: %debug_package %{nil}
+	* scripts/default/splashy: we need to switch to tty1 using "auto" is not a good default now. when gdm is not installed,
+	we need to go back to tty1
 
-commit 673285a36553b06e3b6f21e514bdb11b412a25a6
-Author: root <root@localhost.localdomain>
-Date:   Sat Sep 29 01:42:21 2007 -0400
+2007-09-29  Luis Mondesi <lemsx1@gmail.com>
 
-    on Fedora gcc throws warn
-    
-    freopen() returns a FILE*. catch this
+	* src/Makefile.am: put back the static compilation splashy works fine without being -static, however, if we are going
+	to enable initramfs by default, then it's better to just keep the
+	things in initrd to a minimun
 
-commit 507f405a3074b52ebf127b8777047e0f83cbbcaf
-Author: root <root@localhost.localdomain>
-Date:   Sat Sep 29 00:56:56 2007 -0400
+2007-09-29  Luis Mondesi <lemsx1@gmail.com>
 
-    ignore binaries
-    
-    ignore all binaries build under src/
+	* ChangeLog: new log new changes
 
-commit 1f576360ec5679396f5f2ecb698c23a57755fee9
-Author: root <root@localhost.localdomain>
-Date:   Sat Sep 29 00:33:00 2007 -0400
+2007-09-29  root <root@localhost.localdomain>
 
-    yet more to ignore
-    
-    ignore build objects and other automagically generated files
+	* splashy.spec: fixes %post macro fixes a problem when installing/removing the package
 
-commit e7d22bcca59172b414fd3726f9eecac9cd32cf4f
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 18:39:19 2007 -0400
+2007-09-29  Luis Mondesi <lemsx1@gmail.com>
 
-    adds make macro
-    
-    adds make macro back
+	* NEWS: rpm packages supported now we are able to support RPM packages
 
-commit 68f3d06d6be401dc7d9fa577ed8b955122d4af7b
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 18:36:40 2007 -0400
+2007-09-29  root <root@localhost.localdomain>
 
-    fixes date
-    
-    fixes date in changelog portion
+	* src/Makefile.am: on Fedora we do not like -all-static helps the creation of Splashy packages for RPM-based systems. the
+	directfb-devel package does not include the required .a files (or .o
+	for that matter)
 
-commit af0ea32a8a1c66c62b61c100b5164337a2a5d449
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 18:21:41 2007 -0400
+2007-09-29  root <root@localhost.localdomain>
 
-    fixes minor issue
-    
-    Package already exists: %package debuginfo
+	* splashy.spec: compiles on Fedora Core 7 RPM package is now built correctly. A macro in ~/.rpmmacros was
+	needed to avoid  stupid warning: %debug_package %{nil}
 
-commit 9b911c94f105d7f0d053aa230658ffd4a848c478
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 18:12:54 2007 -0400
+2007-09-29  root <root@localhost.localdomain>
 
-    cleanups
-    
-    removes patch0 and other lines
+	* src/splashy_main.c: on Fedora gcc throws warn freopen() returns a FILE*. catch this
 
-commit 93b60c7f514d065e412c6df5605c692d82fe6937
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 17:48:27 2007 -0400
+2007-09-29  root <root@localhost.localdomain>
 
-    better compilation steps for RPM-based systems
-    
-    Copies ideas from the OpenSUSE spec file
+	* src/.gitignore: ignore binaries ignore all binaries build under src/
 
-commit 502598e741d2e0f5eaebc9feebef78c84f966688
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 16:23:01 2007 -0400
+2007-09-29  root <root@localhost.localdomain>
 
-    Theme specifications included
-    
-    This should give an idea to non-programmers what is needed to build a theme for Splashy
+	* doc/.gitignore, src/.gitignore: yet more to ignore ignore build objects and other automagically generated files
 
-commit 3c1b4c357be43581fcf6b80a494326f7145d22ac
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 16:02:31 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    dependencies added
-    
-    libpng-static and file-devel are also needed
+	* splashy.spec: adds make macro adds make macro back
 
-commit 3dc65ed7740ac81ef6d77f68135313a5271edd93
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Fri Sep 28 14:02:06 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    revised: glib2-static
-    
-    added build dependency on glib2-static
+	* splashy.spec: fixes date fixes date in changelog portion
 
-commit e312fe325a83e79f003ff7b2aaaddbc337a96e8e
-Author: Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
-Date:   Sat Sep 22 20:51:00 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    updated
-    
-    latest and greatest changes
+	* splashy.spec: fixes minor issue Package already exists: %package debuginfo
 
-commit 92691fe10b481635ca1a6ae9739eaca28b9f2b21
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 22 20:50:10 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    changelog file is needed for release ./autogen.sh
-    
-    We cannot ignore this file
+	* splashy.spec: cleanups removes patch0 and other lines
 
-commit 07f921f5c2443361d7a2d411c8c31a4a7e9666de
-Author: Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
-Date:   Sat Sep 22 20:48:26 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    ensures that Splashy exits before gdm/kdm/xdm
-    
-    do not rely solely on X/Xgl processes running, set progress to 100% as soon as gdm starts and exit
+	* splashy.spec: better compilation steps for RPM-based systems Copies ideas from the OpenSUSE spec file
 
-commit 9e1cc3057ebe5910def90b63acadfbfd37999fdc
-Author: Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
-Date:   Sat Sep 22 20:33:45 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    tmpfs needed to fix steps
-    
-    On Ubuntu there is no /lib/init/rw/ directory. We are creating one and mounting a tmpfs on it so we can do our steps
+	* HACKING: Theme specifications included This should give an idea to non-programmers what is needed to build
+	a theme for Splashy
 
-commit 37fb3cd23cfd036e3a0cd7407e8b6f574c2d85ac
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 22 19:55:21 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    ready for next release
-    
-    getting ready for next release
+	* splashy.spec: dependencies added libpng-static and file-devel are also needed
 
-commit 43ac3514435e7feb62f8b3da77555b3b0ff6b71b
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Sat Sep 22 19:53:20 2007 -0400
+2007-09-28  Luis Mondesi <lemsx1@gmail.com>
 
-    ChangeLog added
-    
-    ChangeLog is needed in order to compile Splashy from revision-control repo
+	* splashy.spec: revised: glib2-static added build dependency on glib2-static
 
-commit c4d531c5915c08f25f2ee6c7c6ff2b0ecbec56db
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Sep 17 09:17:12 2007 -0400
+2007-09-22  Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
 
-    notes about upcoming release
-    
-    We need notes for older release. Especially features that were added
+	* ChangeLog: updated latest and greatest changes
 
-commit ebf92e462667595aff5a72b495d2cd21f7c41329
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Sep 17 09:12:41 2007 -0400
+2007-09-22  Luis Mondesi <lemsx1@gmail.com>
 
-    Adds list of commands
-    
-    This makes it easier for people writing scripts to interact with Splashy
+	* ChangeLog: changelog file is needed for release ./autogen.sh We cannot ignore this file
 
-commit db1b24e328eff434f2b9a6779d4c21ffa8495efa
-Author: Luis Mondesi <lemsx1@gmail.com>
-Date:   Mon Sep 17 09:12:08 2007 -0400
+2007-09-22  Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
 
-    Adds <number> to command "timeout"
-    
-    Dunno why this was missing
+	* scripts/lsb-base-logging.sh: ensures that Splashy exits before
+	gdm/kdm/xdm do not rely solely on X/Xgl processes running, set progress to 100%
+	as soon as gdm starts and exit
 
-commit d2f15a579b69f0ce840b88992a7d4aee6a73b0bf
-Author: Vincent Amouret <vincent.amouret@gmail.com>
-Date:   Thu Aug 30 10:12:39 2007 +0200
+2007-09-22  Luis Mondesi <luigi@ubuntu-devel.i.kiskeyix.org>
 
-    Set return codes different than 0 for splashy_config
-    
-    The return values are:
-    0 Success
-    1 Error
-    2 Need super-user priviledges
+	* scripts/init.d/splashy: tmpfs needed to fix steps On Ubuntu there is no /lib/init/rw/ directory. We are creating one
+	and mounting a tmpfs on it so we can do our steps
 
-commit 064ab7ac4e1425e1d8f3374e3d8780f6faee963b
-Author: Vincent Amouret <vincent.amouret@gmail.com>
-Date:   Mon Aug 6 18:13:55 2007 +0200
+2007-09-22  Luis Mondesi <lemsx1@gmail.com>
 
-    Fix .gitignore
+	* configure.ac: ready for next release getting ready for next release
 
-commit d33b166c2b68a3b1da433be5afd02133d0281a2e
-Author: Vincent Amouret <vincent.amouret@gmail.com>
-Date:   Mon Aug 6 09:58:30 2007 +0200
+2007-09-22  Luis Mondesi <lemsx1@gmail.com>
 
-    Merge the SVN diff
-    
-    Remove the system() call for tar.
-    Fix indentation (tabs to spaces) for some files.
+	* .gitignore: ChangeLog added ChangeLog is needed in order to compile Splashy from
+	revision-control repo
 
-commit 1a4782500555e1fa4bf1ef5f8181971fb4bd509f
-Author: Otavio Salvador <otavio@ossystems.com.br>
-Date:   Sat Jul 28 14:46:04 2007 -0300
+2007-09-17  Luis Mondesi <lemsx1@gmail.com>
 
-    Add compile and depcomp to gitignore
+	* NEWS: notes about upcoming release We need notes for older release. Especially features that were added
 
-commit 45790e532218f0789420887e1b24ec613fd18c97
-Author: Otavio Salvador <otavio@ossystems.com.br>
-Date:   Sat Jul 28 13:55:45 2007 -0300
+2007-09-17  Luis Mondesi <lemsx1@gmail.com>
 
-    Remove and blacklist autogenerated files
+	* doc/splashy_update.pod: Adds list of commands This makes it easier for people writing scripts to interact with
+	Splashy
 
-commit cfe7688db7ba4f3486969b28a35c85c6c62a8faf
-Author: Otavio Salvador <otavio@ossystems.com.br>
-Date:   Sat Jul 28 13:51:39 2007 -0300
+2007-09-17  Luis Mondesi <lemsx1@gmail.com>
 
-    Removed debian/ so it will be distribution agnostic
+	* HACKING: Adds <number> to command "timeout" Dunno why this was missing
 
-commit 48f42c13cd28e8443b13467adeba439fad03dbc8
-Author: Otavio Salvador <otavio@ossystems.com.br>
-Date:   Sat Jul 28 13:50:08 2007 -0300
+2007-08-30  Vincent Amouret <vincent.amouret@gmail.com>
 
-    Add a ChangeLog.old with previous Subversion logs
+	* src/splashy_config-functions.c, src/splashy_config-functions.h,
+	src/splashy_config-main.c: Set return codes different than 0 for
+	splashy_config The return values are: 0 Success 1 Error 2 Need super-user
+	priviledges
 
-commit 5987fc44de4e6e8d7e5236805adee75bbff558c3
-Author: Otavio Salvador <otavio@ossystems.com.br>
-Date:   Sat Jul 28 13:40:55 2007 -0300
+2007-08-06  Vincent Amouret <vincent.amouret@gmail.com>
 
-    Import v0.3.5 release
+	* .gitignore: Fix .gitignore
+
+2007-08-06  Vincent Amouret <vincent.amouret@gmail.com>
+
+	* src/splashy_config-functions.c, src/splashy_config-functions.h,
+	src/splashy_config-main.c, src/xml_functions.h: Merge the SVN diff Remove the system() call for tar.  Fix indentation (tabs to spaces)
+	for some files.
+
+2007-07-28  Otavio Salvador <otavio@ossystems.com.br>
+
+	* .gitignore, compile, depcomp, src/libglib-2.0.la: Add compile and
+	depcomp to gitignore
+
+2007-07-28  Otavio Salvador <otavio@ossystems.com.br>
+
+	* .gitignore, INSTALL, Makefile.am, Makefile.in, aclocal.m4,
+	config.guess, config.h.in, config.sub, configure, configure.ac,
+	depcomp, doc/.gitignore, doc/Makefile.in, install-sh, ltmain.sh,
+	missing, scripts/Makefile.in,
+	scripts/initramfs-tools/hooks/.gitignore, src/.gitignore,
+	src/Makefile.in: Remove and blacklist autogenerated files
+
+2007-07-28  Otavio Salvador <otavio@ossystems.com.br>
+
+	* debian/Makefile.am, debian/Makefile.in, debian/changelog,
+	debian/compat, debian/control, debian/copyright,
+	debian/libsplashy1-dev.install, debian/libsplashy1.install,
+	debian/rules, debian/splashy-themes.install,
+	debian/splashy.README.Debian, debian/splashy.install,
+	debian/splashy.links, debian/splashy.manpages,
+	debian/splashy.postinst, debian/splashy.postrm,
+	debian/splashy.preinst: Removed debian/ so it will be distribution
+	agnostic
+
+2007-07-28  Otavio Salvador <otavio@ossystems.com.br>
+
+	* ChangeLog, ChangeLog.old: Add a ChangeLog.old with previous
+	Subversion logs
+
+2007-07-28  Otavio Salvador <otavio@ossystems.com.br>
+
+	* Import v0.3.5 release
+
