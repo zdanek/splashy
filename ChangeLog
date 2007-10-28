@@ -1,3 +1,18 @@
+2007-10-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/contrib/git2cl: passed thru perltidy -gnu
+
+2007-10-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/contrib/git2cl: script to convert git log to GNU ChangeLog This script is a copy from http://josefsson.org/git2cl/. It includes
+	bug fixes by me and it drops dependancy on non-standard module
+	Date::Parse
+
+2007-10-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: Real GNU ChangeLog format. Refer to git2cl inside
+	scripts/contrib
+
 2007-10-26  Luis Mondesi <lemsx1@gmail.com>
 
 	* HACKING, NEWS, src/splashy_functions.c, src/splashy_video.c: text
