@@ -63,7 +63,12 @@ DFB_LIBDIR="$(eval pkg-config directfb-internal --variable=moduledir)"
 AC_DEFINE([DFB_LIBDIR], [$DFB_LIBDIR], [directfb libdir])
 AC_SUBST(DFB_LIBDIR)
 
-DFB_LIBS="$(eval directfb-config --libs --input=keyboard --imageprovider=png --font=ft2,default | sed 's/$/ \\/')"
+# If doing an -all-static, you will need to define which keyboard driver
+# imageprovider and font you want compiled-in and you will need
+# to modify src/Makefile.am where it says "STATIC"
+# sample options to include to directfb-config below (before ' | sed ...'):
+#--input=keyboard --imageprovider=png --font=ft2,default 
+DFB_LIBS="$(eval directfb-config --libs | sed 's/$/ \\/')"
 #AC_DEFINE([DFB_LIBS], [$DFB_LIBS], [directfb libs])
 AC_SUBST(DFB_LIBS)
 

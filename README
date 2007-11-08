@@ -109,6 +109,13 @@ These values could be used in base16 (hexadecimal) also, like:
 
 5. Reboot and have fun!
 
+Installation (static)
+====================
+
+1. edit configure.ac and enable the options to include keyboard, imageprovider and font information for directfb-config
+2. edit src/Makefile.am and use the flags for -all-static (already commented out) and make sure to comment out the regular library call
+3. follow the regular installation instructions from above
+
 Configuration
 =============
 

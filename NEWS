@@ -4,7 +4,9 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 
 Changes between 0.3.6 and 0.3.7
 -------------------------------
- 
+ * all static dropped in favor of shared libraries. If your distribution does not support initramfs
+   shared binaries, or you are using Splashy from a thin-client server, you will need to re-enable
+   static on your own. Please refer to configure.ac and src/Makefile.am
  * scrolls text during boot (splashy_update "scroll text to display")
  * splashy_update commands print_scroll is now just scroll. Same for its alias "TEXT_SCROLL->SCROLL)
  * splashy_update command clrprint is now just "clear"

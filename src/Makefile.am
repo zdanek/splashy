@@ -20,10 +20,11 @@ include_HEADERS = splashy.h splashycnf.h
 ## HACK ALERT! - Tim, Vincent, Otavio
 # directfb-config is currently broken in etch. It generates the lines below 
 # with incorrect capitalization.
-DFBHACK = \
-	-Wl,-uIDirectFBFont_Default \
-	-Wl,-uIDirectFBFont_FT2 \
-	-Wl,-uIDirectFBImageProvider_PNG 
+# I guess we can safely remove this hack now -- Luis
+# DFBHACK = \
+# 	-Wl,-uIDirectFBFont_Default \
+# 	-Wl,-uIDirectFBFont_FT2 \
+# 	-Wl,-uIDirectFBImageProvider_PNG 
 
 libsplashy_la_SOURCES = splashy_video.c
 # adding -ldirectfb here breaks the build process. Luis
@@ -39,16 +40,18 @@ libsplashycnf_la_LDFLAGS = -export-symbols-regex splashy_.*\
 # '-lgcc_s' is provided with -static-libgcc
 splashy_SOURCES = splashy_main.c splashy_functions.c
 splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lm  -lglib-2.0 @DFB_LIBS@
-# Debian:
-splashy_LDFLAGS = -all-static -static-libgcc $(DFBHACK)
-# Fedora:
-#splashy_LDFLAGS = $(shell directfb-config --libs) $(DFBHACK) -rpath $(libdir)/directfb-1.0-0/systems:$(libdir)/directfb-1.0-0/wm:/usr/lib64/directfb-1.0-0/interfaces/IDirectFBFont/:$(libdir)/directfb-1.0-0/interfaces/IDirectFBImageProvider:$(libdir)/directfb-1.0-0/inputdrivers
+# uncomment the following for static builds:
+#splashy_LDFLAGS = -all-static -static-libgcc $(DFBHACK)
+# all other builds:
+#FIXME doesn't DFB_LIBS provide this from configure.ac? $(shell directfb-config --libs) 
+splashy_LDFLAGS = -rpath $(libdir)/directfb-1.0-0/systems:$(libdir)/directfb-1.0-0/wm:/usr/lib64/directfb-1.0-0/interfaces/IDirectFBFont/:$(libdir)/directfb-1.0-0/interfaces/IDirectFBImageProvider:$(libdir)/directfb-1.0-0/inputdrivers
 
 splashy_config_SOURCES = splashy_config-main.c splashy_config-functions.c \
 	xml_functions.c
 splashy_config_LDFLAGS = -lsplashycnf -lglib-2.0 -lmagic -lz
 
-splashy_update_LDFLAGS = -all-static -static-libgcc
+# uncomment the following if you need static builds for splashy_update as well:
+#splashy_update_LDFLAGS = -all-static -static-libgcc
 splashy_update_SOURCES = splashy_update.c
 
 install-exec-hook:
