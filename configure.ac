@@ -7,7 +7,7 @@ AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([splashy], [0.3.7], [splashy-devel@alioth.debian.org])
 
 AC_PREREQ(2.59)
-AC_ENABLE_STATIC
+#AC_ENABLE_STATIC
 AC_LANG_C
 AC_PROG_CC
 AC_PROG_INSTALL
