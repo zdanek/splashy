@@ -36,7 +36,7 @@ AC_ARG_ENABLE(debug,AC_HELP_STRING([--enable-debug],[enable debugging messages])
 # TODO when in --enable-debug mode, we need to enable assert in glib...
 CFLAGS="$CFLAGS -Wall -Werror -DG_DISABLE_ASSERT -DG_DISABLE_CHECKS"
 
-# we compile splashy statically always
+# we used to compile splashy statically
 AC_SUBST(splashy_LIBS)
 AC_SUBST(splashy_CFLAGS)
 # other binaries
