@@ -37,13 +37,14 @@ libsplashycnf_la_LIBADD = -lglib-2.0
 libsplashycnf_la_LDFLAGS = -export-symbols-regex splashy_.*\
 			   -version-info $(SPL_SONAME)
 
-# '-lgcc_s' is provided with -static-libgcc
 splashy_SOURCES = splashy_main.c splashy_functions.c
 splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lm  -lglib-2.0 @DFB_LIBS@
+
+# '-lgcc_s' is provided with -static-libgcc and this is needed when compiling statically only
 # uncomment the following for static builds:
 #splashy_LDFLAGS = -all-static -static-libgcc $(DFBHACK)
 # all other builds:
-#FIXME doesn't DFB_LIBS provide this from configure.ac? $(shell directfb-config --libs) 
+# FIXME doesn't DFB_LIBS provide this from configure.ac? $(shell directfb-config --libs) 
 splashy_LDFLAGS = -rpath $(libdir)/directfb-1.0-0/systems:$(libdir)/directfb-1.0-0/wm:/usr/lib64/directfb-1.0-0/interfaces/IDirectFBFont/:$(libdir)/directfb-1.0-0/interfaces/IDirectFBImageProvider:$(libdir)/directfb-1.0-0/inputdrivers
 
 splashy_config_SOURCES = splashy_config-main.c splashy_config-functions.c \
