@@ -137,6 +137,8 @@ case "$1" in
 
         log_daemon_msg "Starting $DESC" $NAME
         pidof $NAME > /dev/null || /sbin/$NAME shutdown
+        # tell killall5 to not kill us too early at shutdown/restart:
+        pidof $NAME >> /var/run/sendsigs.omit
         log_end_msg $?
 
     ;;
