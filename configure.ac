@@ -7,11 +7,15 @@ AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([splashy], [0.3.7], [splashy-devel@alioth.debian.org])
 
 AC_PREREQ(2.59)
-#AC_ENABLE_STATIC
 AC_LANG_C
 AC_PROG_CC
 AC_PROG_INSTALL
+
+#AC_ENABLE_STATIC
+# when using STATIC, comment the following line (and uncomment the previous one):
+AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
+
 AC_PROG_LN_S
 
 # Check library magic existence and its use
