@@ -58,7 +58,7 @@ typedef struct splashy_videomode_s
         gint bpp;
 } splashy_videomode_t;
 
-typedef struct 
+typedef struct
 {
         IDirectFBSurface *offscreen;    /** off-screen storage */
         IDirectFBSurface *surface;      /** Subsurface to draw text on */
@@ -73,7 +73,7 @@ typedef struct
         IDirectFBSurface *primary_window_surface; /** interface to window's surface */
 
         IDirectFBDisplayLayer *primary_layer;   /** interface to our layer */
-        DFBDisplayLayerConfig  primary_layer_config; /** configuration for our primary_layer */
+        DFBDisplayLayerConfig primary_layer_config;  /** configuration for our primary_layer */
         IDirectFBSurface *primary_surface;      /** our main background */
         IDirectFBInputDevice *keyboard;         /** our main input dev */
         IDirectFBEventBuffer *ev_buffer;        /** our events listener */
@@ -95,9 +95,16 @@ static guint _last_x = 0;
 
 static gboolean _draw_progressbar_forward = TRUE;
 static gboolean _show_progressbar = FALSE;
+static gboolean _show_textbox_area = FALSE;     /* flag to toggle showing *
+                                                 * textbox area. @see
+                                                 * splashy_function::keyevent_loop() 
+                                                 */
 #define NRMODES 4
-static const char *valid_modes[NRMODES]= {"boot", "shutdown", "resume", "suspend"};
-static enum {BOOT, SHUTDOWN, RESUME, SUSPEND} _current_mode; /* boot, halt, resume, suspend */
+static const char *valid_modes[NRMODES] =
+        { "boot", "shutdown", "resume", "suspend" };
+static enum
+{ BOOT, SHUTDOWN, RESUME, SUSPEND } _current_mode;      /* boot, halt,
+                                                         * resume, suspend */
 
 /*
  * helper functions 
@@ -127,18 +134,30 @@ splashy_set_progressbar_visible (gboolean visible)
         _show_progressbar = visible;
 }
 
+void
+splashy_set_textbox_area_visible (gboolean visible)
+{
+        _show_textbox_area = visible;
+}
+
+gboolean
+splashy_get_textbox_area_visible (void)
+{
+        return _show_textbox_area;
+}
+
 static gint
-fb_preinit (struct fb_var_screeninfo * fb_vinfo)
+fb_preinit (struct fb_var_screeninfo *fb_vinfo)
 {
         static gint fb_preinit_done = 0;
         static gint fb_err = -1;
-        gchar *fb_dev_name = NULL;       /* such as /dev/fb0 */
-        
-        gint fb_dev_fd;          /* handle for fb_dev_name */
+        gchar *fb_dev_name = NULL;      /* such as /dev/fb0 */
+
+        gint fb_dev_fd;         /* handle for fb_dev_name */
 #if 0
-        fb_var_screeninfo fb_orig_vinfo;  /* variable info to restore
+        fb_var_screeninfo fb_orig_vinfo;        /* variable info to restore * 
                                                  * later */
-        gint fb_bpp;             /* 32: 32 24: 24 16: 16 15: 15 */
+        gint fb_bpp;            /* 32: 32 24: 24 16: 16 15: 15 */
 #endif
 
         if (fb_preinit_done)
@@ -193,7 +212,7 @@ fb_preinit (struct fb_var_screeninfo * fb_vinfo)
 void
 splashy_allow_vt_switching ()
 {
-        DEBUG_PRINT ("%s",__FUNCTION__);
+        DEBUG_PRINT ("%s", __FUNCTION__);
         /*
          * Please read functions.c about why NOT to set vt-switching here.
          * 2005-04-28 20:42 EDT - Luis Mondesi <lemsx1@gmail.com> 
@@ -201,8 +220,10 @@ splashy_allow_vt_switching ()
         /*
          * DirectFBSetOption( "vt-switching", NULL); 
          */
-        /* DirectFBSetOption ("force-windowed", NULL); */
-        DEBUG_PRINT ("%s",__FUNCTION__);
+        /*
+         * DirectFBSetOption ("force-windowed", NULL); 
+         */
+        DEBUG_PRINT ("%s", __FUNCTION__);
 }
 
 void
@@ -219,10 +240,10 @@ _get_divider (gint * divider_w, gint * divider_h)
          */
         source_width =
                 splashy_get_config_int ("/splashy/background/dimension/width",
-                                    10);
+                                        10);
         source_height =
-                splashy_get_config_int ("/splashy/background/dimension/height",
-                                    10);
+                splashy_get_config_int
+                ("/splashy/background/dimension/height", 10);
         if (source_width > 0 && source_height > 0)
         {
                 /*
@@ -246,13 +267,16 @@ draw_progressbar ()
         gint screen_width, screen_height;
         gint divider_w, divider_h;
         guint rectangle_red, rectangle_green, rectangle_blue, rectangle_alpha;
-        /* /splashy/progressbar/background/color */
+        /*
+         * /splashy/progressbar/background/color 
+         */
         guint fondo_red, fondo_green, fondo_blue, fondo_alpha;
 
-	DFBRectangle * progressbar = &video.progressbar;
+        DFBRectangle *progressbar = &video.progressbar;
 
         const gchar *draw_progress =
-                splashy_get_config_string ("/splashy/progressbar/border/enable");
+                splashy_get_config_string
+                ("/splashy/progressbar/border/enable");
         gboolean draw_progress_border = (draw_progress
                                          &&
                                          g_ascii_strncasecmp (draw_progress,
@@ -260,30 +284,31 @@ draw_progressbar ()
                                                               3) ==
                                          0) ? TRUE : FALSE;
 
-        if (! _show_progressbar) return 0;
+        if (!_show_progressbar)
+                return 0;
 
         DEBUG_PRINT ("Printing progress border: %d", draw_progress_border);
 
         _get_divider (&divider_w, &divider_h);
 
         video.primary_surface->GetSize (video.primary_surface,
-                                         &screen_width, &screen_height);
+                                        &screen_width, &screen_height);
 
         progressbar->x = screen_width *
                 splashy_get_config_int ("/splashy/progressbar/dimension/x",
-                                    10) / divider_w;
+                                        10) / divider_w;
         progressbar->y =
                 screen_height *
                 splashy_get_config_int ("/splashy/progressbar/dimension/y",
-                                    10) / divider_h;
+                                        10) / divider_h;
         progressbar->w =
                 screen_width *
-                splashy_get_config_int ("/splashy/progressbar/dimension/width",
-                                    10) / divider_w;
+                splashy_get_config_int
+                ("/splashy/progressbar/dimension/width", 10) / divider_w;
         progressbar->h =
                 screen_height *
-                splashy_get_config_int ("/splashy/progressbar/dimension/height",
-                                    10) / divider_h;
+                splashy_get_config_int
+                ("/splashy/progressbar/dimension/height", 10) / divider_h;
 
         if (progressbar->x < 0 ||
             progressbar->y < 0 || progressbar->w < 0 || progressbar->h < 0)
@@ -315,39 +340,41 @@ draw_progressbar ()
                     (rectangle_red > 255 || rectangle_green > 255
                      || rectangle_blue > 255 || rectangle_alpha > 255))
                 {
-                        DEBUG_PRINT ("Border draw: x, y, w, h = %d, %d, %d, %d",
-				progressbar->x, progressbar->y, 
-				progressbar->w, progressbar->h);
+                        DEBUG_PRINT
+                                ("Border draw: x, y, w, h = %d, %d, %d, %d",
+                                 progressbar->x, progressbar->y,
+                                 progressbar->w, progressbar->h);
 
-                        DEBUG_PRINT ("Border color: rgba = %d, %d, %d, %d", 
-				rectangle_red, rectangle_green, 
-				rectangle_blue, rectangle_alpha);
+                        DEBUG_PRINT ("Border color: rgba = %d, %d, %d, %d",
+                                     rectangle_red, rectangle_green,
+                                     rectangle_blue, rectangle_alpha);
 
                         video.primary_surface->SetColor (video.
-                                                          primary_surface,
-                                                          rectangle_red,
-                                                          rectangle_green,
-                                                          rectangle_blue,
-                                                          rectangle_alpha);
+                                                         primary_surface,
+                                                         rectangle_red,
+                                                         rectangle_green,
+                                                         rectangle_blue,
+                                                         rectangle_alpha);
 
                         /*
                          * Draw border so that it is one pixel around the bar 
                          */
                         video.primary_surface->DrawRectangle (video.
-                                                               primary_surface,
-                                                               progressbar->
-                                                               x - 1,
-                                                               progressbar->
-                                                               y - 1,
-                                                               progressbar->
-                                                               w + 2,
-                                                               progressbar->
-                                                               h + 2);
+                                                              primary_surface,
+                                                              progressbar->
+                                                              x - 1,
+                                                              progressbar->
+                                                              y - 1,
+                                                              progressbar->
+                                                              w + 2,
+                                                              progressbar->
+                                                              h + 2);
                 }
                 else if (rectangle_red < 0 || rectangle_green < 0 ||
                          rectangle_blue < 0 || rectangle_alpha < 0)
                 {
-                        ERROR_PRINT ("Progress bar border colour not properly specified");
+                        ERROR_PRINT
+                                ("Progress bar border colour not properly specified");
                 }
                 else
                 {
@@ -357,24 +384,29 @@ draw_progressbar ()
         rectangle_red =
                 splashy_get_config_int ("/splashy/progressbar/color/red", 10);
         rectangle_green =
-                splashy_get_config_int ("/splashy/progressbar/color/green", 10);
+                splashy_get_config_int ("/splashy/progressbar/color/green",
+                                        10);
         rectangle_blue =
-                splashy_get_config_int ("/splashy/progressbar/color/blue", 10);
+                splashy_get_config_int ("/splashy/progressbar/color/blue",
+                                        10);
         rectangle_alpha =
-                splashy_get_config_int ("/splashy/progressbar/color/alpha", 10);
+                splashy_get_config_int ("/splashy/progressbar/color/alpha",
+                                        10);
 
         /*
          * set the filling color of the progressbar to be 
          * used by splashy_update_progress()
          */
-        DEBUG_PRINT ("Draw rgba = %d, %d, %d, %d", 
-		rectangle_red, rectangle_green, rectangle_blue, rectangle_alpha);
+        DEBUG_PRINT ("Draw rgba = %d, %d, %d, %d",
+                     rectangle_red, rectangle_green, rectangle_blue,
+                     rectangle_alpha);
 
         if (rectangle_red > 255 ||
             rectangle_green > 255 ||
             rectangle_blue > 255 || rectangle_alpha > 255)
         {
-                ERROR_PRINT ("Red, green, blue or alpha tags in the configuration file contain wrong values");
+                ERROR_PRINT
+                        ("Red, green, blue or alpha tags in the configuration file contain wrong values");
                 return 3;
         }
 
@@ -383,57 +415,58 @@ draw_progressbar ()
          * /splashy/progressbar/background/color/red...
          * for now picking gray
          */
-	fondo_red =
-		splashy_get_config_int ("/splashy/progressbar/background/color/red", 10);
-	fondo_green =
-		splashy_get_config_int ("/splashy/progressbar/background/color/green", 10);
-	fondo_blue =
-		splashy_get_config_int ("/splashy/progressbar/background/color/blue", 10);
-	fondo_alpha =
-		splashy_get_config_int ("/splashy/progressbar/background/color/alpha", 10);
+        fondo_red =
+                splashy_get_config_int
+                ("/splashy/progressbar/background/color/red", 10);
+        fondo_green =
+                splashy_get_config_int
+                ("/splashy/progressbar/background/color/green", 10);
+        fondo_blue =
+                splashy_get_config_int
+                ("/splashy/progressbar/background/color/blue", 10);
+        fondo_alpha =
+                splashy_get_config_int
+                ("/splashy/progressbar/background/color/alpha", 10);
         if (_draw_progressbar_forward == TRUE)
         {
                 /*
                  * fill the rectangle so that it's easier to do the reverse progress trick
                  * @see splashy_update_progress()
-                 */                
+                 */
                 video.primary_surface->SetColor (video.primary_surface,
-                                                  fondo_red,
-                                                  fondo_green, 
-                                                  fondo_blue,
-                                                  fondo_alpha);
+                                                 fondo_red,
+                                                 fondo_green,
+                                                 fondo_blue, fondo_alpha);
         }
         else
         {
                 video.primary_surface->SetColor (video.primary_surface,
-                                                  rectangle_red,
-                                                  rectangle_green,
-                                                  rectangle_blue,
-                                                  rectangle_alpha);
+                                                 rectangle_red,
+                                                 rectangle_green,
+                                                 rectangle_blue,
+                                                 rectangle_alpha);
         }
         video.primary_surface->FillRectangle (video.primary_surface,
-                                               progressbar->x,
-                                               progressbar->y,
-                                               progressbar->w,
-                                               progressbar->h);
+                                              progressbar->x,
+                                              progressbar->y,
+                                              progressbar->w, progressbar->h);
         /*
          * now invert the colors set 
          */
         if (_draw_progressbar_forward != TRUE)
         {
                 video.primary_surface->SetColor (video.primary_surface,
-                                                  fondo_red,
-                                                  fondo_green, 
-                                                  fondo_blue,
-                                                  fondo_alpha);
+                                                 fondo_red,
+                                                 fondo_green,
+                                                 fondo_blue, fondo_alpha);
         }
         else
         {
                 video.primary_surface->SetColor (video.primary_surface,
-                                                  rectangle_red,
-                                                  rectangle_green,
-                                                  rectangle_blue,
-                                                  rectangle_alpha);
+                                                 rectangle_red,
+                                                 rectangle_green,
+                                                 rectangle_blue,
+                                                 rectangle_alpha);
         }
 
         /*
@@ -444,15 +477,15 @@ draw_progressbar ()
         _last_w = 0;            /* we start at progressbar->x really. 0 is
                                  * fine */
 
-/*        IDirectFBSurface *_layer_surface;
-
-        DFBCHECK (video.primary_layer->
-                  GetSurface (video.primary_layer,
-                              &_layer_surface));
-
-        _layer_surface->Blit(_layer_surface,
-                        video.primary_surface,
-                        NULL, 0, 0);*/
+        /*
+         * IDirectFBSurface *_layer_surface;
+         * 
+         * DFBCHECK (video.primary_layer-> GetSurface (video.primary_layer,
+         * &_layer_surface));
+         * 
+         * _layer_surface->Blit(_layer_surface, video.primary_surface, NULL,
+         * 0, 0);
+         */
 
         return 0;
 }
@@ -471,11 +504,12 @@ splashy_update_progressbar (gint perc)
         struct timespec _progress_sleep;
         guint i = 0, _w = 0;
 
-        DFBRectangle * progressbar = &video.progressbar;
+        DFBRectangle *progressbar = &video.progressbar;
 
         DEBUG_PRINT ("splashy_update_progressbar(%d) called", perc);
 
-        if (! _show_progressbar) return 0;
+        if (!_show_progressbar)
+                return 0;
         /*
          * sanity check 
          */
@@ -487,9 +521,9 @@ splashy_update_progressbar (gint perc)
                 return 0;
         DEBUG_PRINT ("splashy_update_progressbar(%d) sanity checks passed",
                      perc);
-        DEBUG_PRINT ("Progress x, y, w, h = %d, %d, %d, %d", 
-			progressbar->x, progressbar->y, 
-			progressbar->w, progressbar->h);
+        DEBUG_PRINT ("Progress x, y, w, h = %d, %d, %d, %d",
+                     progressbar->x, progressbar->y,
+                     progressbar->w, progressbar->h);
 
         _progress_sleep.tv_sec = 0;
         _progress_sleep.tv_nsec = 100;
@@ -514,15 +548,14 @@ splashy_update_progressbar (gint perc)
                 for (i = _last_x; i > _x; i--)
                 {
                         video.primary_surface->FillRectangle (video.
-                                                               primary_surface,
-                                                               i,
-                                                               progressbar->y,
-                                                               progressbar->
-                                                               w - (i -
-                                                                    progressbar->
-                                                                    x),
-                                                               progressbar->
-                                                               h);
+                                                              primary_surface,
+                                                              i,
+                                                              progressbar->y,
+                                                              progressbar->
+                                                              w - (i -
+                                                                   progressbar->
+                                                                   x),
+                                                              progressbar->h);
                         _last_progress = i;
                         nanosleep (&_progress_sleep, NULL);
                 }
@@ -536,12 +569,11 @@ splashy_update_progressbar (gint perc)
                 for (i = _last_w; i <= _w; i++)
                 {
                         video.primary_surface->FillRectangle (video.
-                                                               primary_surface,
-                                                               progressbar->x,
-                                                               progressbar->y,
-                                                               i,
-                                                               progressbar->
-                                                               h);
+                                                              primary_surface,
+                                                              progressbar->x,
+                                                              progressbar->y,
+                                                              i,
+                                                              progressbar->h);
                         _last_progress = i;
                         nanosleep (&_progress_sleep, NULL);
                 }
@@ -559,10 +591,11 @@ splashy_update_progressbar_quick (gint perc)
 {
         guint _w = 0;
 
-        DFBRectangle * progressbar = &video.progressbar;
+        DFBRectangle *progressbar = &video.progressbar;
 
         DEBUG_PRINT ("%s(%d) called", __FUNCTION__, perc);
-        if (! _show_progressbar) return 0;
+        if (!_show_progressbar)
+                return 0;
 
         /*
          * sanity check 
@@ -576,8 +609,9 @@ splashy_update_progressbar_quick (gint perc)
         DEBUG_PRINT
                 ("splashy_update_progressbar_quick(%d) sanity checks passed",
                  perc);
-        DEBUG_PRINT ("Progress x, y, w, h = %d, %d, %d, %d", 
-		progressbar->x, progressbar->y, progressbar->w, progressbar->h);
+        DEBUG_PRINT ("Progress x, y, w, h = %d, %d, %d, %d",
+                     progressbar->x, progressbar->y, progressbar->w,
+                     progressbar->h);
 
         _w = progressbar->w * perc / 100;
         if (_w <= 0)
@@ -594,22 +628,22 @@ splashy_update_progressbar_quick (gint perc)
                  * guint _x = progressbar->x + (progressbar->w - _w); 
                  */
                 video.primary_surface->FillRectangle (video.
-                                                       primary_surface,
-                                                       _w,
-                                                       progressbar->y,
-                                                       progressbar->w - (_w -
-                                                                         progressbar->
-                                                                         x),
-                                                       progressbar->h);
+                                                      primary_surface,
+                                                      _w,
+                                                      progressbar->y,
+                                                      progressbar->w - (_w -
+                                                                        progressbar->
+                                                                        x),
+                                                      progressbar->h);
                 _last_x = progressbar->x + (progressbar->w - _w);
         }
         else
         {
                 video.primary_surface->FillRectangle (video.
-                                                       primary_surface,
-                                                       progressbar->x,
-                                                       progressbar->y,
-                                                       _w, progressbar->h);
+                                                      primary_surface,
+                                                      progressbar->x,
+                                                      progressbar->y,
+                                                      _w, progressbar->h);
                 _last_w = _w;
         }
 
@@ -624,8 +658,8 @@ video_modes_callback (gint width, gint height, gint bpp, void *data)
         gint overx = 0, overy = 0, closer = 0, over = 0;
         gint we_are_under = 0;
 
-	DEBUG_PRINT("%s: Validator entered %i %i %i\n", __FUNCTION__,
-			width, height, bpp);
+        DEBUG_PRINT ("%s: Validator entered %i %i %i\n", __FUNCTION__,
+                     width, height, bpp);
 
         overx = width - video_m->out_width;
         overy = height - video_m->out_height;
@@ -636,8 +670,8 @@ video_modes_callback (gint width, gint height, gint bpp, void *data)
                 video_m->overx = overx;
                 video_m->overy = overy;
 
-		DEBUG_PRINT("%s: Mode added %i %i %i\n", __FUNCTION__,
-			width, height, bpp);
+                DEBUG_PRINT ("%s: Mode added %i %i %i\n", __FUNCTION__,
+                             width, height, bpp);
         }
         if ((video_m->overy < 0) || (video_m->overx < 0))
                 we_are_under = 1;       /* stored mode is smaller than req
@@ -653,8 +687,8 @@ video_modes_callback (gint width, gint height, gint bpp, void *data)
                 video_m->height = height;
                 video_m->overx = overx;
                 video_m->overy = overy;
-		DEBUG_PRINT("%s: Better mode added %i %i %i\n",__FUNCTION__ ,
-                         width, height, bpp);
+                DEBUG_PRINT ("%s: Better mode added %i %i %i\n", __FUNCTION__,
+                             width, height, bpp);
         };
         return DFENUM_OK;
 }
@@ -671,16 +705,16 @@ video_set_mode ()
          * DFSCL_FULLSCREEN); 
          */
         video.primary_layer->SetCooperativeLevel (video.primary_layer,
-                                                   DLSCL_EXCLUSIVE);
+                                                  DLSCL_EXCLUSIVE);
         video.primary_layer->GetConfiguration (video.primary_layer,
-                                                &video.primary_layer_config);
+                                               &video.primary_layer_config);
 
         DFBResult ret =
                 video.dfb->EnumVideoModes (video.dfb, video_modes_callback,
-                                            video.mode);
+                                           video.mode);
         if (ret)
                 DEBUG_PRINT ("Error while detecting full screen video modes");
-        
+
         /*
          * http://directfb.org/docs/DirectFB_Reference/types.html#DFBSurfacePixelFormat 
          */
@@ -698,11 +732,11 @@ video_set_mode ()
          */
 
         ret = video.primary_layer->SetConfiguration (video.primary_layer,
-                                                      &video.
-                                                      primary_layer_config);
+                                                     &video.
+                                                     primary_layer_config);
 
-        DEBUG_PRINT ("Set resolution to %d x %d", 
-			video.mode->width, video.mode->height);
+        DEBUG_PRINT ("Set resolution to %d x %d",
+                     video.mode->width, video.mode->height);
 }
 
 gint
@@ -765,7 +799,8 @@ _window_fade (__u8 opacity, long ms_duration)
                 /*
                  * Calculate an intermediate opacity. 
                  */
-                __u8 op = video.opacity + ((t2 - t1 + 1) * diff / ms_duration);
+                __u8 op =
+                        video.opacity + ((t2 - t1 + 1) * diff / ms_duration);
                 /*
                  * fprintf(stderr,"op %d\n",op); 
                  */
@@ -843,29 +878,31 @@ int
 init_font ()
 {
         const gchar *fontface;
-	gint temp;
-	gint screen_w, screen_h;
-	gint divider_w, divider_h;
+        gint temp;
+        gint screen_w, screen_h;
+        gint divider_w, divider_h;
 
         video.primary_surface->GetSize (video.primary_surface,
-                                         &screen_w, &screen_h);
-      
+                                        &screen_w, &screen_h);
+
         _get_divider (&divider_w, &divider_h);
-    
+
         video.fontdesc.flags = DFDESC_HEIGHT;
-        fontface = splashy_get_config_string ("/splashy/textbox/text/font/file");
-        temp = splashy_get_config_int ("/splashy/textbox/text/font/height", 10);
-        
+        fontface =
+                splashy_get_config_string ("/splashy/textbox/text/font/file");
+        temp = splashy_get_config_int ("/splashy/textbox/text/font/height",
+                                       10);
+
         video.fontdesc.height = temp * screen_h / divider_h;
         video.dfb->CreateFont (video.dfb, fontface,
-                                &video.fontdesc, &video.font);
+                               &video.fontdesc, &video.font);
         if (video.font == NULL)
                 video.dfb->CreateFont (video.dfb, NULL, NULL, &video.font);
 
-	if (video.font == NULL)
-		return -1;
+        if (video.font == NULL)
+                return -1;
 
-	return 0;
+        return 0;
 }
 
 /**
@@ -905,24 +942,24 @@ _clear_offscreen ()
          * gets displayed correctly 
          */
         video.textbox->offscreen->Blit (video.textbox->offscreen,
-                                         video.primary_surface,
-                                         &video.textbox->area, 0, 0);
+                                        video.primary_surface,
+                                        &video.textbox->area, 0, 0);
 
         video.textbox->offscreen->Blit (video.primary_surface,
-                                         video.textbox->offscreen,
-                                         &video.textbox->area, 0, 0);
+                                        video.textbox->offscreen,
+                                        &video.textbox->area, 0, 0);
 
         /*
          * Tint the box in the off-screen surface 
          */
         video.textbox->offscreen->SetDrawingFlags (video.textbox->offscreen,
-                                                    DSDRAW_BLEND);
+                                                   DSDRAW_BLEND);
         video.textbox->offscreen->SetColor (video.textbox->offscreen, red,
-                                             green, blue, alpha);
+                                            green, blue, alpha);
         video.textbox->offscreen->FillRectangle (video.textbox->offscreen,
-                                                  0, 0,
-                                                  video.textbox->area.w,
-                                                  video.textbox->area.h);
+                                                 0, 0,
+                                                 video.textbox->area.w,
+                                                 video.textbox->area.h);
 }
 
 
@@ -937,7 +974,7 @@ start_text_area ()
         gint divider_w, divider_h;
         gint screen_width, screen_height;
         gint red, green, blue;  /* alpha; */
-	gint temp;
+        gint temp;
         DFBSurfaceDescription desc;
 
 
@@ -947,13 +984,14 @@ start_text_area ()
         /*
          * TODO autoverboseonerror implies /splashy/textbox/enable="yes" 
          */
-        const gchar *enable = splashy_get_config_string ("/splashy/textbox/enable");
+        const gchar *enable =
+                splashy_get_config_string ("/splashy/textbox/enable");
 
         if (g_ascii_strncasecmp (enable, "yes", 3) != 0)
                 return;
 
         video.primary_surface->GetSize (video.primary_surface,
-                                         &screen_width, &screen_height);
+                                        &screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
 
         video.textbox = g_new0 (splashy_box_t, 1);
@@ -976,11 +1014,13 @@ start_text_area ()
         if (temp >= 0 && temp < divider_h)
                 video.textbox->area.y = temp * screen_height / divider_h;
 
-        temp = splashy_get_config_int ("/splashy/textbox/dimension/width", 10);
+        temp = splashy_get_config_int ("/splashy/textbox/dimension/width",
+                                       10);
         if (temp > 0 && temp <= divider_w)
                 video.textbox->area.w = temp * screen_width / divider_w;
 
-        temp = splashy_get_config_int ("/splashy/textbox/dimension/height", 10);
+        temp = splashy_get_config_int ("/splashy/textbox/dimension/height",
+                                       10);
         if (temp > 0 && temp <= divider_h)
                 video.textbox->area.h = temp * screen_height / divider_h;
 
@@ -994,10 +1034,10 @@ start_text_area ()
          * Grab the textbox area to a seperate surface 
          */
         video.dfb->CreateSurface (video.dfb, &desc,
-                                   &video.textbox->offscreen);
+                                  &video.textbox->offscreen);
         video.textbox->offscreen->Blit (video.textbox->offscreen,
-                                         video.primary_surface,
-                                         &video.textbox->area, 0, 0);
+                                        video.primary_surface,
+                                        &video.textbox->area, 0, 0);
 
         /*
          * clear the offscreen surface and set the drawing flags
@@ -1008,8 +1048,10 @@ start_text_area ()
          * Get the text colour (no alpha) 
          */
         red = splashy_get_config_int ("/splashy/textbox/text/color/red", 10);
-        green = splashy_get_config_int ("/splashy/textbox/text/color/green", 10);
-        blue = splashy_get_config_int ("/splashy/textbox/text/color/blue", 10);
+        green = splashy_get_config_int ("/splashy/textbox/text/color/green",
+                                        10);
+        blue = splashy_get_config_int ("/splashy/textbox/text/color/blue",
+                                       10);
         if (red < 0 || red > 255)
                 red = 0;        /* if missing, make font color black */
         if (green < 0 || green > 255)
@@ -1021,10 +1063,10 @@ start_text_area ()
          * Establish the subsurface to which we print 
          */
         video.primary_surface->GetSubSurface (video.primary_surface,
-                                               &video.textbox->area,
-                                               &video.textbox->surface);
+                                              &video.textbox->area,
+                                              &video.textbox->surface);
         video.textbox->surface->SetColor (video.textbox->surface, red,
-                                           green, blue, 255);
+                                          green, blue, 255);
 
         video.textbox->surface->SetFont (video.textbox->surface, video.font);
 }
@@ -1032,7 +1074,7 @@ start_text_area ()
 int
 create_event_buffer ()
 {
-	DEBUG_PRINT("%s",__FUNCTION__);
+        DEBUG_PRINT ("%s", __FUNCTION__);
         /*
          * setup our main input: keyboard 
          */
@@ -1041,20 +1083,18 @@ create_event_buffer ()
          * ? We should make sure splashy can't be launched twice from this
          * same thread 
          */
-        if (video.dfb-> GetInputDevice (video.dfb, DIDID_KEYBOARD,
-					&video.keyboard) 
-		!= DFB_OK)
-	    return -1;
+        if (video.dfb->GetInputDevice (video.dfb, DIDID_KEYBOARD,
+                                       &video.keyboard) != DFB_OK)
+                return -1;
 
         /*
          * create event buffer for the keyboard: to listen for events 
          */
-        if (video.keyboard-> CreateEventBuffer (video.keyboard, 
-						&video.ev_buffer)
-		!= DFB_OK)
-	    return -2;
+        if (video.keyboard->CreateEventBuffer (video.keyboard,
+                                               &video.ev_buffer) != DFB_OK)
+                return -2;
 
-	return 0;
+        return 0;
 }
 
 int
@@ -1062,7 +1102,7 @@ splashy_start_splash ()
 {
         DFBSurfaceDescription desc;
         DFBWindowDescription win_desc;
-	struct fb_var_screeninfo fb_vinfo;
+        struct fb_var_screeninfo fb_vinfo;
 
         /*
          * initializing Directfb
@@ -1074,23 +1114,31 @@ splashy_start_splash ()
          * - no-cursor          := disallow showing a cursor
          */
 
-        if (DirectFBInit (NULL, NULL) != DFB_OK) return -1;
+        if (DirectFBInit (NULL, NULL) != DFB_OK)
+                return -1;
 
         DirectFBSetOption ("quiet", NULL);
         DirectFBSetOption ("no-debug", NULL);
         DirectFBSetOption ("graphics-vt", NULL);
         DirectFBSetOption ("no-cursor", NULL);
-	/* I disabled these modules, because they were causing
-	 * problems on my machine.
-	 */
-        DirectFBSetOption ("disable-module","radeon");
-        DirectFBSetOption ("disable-module","linux_input");
+        /*
+         * I disabled these modules, because they were causing problems on my 
+         * machine. 
+         */
+        DirectFBSetOption ("disable-module", "radeon");
+        DirectFBSetOption ("disable-module", "linux_input");
 
-        /* TODO doesn't solve anything: DirectFBSetOption ("dont-catch", "15"); */
-        /* TODO too dangerous DirectFBSetOption ("block-all-signals", NULL); */
+        /*
+         * TODO doesn't solve anything: DirectFBSetOption ("dont-catch",
+         * "15"); 
+         */
+        /*
+         * TODO too dangerous DirectFBSetOption ("block-all-signals", NULL); 
+         */
 
 
-        if (DirectFBCreate (&video.dfb) != DFB_OK) return -2;
+        if (DirectFBCreate (&video.dfb) != DFB_OK)
+                return -2;
 
         video.mode = g_new0 (splashy_videomode_t, 1);
         /*
@@ -1105,21 +1153,19 @@ splashy_start_splash ()
         DEBUG_PRINT ("Setting min Height (y) resolution to %d",
                      video.mode->out_height);
 
-        if (video.dfb->CreateImageProvider (video.dfb, 
-					    _current_background, 
-					    &video.provider) 
-		!= DFB_OK) 
-	{
-	    video.dfb->Release (video.dfb);
-	    return -3;
-	}
+        if (video.dfb->CreateImageProvider (video.dfb,
+                                            _current_background,
+                                            &video.provider) != DFB_OK)
+        {
+                video.dfb->Release (video.dfb);
+                return -3;
+        }
         if (video.provider->GetSurfaceDescription (video.provider,
-                                                    &desc) 
-		!= DFB_OK)
-	{
-	    video.dfb->Release (video.dfb);
-	    return -4;
-	}
+                                                   &desc) != DFB_OK)
+        {
+                video.dfb->Release (video.dfb);
+                return -4;
+        }
         /*
          * flags to set the default surface as main surface
          */
@@ -1130,14 +1176,13 @@ splashy_start_splash ()
          * store our primary layer as this will be use for setting the opacity
          * levels later
          */
-        if (video.dfb->GetDisplayLayer (video.dfb, 
-					DLID_PRIMARY, 
-					&video.primary_layer) 
-		!= DFB_OK)
-	{
-	    video.dfb->Release (video.dfb);
-	    return -5;
-	}
+        if (video.dfb->GetDisplayLayer (video.dfb,
+                                        DLID_PRIMARY,
+                                        &video.primary_layer) != DFB_OK)
+        {
+                video.dfb->Release (video.dfb);
+                return -5;
+        }
 
 
         /*
@@ -1149,13 +1194,13 @@ splashy_start_splash ()
          * get our primary_surface, this will hold the progressbar, textbox
          * and others
          */
-        if (video.primary_layer-> GetSurface (video.primary_layer, 
-					      &video.primary_surface) 
-		!= DFB_OK)
-	{
-	    video.dfb->Release (video.dfb);
-	    return -6;
-	} 
+        if (video.primary_layer->GetSurface (video.primary_layer,
+                                             &video.primary_surface)
+            != DFB_OK)
+        {
+                video.dfb->Release (video.dfb);
+                return -6;
+        }
 
         win_desc.flags = (DWDESC_POSX | DWDESC_POSY |
                           DWDESC_WIDTH | DWDESC_HEIGHT);
@@ -1163,33 +1208,33 @@ splashy_start_splash ()
         win_desc.posy = 0;
         win_desc.width = video.mode->out_width;
         win_desc.height = video.mode->out_height;
-        /* TODO do we really need this? win_desc.caps = DWCAPS_ALPHACHANNEL; */
+        /*
+         * TODO do we really need this? win_desc.caps = DWCAPS_ALPHACHANNEL; 
+         */
 
         if (video.primary_layer->CreateWindow (video.primary_layer,
-                                                      &win_desc,
-                                                      &video.
-                                                      primary_window) 
-		!= DFB_OK)
-	{
-	    video.dfb->Release (video.dfb);
-	    video.primary_surface->Release (video.primary_surface);
-	    return -7;
-	}
-        
-        if (video.primary_window-> GetSurface (	video.primary_window,
-						&video.primary_window_surface)
-		!= DFB_OK)
-	{
-	    video.dfb->Release (video.dfb);
-	    video.primary_surface->Release (video.primary_surface);
-	    video.primary_window->Release(video.primary_window);
-	    return -8;
-	}
+                                               &win_desc,
+                                               &video.
+                                               primary_window) != DFB_OK)
+        {
+                video.dfb->Release (video.dfb);
+                video.primary_surface->Release (video.primary_surface);
+                return -7;
+        }
+
+        if (video.primary_window->GetSurface (video.primary_window,
+                                              &video.primary_window_surface)
+            != DFB_OK)
+        {
+                video.dfb->Release (video.dfb);
+                video.primary_surface->Release (video.primary_surface);
+                video.primary_window->Release (video.primary_window);
+                return -8;
+        }
 
         if (g_ascii_strncasecmp
             (splashy_get_config_string ("/splashy/fadein"), "yes", 3) == 0)
-                video.primary_window->SetOpacity (video.primary_window,
-                                                   0x0);
+                video.primary_window->SetOpacity (video.primary_window, 0x0);
 
         /*
          * allow surface to have alpha channels 
@@ -1205,18 +1250,18 @@ splashy_start_splash ()
         /*
          * it writes on the framebuffer the background image
          */
-        video.provider->RenderTo (video.provider, video.primary_window_surface,
-                                   NULL);
+        video.provider->RenderTo (video.provider,
+                                  video.primary_window_surface, NULL);
         video.provider->RenderTo (video.provider, video.primary_surface,
-                                   NULL);
+                                  NULL);
 
-	if (create_event_buffer() < 0) 
-	{
-	    video.dfb->Release (video.dfb);
-	    video.primary_surface->Release (video.primary_surface);
-	    video.primary_window->Release(video.primary_window);
-	    return -9;
-	}
+        if (create_event_buffer () < 0)
+        {
+                video.dfb->Release (video.dfb);
+                video.primary_surface->Release (video.primary_surface);
+                video.primary_window->Release (video.primary_window);
+                return -9;
+        }
         /*
          * fade in effect 
          */
@@ -1226,17 +1271,17 @@ splashy_start_splash ()
                 fade_in ();
 
 
-	draw_progressbar();
+        draw_progressbar ();
 
-        if (init_font() < 0) 
-	{
-	    splashy_stop_splash();
-	    return -10;
-	}
+        if (init_font () < 0)
+        {
+                splashy_stop_splash ();
+                return -10;
+        }
 
-        start_text_area();
+        start_text_area ();
 
-	return 0;
+        return 0;
 }
 
 void
@@ -1256,9 +1301,13 @@ splashy_stop_splash ()
 
         /*
          * free up memory 
-	 */
-	/* Also release textarea ? */
-        /* TODO Do we need to check if keyboard and ev_buffer were init'd ?*/
+         */
+        /*
+         * Also release textarea ? 
+         */
+        /*
+         * TODO Do we need to check if keyboard and ev_buffer were init'd ?
+         */
 
         DEBUG_PRINT ("Releasing %s\n", "ev_buffer");
         video.ev_buffer->Release (video.ev_buffer);     /* input buffer */
@@ -1278,14 +1327,14 @@ splashy_stop_splash ()
 void
 splashy_wait_for_event ()
 {
-        DEBUG_PRINT("%s",__FUNCTION__);
+        DEBUG_PRINT ("%s", __FUNCTION__);
         video.ev_buffer->WaitForEvent (video.ev_buffer);
 }
-    
+
 void
 splashy_wake_up ()
 {
-        DEBUG_PRINT("%s",__FUNCTION__);
+        DEBUG_PRINT ("%s", __FUNCTION__);
         video.ev_buffer->WakeUp (video.ev_buffer);
 }
 
@@ -1298,17 +1347,17 @@ splashy_wake_up ()
 int
 splashy_get_key_event ()
 {
-        DEBUG_PRINT("%s",__FUNCTION__);
+        DEBUG_PRINT ("%s", __FUNCTION__);
         DFBInputEvent DFBevent;
-        
-        while (video.ev_buffer->HasEvent (video.ev_buffer) == DFB_OK
-                       && video.ev_buffer->GetEvent (video.ev_buffer,
-                                                     DFB_EVENT (&DFBevent)) ==
-                       DFB_OK) 
-        {
-            if (DFBevent.type != DIET_KEYPRESS) continue;
 
-            return DFBevent.key_symbol;
+        while (video.ev_buffer->HasEvent (video.ev_buffer) == DFB_OK
+               && video.ev_buffer->GetEvent (video.ev_buffer,
+                                             DFB_EVENT (&DFBevent)) == DFB_OK)
+        {
+                if (DFBevent.type != DIET_KEYPRESS)
+                        continue;
+
+                return DFBevent.key_symbol;
         }
 
         return -1;
@@ -1317,10 +1366,9 @@ splashy_get_key_event ()
 void
 splashy_change_splash (const gchar * newimage)
 {
-        video.dfb->CreateImageProvider (video.dfb, newimage,
-                                         &video.provider);
+        video.dfb->CreateImageProvider (video.dfb, newimage, &video.provider);
         video.provider->RenderTo (video.provider, video.primary_surface,
-                                   NULL);
+                                  NULL);
         /*
          * restore progressbar 
          */
@@ -1338,21 +1386,25 @@ splashy_change_splash (const gchar * newimage)
 }
 
 void
-splashy_reset_splash () {
-    splashy_change_splash(_current_background);
+splashy_reset_splash ()
+{
+        splashy_change_splash (_current_background);
 }
 
 /**
- * Print a line of text in the textbox.
+ * Prints a line of text in the textbox.
+ * This displays regardless of whether the user wants
+ * to see the message or not. Use this function to send
+ * important status messages (one line at a time) to the user.
  *
  * @return
  */
 void
-splashy_printline (const char * string)
+splashy_printline (const char *string)
 {
-	char *sp = NULL, *tok, *str;
-	DFBRectangle rect;
-	int x, y, ls;
+        char *sp = NULL, *tok, *str;
+        DFBRectangle rect;
+        int x, y, ls;
 
         if (video.textbox == NULL)
                 return;
@@ -1366,46 +1418,53 @@ splashy_printline (const char * string)
         /*
          * Copy the textbox background from off-screen surface 
          */
-	video.textbox->offscreen->Blit (video.textbox->surface,
-					 video.textbox->offscreen,
-					 NULL, 0, 0);
+        video.textbox->offscreen->Blit (video.textbox->surface,
+                                        video.textbox->offscreen, NULL, 0, 0);
 
 
-	video.font-> GetStringExtents(video.font, "_", -1, NULL, &rect);
-	video.font-> GetHeight(video.font, &ls);
-	x = rect.w;
-	y = ls/2;
+        video.font->GetStringExtents (video.font, "_", -1, NULL, &rect);
+        video.font->GetHeight (video.font, &ls);
+        x = rect.w;
+        y = ls / 2;
 
-	for (str=strdup(string); 
-		(tok = strtok_r(str,"\n",&sp)) != NULL; str=NULL) {
-        /*
-         * Draw string to the clipped surface 
-         */
-		video.textbox->surface->DrawString (
-				    video.textbox->surface, tok,
-				    -1, x, (y+=ls),
-				    DSTF_BOTTOM);
-	}
+        for (str = strdup (string);
+             (tok = strtok_r (str, "\n", &sp)) != NULL; str = NULL)
+        {
+                /*
+                 * Draw string to the clipped surface 
+                 */
+                video.textbox->surface->DrawString (video.textbox->surface,
+                                                    tok, -1, x, (y +=
+                                                                 ls),
+                                                    DSTF_BOTTOM);
+        }
 
-	free(str);
+        free (str);
 }
 
 /**
- * Print a line of text in the textbox and scroll down
+ * Prints a line of text in the textbox and scroll down
+ * Note that this function respects _show_textbox_area while
+ * splashy_printline() does not. The reason is that this
+ * function will show the texbox only when F2 is pressed.
+ * splashy_printline() is assumed to be used for displaying
+ * status regardless of whether the user actually wanted to see this
+ * or not.
  *
  * @return
  */
 void
-splashy_printline_s (const char * string)
+splashy_printline_s (const char *string)
 {
         char *str;
-	DFBRectangle rect;
-	int x, y=0, ls;
+        DFBRectangle rect;
+        int x, y = 0, ls;
 
         if (video.textbox == NULL)
                 return;
 
-        if (last_text_y_position >= (video.textbox->area.h - abs (video.fontdesc.height/2)))
+        if (last_text_y_position >=
+            (video.textbox->area.h - abs (video.fontdesc.height / 2)))
         {
                 _clear_offscreen (video);
                 last_text_y_position = 0;
@@ -1414,184 +1473,229 @@ splashy_printline_s (const char * string)
         /*
          * Copy the textbox background from off-screen surface 
          */
-	video.textbox->offscreen->Blit (video.textbox->surface,
-					 video.textbox->offscreen,
-					 NULL, 0, 0);
+        video.textbox->offscreen->Blit (video.textbox->surface,
+                                        video.textbox->offscreen, NULL, 0, 0);
 
-	video.font-> GetStringExtents(video.font, "_", -1, NULL, &rect);
-	video.font-> GetHeight(video.font, &ls);
-	x = rect.w;
-	y = ls/2 + last_text_y_position;
+        video.font->GetStringExtents (video.font, "_", -1, NULL, &rect);
+        video.font->GetHeight (video.font, &ls);
+        x = rect.w;
+        y = (ls / 2 + last_text_y_position) + ls;
 
-	str=strdup(string); 
+        str = strdup (string);
         /*
          * Draw string to the clipped surface 
          */
-        video.textbox->surface->DrawString (
-		video.textbox->surface, str,
-		-1, x, (y+=ls), DSTF_BOTTOM);
+        if (_show_textbox_area)
+        {
+                video.textbox->surface->DrawString (video.textbox->surface,
+                                                    str, -1, x, y,
+                                                    DSTF_BOTTOM);
+
+                /*
+                 * save our textbox for the next scroll 
+                 */
+                video.textbox->offscreen->Blit (video.textbox->offscreen,
+                                                video.textbox->surface,
+                                                NULL, 0, 0);
+        }
+        else
+        {
+                /*
+                 * draw the string offscreen anyway 
+                 */
+                video.textbox->offscreen->DrawString (video.textbox->
+                                                      offscreen, str, -1, x,
+                                                      y, DSTF_BOTTOM);
+        }
         last_text_y_position = y;
-	free(str);
-
-        /* save our textbox for the next scroll */
-        video.textbox->offscreen->Blit (video.textbox->offscreen,
-                                        video.textbox->surface,
-					 NULL, 0, 0);
-}
-
-int splashy_getchar () {
-    DFBInputEvent event;
-    int res=-1;
-        
-    while (res < 0) 
-    {
-        video.ev_buffer->WaitForEvent (video.ev_buffer);
-
-        while (video.ev_buffer->GetEvent (video.ev_buffer, DFB_EVENT(&event)) == DFB_OK) 
-        {
-            if (event.type != DIET_KEYPRESS) continue;
-            if (!DFB_KEY_IS_ASCII(event.key_symbol) ) continue;
-
-            res = event.key_symbol;
-        }
-    }
-
-    return res;
-}
-
-void
-draw_input_bar (char *string, int len, int pos, splashy_box_t *input)
-{
-
-	int dir=DSTF_LEFT, loc=5, cursor;
-        DFBRectangle rect;
-        video.font-> GetStringExtents(video.font, string, pos, NULL, &rect);
-        cursor = rect.w;
-
-        /* Clear input bar */
-	input->surface->Blit(input->surface, 
-				input->offscreen, NULL, 0, 0);
-
-		/* If string is longer than box, scroll to left */ 
-	if (cursor  > input->area.w - 2*loc ) {
-	    video.font-> GetStringExtents(video.font, "_", 1, NULL, &rect);
-	    dir = DSTF_RIGHT;
-	    loc = input->area.w - loc - rect.w;
-	    cursor = loc + rect.w;
-	}
-        /* Draw text */
-	input->surface->DrawString(input->surface, string, -1, 
-			    loc, input->area.h/2, dir);
-        /* Draw cursor */
-	input->surface->DrawString(input->surface, "_", -1, 
-			    cursor, input->area.h/2 + 2, dir);
-        
-}
-
-/* Asks user to fill the buffer with a string with max_length-1 char's
- * The buffer will always end with a \0.
- */
-int _gets_from_input_bar (char *buf, int max_length, splashy_box_t *input, int pass) 
-{
-    DFBInputEvent event;
-    int enter_pressed=0, len=0, pos=0, i;
-    char *tmp = (char *) malloc(max_length *sizeof(char));
-    
-    if (max_length<1) 
-        return 0;
-    
-
-    while (!enter_pressed) 
-    {
-        video.ev_buffer->WaitForEvent (video.ev_buffer);
-
-        while (video.ev_buffer->GetEvent (video.ev_buffer, DFB_EVENT(&event)) == DFB_OK) 
-        {
-            if (event.type != DIET_KEYPRESS) continue;
-
-            switch(event.key_id) {
-                case DIKI_ENTER:
-                    enter_pressed = 1;
-                    break;
-                case DIKI_RIGHT:
-                    pos = (++pos > len ? len : pos);
-                    break;
-                case DIKI_LEFT:
-                    pos = (--pos < 0 ? 0 : pos);
-                    break;
-                case DIKI_DELETE:
-                    if (len == 0 || pos == len) break;
-	            len--;
-                    // For the corner cases pos=0 or len
-                    // nrchars == 0
-                    strncpy(tmp,buf,pos); 
-                    strncpy(tmp+pos,buf+pos+1,len-pos);
-                    strncpy(buf,tmp,len);
-                    pos = (pos > len-1 ? len-1 : pos);
-                    break;
-                case DIKI_BACKSPACE:
-                    if (pos==0) break;
-                    len--;
-                    pos--;
-                    strncpy(tmp,buf,pos);
-                    strncpy(tmp+pos,buf+pos+1,len-pos);
-                    strncpy(buf,tmp,len);
-                    break;
-                case DIKI_HOME:
-                    pos = 0;
-                    break;
-                case DIKI_END:
-                    pos = len;
-                    break;
-                    //case DIKI_SPACE:
-                default:
-                    //if( DFB_KEY_TYPE(event.key_symbol) != DIKT_UNICODE ) continue;
-                    if( !DFB_KEY_IS_ASCII(event.key_symbol) ) continue;
-                        
-                    if ( len + 1 >= max_length ) { 
-			/*We're full, blink */
-			break;
-                    }
-
-                    buf[len++] = event.key_symbol;
-                    pos = (++pos > len ? len : pos);
-                    break;
-            }
-        }
-        
-        buf[len]='\0';
-        tmp[len]='\0';
-        if(pass) 
-            for(i=0; i<len; i++) tmp[i]='*';
-        else 
-            strncpy(tmp,buf,len);
-        
-        draw_input_bar(tmp,len,pos,input);
-
-    } /* while ! enter */
-
-    free(tmp);
-    return len;
+        free (str);
 }
 
 int
-_get_string (char *buf, int len, const char * prompt, int pass)
+splashy_getchar ()
+{
+        DFBInputEvent event;
+        int res = -1;
+
+        while (res < 0)
+        {
+                video.ev_buffer->WaitForEvent (video.ev_buffer);
+
+                while (video.ev_buffer->
+                       GetEvent (video.ev_buffer,
+                                 DFB_EVENT (&event)) == DFB_OK)
+                {
+                        if (event.type != DIET_KEYPRESS)
+                                continue;
+                        if (!DFB_KEY_IS_ASCII (event.key_symbol))
+                                continue;
+
+                        res = event.key_symbol;
+                }
+        }
+
+        return res;
+}
+
+void
+draw_input_bar (char *string, int len, int pos, splashy_box_t * input)
+{
+
+        int dir = DSTF_LEFT, loc = 5, cursor;
+        DFBRectangle rect;
+        video.font->GetStringExtents (video.font, string, pos, NULL, &rect);
+        cursor = rect.w;
+
+        /*
+         * Clear input bar 
+         */
+        input->surface->Blit (input->surface, input->offscreen, NULL, 0, 0);
+
+        /*
+         * If string is longer than box, scroll to left 
+         */
+        if (cursor > input->area.w - 2 * loc)
+        {
+                video.font->GetStringExtents (video.font, "_", 1, NULL,
+                                              &rect);
+                dir = DSTF_RIGHT;
+                loc = input->area.w - loc - rect.w;
+                cursor = loc + rect.w;
+        }
+        /*
+         * Draw text 
+         */
+        input->surface->DrawString (input->surface, string, -1,
+                                    loc, input->area.h / 2, dir);
+        /*
+         * Draw cursor 
+         */
+        input->surface->DrawString (input->surface, "_", -1,
+                                    cursor, input->area.h / 2 + 2, dir);
+
+}
+
+/*
+ * Asks user to fill the buffer with a string with max_length-1 char's The
+ * buffer will always end with a \0. 
+ */
+int
+_gets_from_input_bar (char *buf, int max_length, splashy_box_t * input,
+                      int pass)
+{
+        DFBInputEvent event;
+        int enter_pressed = 0, len = 0, pos = 0, i;
+        char *tmp = (char *) malloc (max_length * sizeof (char));
+
+        if (max_length < 1)
+                return 0;
+
+
+        while (!enter_pressed)
+        {
+                video.ev_buffer->WaitForEvent (video.ev_buffer);
+
+                while (video.ev_buffer->
+                       GetEvent (video.ev_buffer,
+                                 DFB_EVENT (&event)) == DFB_OK)
+                {
+                        if (event.type != DIET_KEYPRESS)
+                                continue;
+
+                        switch (event.key_id)
+                        {
+                        case DIKI_ENTER:
+                                enter_pressed = 1;
+                                break;
+                        case DIKI_RIGHT:
+                                pos = (++pos > len ? len : pos);
+                                break;
+                        case DIKI_LEFT:
+                                pos = (--pos < 0 ? 0 : pos);
+                                break;
+                        case DIKI_DELETE:
+                                if (len == 0 || pos == len)
+                                        break;
+                                len--;
+                                // For the corner cases pos=0 or len
+                                // nrchars == 0
+                                strncpy (tmp, buf, pos);
+                                strncpy (tmp + pos, buf + pos + 1, len - pos);
+                                strncpy (buf, tmp, len);
+                                pos = (pos > len - 1 ? len - 1 : pos);
+                                break;
+                        case DIKI_BACKSPACE:
+                                if (pos == 0)
+                                        break;
+                                len--;
+                                pos--;
+                                strncpy (tmp, buf, pos);
+                                strncpy (tmp + pos, buf + pos + 1, len - pos);
+                                strncpy (buf, tmp, len);
+                                break;
+                        case DIKI_HOME:
+                                pos = 0;
+                                break;
+                        case DIKI_END:
+                                pos = len;
+                                break;
+                                // case DIKI_SPACE:
+                        default:
+                                // if( DFB_KEY_TYPE(event.key_symbol) !=
+                                // DIKT_UNICODE ) continue;
+                                if (!DFB_KEY_IS_ASCII (event.key_symbol))
+                                        continue;
+
+                                if (len + 1 >= max_length)
+                                {
+                                        /*
+                                         * We're full, blink 
+                                         */
+                                        break;
+                                }
+
+                                buf[len++] = event.key_symbol;
+                                pos = (++pos > len ? len : pos);
+                                break;
+                        }
+                }
+
+                buf[len] = '\0';
+                tmp[len] = '\0';
+                if (pass)
+                        for (i = 0; i < len; i++)
+                                tmp[i] = '*';
+                else
+                        strncpy (tmp, buf, len);
+
+                draw_input_bar (tmp, len, pos, input);
+
+        }                       /* while ! enter */
+
+        free (tmp);
+        return len;
+}
+
+int
+_get_string (char *buf, int len, const char *prompt, int pass)
 {
         gint divider_w, divider_h;
         gint screen_width, screen_height;
-        gint red, green, blue, alpha; 
+        gint red, green, blue, alpha;
 
-	splashy_box_t box;
-	splashy_box_t input;
+        splashy_box_t box;
+        splashy_box_t input;
         DFBSurfaceDescription desc;
 
-	int font_height, r_len;
-        video.font->GetHeight(video.font, &font_height);
-                        
+        int font_height, r_len;
+        video.font->GetHeight (video.font, &font_height);
+
         video.primary_surface->GetSize (video.primary_surface,
-                                         &screen_width, &screen_height);
+                                        &screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
-        /* Set up the size of the box and input line and title box */
+        /*
+         * Set up the size of the box and input line and title box 
+         */
         box.area.x = 0.2 * screen_width;
         box.area.w = 0.6 * screen_width;
         box.area.y = 0.35 * screen_height;
@@ -1600,7 +1704,7 @@ _get_string (char *buf, int len, const char * prompt, int pass)
         input.area.x = box.area.x + 2 * font_height;
         input.area.w = box.area.w - 4 * font_height;
         input.area.h = 2 * font_height;
-	input.area.y = box.area.y + box.area.h / 2 ; 
+        input.area.y = box.area.y + box.area.h / 2;
 
         /*
          * Make a copy of the surface below, so we can put it back
@@ -1608,74 +1712,87 @@ _get_string (char *buf, int len, const char * prompt, int pass)
         desc.width = box.area.w;
         desc.height = box.area.h;
         desc.caps = DSCAPS_SYSTEMONLY;  // Only in system
-        desc.flags =
-                DSDESC_CAPS | DSDESC_WIDTH | DSDESC_HEIGHT;
+        desc.flags = DSDESC_CAPS | DSDESC_WIDTH | DSDESC_HEIGHT;
 
         video.dfb->CreateSurface (video.dfb, &desc, &box.offscreen);
-        
-	box.offscreen->Blit (box.offscreen, 
-				video.primary_surface, &box.area, 0, 0);
 
-        /* 
+        box.offscreen->Blit (box.offscreen,
+                             video.primary_surface, &box.area, 0, 0);
+
+        /*
          * Create a pointer to the SubSurface where the box will be 
          */
         video.primary_surface->GetSubSurface (video.primary_surface,
-                                               &box.area,
-                                               &box.surface);
-        box.surface->SetDrawingFlags (box.surface,DSDRAW_BLEND);
+                                              &box.area, &box.surface);
+        box.surface->SetDrawingFlags (box.surface, DSDRAW_BLEND);
 
-        /* Fill it with a color (using alpha) */
-        red = alpha = 255; green = blue = 0;
+        /*
+         * Fill it with a color (using alpha) 
+         */
+        red = alpha = 255;
+        green = blue = 0;
         box.surface->SetColor (box.surface, red, green, blue, alpha);
-        box.surface->FillRectangle (box.surface, 0, 0, box.area.w, box.area.h);
+        box.surface->FillRectangle (box.surface, 0, 0, box.area.w,
+                                    box.area.h);
 
-        /* Draw the title box, and the title */
+        /*
+         * Draw the title box, and the title 
+         */
         box.surface->SetColor (box.surface, 0, 0, 0, alpha);
-        box.surface->DrawRectangle (box.surface, 0, 0, box.area.w, box.area.h);
+        box.surface->DrawRectangle (box.surface, 0, 0, box.area.w,
+                                    box.area.h);
         box.surface->SetFont (box.surface, video.font);
-        box.surface->DrawString (box.surface, prompt, -1,  box.area.w /2, 
-                font_height, DSTF_CENTER | DSTF_TOP);
+        box.surface->DrawString (box.surface, prompt, -1, box.area.w / 2,
+                                 font_height, DSTF_CENTER | DSTF_TOP);
 
-        /* Create a pointer to the SubSurface where the input line is 
-         * Give it some color.
+        /*
+         * Create a pointer to the SubSurface where the input line is Give
+         * it some color. 
          */
         video.primary_surface->GetSubSurface (video.primary_surface,
-                &input.area,&input.surface);
+                                              &input.area, &input.surface);
         input.surface->SetColor (input.surface, 255, 255, 255, 255);
-        input.surface->FillRectangle (input.surface, 0, 0, input.area.w, input.area.h);
-        alpha = 255; green = blue = red = 0;
+        input.surface->FillRectangle (input.surface, 0, 0, input.area.w,
+                                      input.area.h);
+        alpha = 255;
+        green = blue = red = 0;
         input.surface->SetColor (input.surface, red, green, blue, alpha);
         input.surface->SetFont (input.surface, video.font);
-       
-        /* Create a copy of the empty input box */
+
+        /*
+         * Create a copy of the empty input box 
+         */
         desc.width = input.area.w;
         desc.height = input.area.h;
         video.dfb->CreateSurface (video.dfb, &desc, &input.offscreen);
-        input.offscreen->Blit (input.offscreen, video.primary_surface, &input.area, 0, 0);
-	
-	r_len = _gets_from_input_bar (buf, len, &input, pass); 
+        input.offscreen->Blit (input.offscreen, video.primary_surface,
+                               &input.area, 0, 0);
 
-	video.primary_surface->Blit (video.primary_surface, box.offscreen, 
-					NULL, box.area.x, box.area.y);
+        r_len = _gets_from_input_bar (buf, len, &input, pass);
 
-	input.surface->Release(input.surface);
-	input.offscreen->Release(input.offscreen);
-	box.surface->Release(box.surface);
-	box.offscreen->Release(box.offscreen);
+        video.primary_surface->Blit (video.primary_surface, box.offscreen,
+                                     NULL, box.area.x, box.area.y);
 
-	return r_len;
+        input.surface->Release (input.surface);
+        input.offscreen->Release (input.offscreen);
+        box.surface->Release (box.surface);
+        box.offscreen->Release (box.offscreen);
+
+        return r_len;
 }
 
 int
-splashy_get_string (char *buf, int len, const char * prompt) {
-    return _get_string (buf, len, prompt, 0);
+splashy_get_string (char *buf, int len, const char *prompt)
+{
+        return _get_string (buf, len, prompt, 0);
 }
 
 int
-splashy_get_password (char *buf, int len, const char * prompt) {
-    return _get_string (buf, len, prompt, 1);
+splashy_get_password (char *buf, int len, const char *prompt)
+{
+        return _get_string (buf, len, prompt, 1);
 }
-  
+
 
 /*
  * Initialize the library 
@@ -1683,74 +1800,86 @@ splashy_get_password (char *buf, int len, const char * prompt) {
  *  - Checks it the config is sane
  *  @param const char * file    Path to splashy configfile. If NULL, standard is taken
  *  @param const char * mode    Mode of operation: boot, shutdown, resume, suspend
- *  @return int	    Returns <0 for error 0 for succes
+ *  @return int     Returns <0 for error 0 for succes
  */
 int
-splashy_init (const char * file, const char *mode)
+splashy_init (const char *file, const char *mode)
 {
-	DEBUG_PRINT("Entering splashy_init(...,%s)",mode);
-        GString *xpath = g_string_new("");
-	const char *cnf_item;
-	int i;
+        DEBUG_PRINT ("Entering splashy_init(...,%s)", mode);
+        GString *xpath = g_string_new ("");
+        const char *cnf_item;
+        int i;
 
-        if (!splashy_init_config( (file!=NULL?file:SPL_CONFIG_FILE) )) {
-            ERROR_PRINT("libsplashy: No config file found at %s", file);
-            return -1;
+        if (!splashy_init_config ((file != NULL ? file : SPL_CONFIG_FILE)))
+        {
+                ERROR_PRINT ("libsplashy: No config file found at %s", file);
+                return -1;
         }
 
         _current_mode = -1;
-        for(i=0; i<NRMODES; i++) {
-            if(strncmp(valid_modes[i],mode,strlen(valid_modes[i])) == 0) {
-		_current_mode = i;
-		DEBUG_PRINT("We're in mode %s",mode);
-            }
-        }
-        
-        if (_current_mode == -1)  {
-            ERROR_PRINT("libsplashy: %s is not a legal mode",mode);
-            return -2;
+        for (i = 0; i < NRMODES; i++)
+        {
+                if (strncmp (valid_modes[i], mode, strlen (valid_modes[i])) ==
+                    0)
+                {
+                        _current_mode = i;
+                        DEBUG_PRINT ("We're in mode %s", mode);
+                }
         }
 
-        g_string_assign(xpath,"/splashy/progressbar/direction/");
-	g_string_append(xpath,mode);
-	DEBUG_PRINT("Getting %s",xpath->str);
-	if ((cnf_item = splashy_get_config_string (xpath->str))) {
-	    if (strncmp("forward",cnf_item, 7) == 0) 
-		splashy_set_progressbar_forward(TRUE);
-	    else if (strncmp("backward", cnf_item, 8) == 0)
-		splashy_set_progressbar_forward(FALSE);
-	}	
-
-        g_string_assign(xpath,"/splashy/progressbar/visibility/");
-	g_string_append(xpath,mode);
-	DEBUG_PRINT("Getting %s",xpath->str);
-	if ((cnf_item = splashy_get_config_string (xpath->str))) {
-	    if (strncmp("y",cnf_item,1) == 0)
-		splashy_set_progressbar_visible(TRUE);
-	    else if (strncmp("n",cnf_item,1) == 0)
-		splashy_set_progressbar_visible(FALSE);
-	}
-
-	g_string_assign(xpath,"/splashy/background/errorimg");
-	DEBUG_PRINT("Getting %s",xpath->str);
-	cnf_item = splashy_image_path (xpath->str);
-        if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR)) {
-            ERROR_PRINT("libsplashy: Could not find error image at %s.",cnf_item);
-            return -3;
+        if (_current_mode == -1)
+        {
+                ERROR_PRINT ("libsplashy: %s is not a legal mode", mode);
+                return -2;
         }
 
-        g_string_assign(xpath,"/splashy/background/");
-	g_string_append(xpath,mode);
-	DEBUG_PRINT("Getting %s",xpath->str);
-	cnf_item = splashy_image_path (xpath->str);
-        if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR)) {
-            ERROR_PRINT("libsplashy: Could not find background image at %s.",cnf_item);
-            return -4;
-	}
+        g_string_assign (xpath, "/splashy/progressbar/direction/");
+        g_string_append (xpath, mode);
+        DEBUG_PRINT ("Getting %s", xpath->str);
+        if ((cnf_item = splashy_get_config_string (xpath->str)))
+        {
+                if (strncmp ("forward", cnf_item, 7) == 0)
+                        splashy_set_progressbar_forward (TRUE);
+                else if (strncmp ("backward", cnf_item, 8) == 0)
+                        splashy_set_progressbar_forward (FALSE);
+        }
 
-	_current_background = cnf_item;
-       
-	g_string_free(xpath, TRUE);
+        g_string_assign (xpath, "/splashy/progressbar/visibility/");
+        g_string_append (xpath, mode);
+        DEBUG_PRINT ("Getting %s", xpath->str);
+        if ((cnf_item = splashy_get_config_string (xpath->str)))
+        {
+                if (strncmp ("y", cnf_item, 1) == 0)
+                        splashy_set_progressbar_visible (TRUE);
+                else if (strncmp ("n", cnf_item, 1) == 0)
+                        splashy_set_progressbar_visible (FALSE);
+        }
+
+        g_string_assign (xpath, "/splashy/background/errorimg");
+        DEBUG_PRINT ("Getting %s", xpath->str);
+        cnf_item = splashy_image_path (xpath->str);
+        if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR))
+        {
+                ERROR_PRINT ("libsplashy: Could not find error image at %s.",
+                             cnf_item);
+                return -3;
+        }
+
+        g_string_assign (xpath, "/splashy/background/");
+        g_string_append (xpath, mode);
+        DEBUG_PRINT ("Getting %s", xpath->str);
+        cnf_item = splashy_image_path (xpath->str);
+        if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR))
+        {
+                ERROR_PRINT
+                        ("libsplashy: Could not find background image at %s.",
+                         cnf_item);
+                return -4;
+        }
+
+        _current_background = cnf_item;
+
+        g_string_free (xpath, TRUE);
 
         return TRUE;
 }

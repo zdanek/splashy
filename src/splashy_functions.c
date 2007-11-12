@@ -89,8 +89,6 @@ static gboolean exiting = FALSE;        /* threads should read this before
                                          * to true at cmd_exit() */
 static gboolean read_console = FALSE;   /* flag to turn on/off reading the
                                          * /dev/vcs* files */
-static gboolean show_textbox_area = FALSE;      /* flag to toggle showing
-                                                 * textbox area */
 static gboolean switched_to_verbose = FALSE;    /* flag to know when verbose
                                                  * image is displayed */
 static gboolean F2_toggle_pressed = FALSE;      /* keeps track of the depress 
@@ -636,9 +634,8 @@ _switch_to_verbose_image ()
 }
 
 /**
- * When pressing F2, or when autoverboseonerror is set
- * we show the scrolling UNIX text from the console /dev/vcs1, in a smaller window
- * if the user needs to type something, s/he must press ESC to exit Splashy
+ * When autoverboseonerror is set we show the scrolling 
+ * text from the consoles /dev/vcs*
  * @param data - not used
  * @return
  *
@@ -662,8 +659,8 @@ verbose_text_loop (void *data)
 
         dev_vcs = NULL;
         switched_to_verbose = FALSE;    /* verbose image flag */
-        show_textbox_area = FALSE;      /* when this flag is set we display a 
-                                         * textbox */
+        splashy_set_textbox_area_visible(FALSE);
+
         autoverbose = FALSE;    /* assume we don't need verbose mode for now */
         read_console = TRUE;    /* assume we will be able to read from a
                                  * console */
@@ -780,7 +777,7 @@ verbose_text_loop (void *data)
                                  * look for error messages only if we weren't asked
                                  * to display text right the way
                                  */
-                                if (show_textbox_area != TRUE)
+                                if (splashy_get_textbox_area_visible() != TRUE)
                                 {
                                         /*
                                          * we only look for errors if autoverbose
@@ -800,7 +797,7 @@ verbose_text_loop (void *data)
                                                                  buf, 1);
                                                 }
 
-                                                /* when the user press F2 we want to show
+                                                /* when the user presses F2 we want to show
                                                  * the buffer in the textbox anyway. regardless
                                                  * of whether an error was found or not */
                                                 if (F2_toggle_pressed != TRUE)
@@ -816,7 +813,7 @@ verbose_text_loop (void *data)
                                                  * and allow the textbox area to be shown
                                                  */
                                                 found_error = TRUE;
-                                                show_textbox_area = TRUE;
+                                                splashy_set_textbox_area_visible(TRUE);
 
                                                 if (autoverbose == TRUE
                                                     && switched_to_verbose ==
@@ -838,7 +835,7 @@ verbose_text_loop (void *data)
 
                                 /*
                                  * pressing F2 will cause text to be printed to the textbox
-                                 * as well as having autoverbose set to on in the config.xml
+                                 * as well as having autoverbose set to ON in the config.xml
                                  */
                                 if (autoverbose == TRUE
                                     || F2_toggle_pressed == TRUE)
@@ -1078,14 +1075,12 @@ keyevent_loop (void *data)
 				if (F2_toggle_pressed != TRUE)
 				{
 					F2_toggle_pressed = TRUE;
-					show_textbox_area = TRUE;
-					/* now show the box */
-					splashy_printline_s ("");
+					splashy_set_textbox_area_visible(TRUE);
 				}
 				else
 				{
 					F2_toggle_pressed = FALSE;
-					show_textbox_area = FALSE;
+                                        splashy_set_textbox_area_visible(FALSE);
 					/*
 					 * pressing F2 also clears the 
 					 * switched_to_verbose flag

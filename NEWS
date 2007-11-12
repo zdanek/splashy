@@ -4,12 +4,17 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 
 Changes between 0.3.6 and 0.3.7
 -------------------------------
- * all static dropped in favor of shared libraries. If your distribution does not support initramfs
-   shared binaries, or you are using Splashy from a thin-client server, you will need to re-enable
-   static on your own. Please refer to configure.ac and src/Makefile.am
+ * all static build dropped in favor of shared libraries. If your distribution does not support 
+   initramfs shared binaries, or you are using Splashy from a thin-client server, you will need 
+   to re-enable static on your own. Please refer to configure.ac and src/Makefile.am
  * scrolls text during boot (splashy_update "scroll text to display")
  * splashy_update commands print_scroll is now just scroll. Same for its alias "TEXT_SCROLL->SCROLL)
  * splashy_update command clrprint is now just "clear"
+ * adds verbose text when pressing F2 (again). This time is done using LSB scripts not reading 
+   the console files (/dev/vcs*)
+ * LSB script writes splashy PID to /var/run/sendsigs.omit which is used by /etc/init.d/sendsigs to
+   killall5 all processes at shutdown/reboot. This tells the system to ignore killing splashy during
+   shutdown/reboot.
 
 Changes between 0.3.5 and 0.3.6
 -------------------------------
