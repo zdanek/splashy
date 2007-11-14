@@ -138,6 +138,21 @@ void
 splashy_set_textbox_area_visible (gboolean visible)
 {
         _show_textbox_area = visible;
+        /*
+         * users expect to see something happen as soon
+         * as F2 is pressed. Let's give'm a show for their
+         * money!
+         */
+        if (visible)
+        {
+                video.textbox->offscreen->Blit (video.textbox->surface,
+                                                video.textbox->offscreen,
+                                                NULL, 0, 0);
+        }
+        else
+        {
+                _clear_offscreen ();
+        }
 }
 
 gboolean
@@ -1392,7 +1407,7 @@ splashy_reset_splash ()
 }
 
 /**
- * Prints a line of text in the textbox.
+ * Prints a line of text in the textbox. Supports multi-lines split by new-lines (\n)
  * This displays regardless of whether the user wants
  * to see the message or not. Use this function to send
  * important status messages (one line at a time) to the user.
@@ -1470,12 +1485,6 @@ splashy_printline_s (const char *string)
                 last_text_y_position = 0;
         }
 
-        /*
-         * Copy the textbox background from off-screen surface 
-         */
-        video.textbox->offscreen->Blit (video.textbox->surface,
-                                        video.textbox->offscreen, NULL, 0, 0);
-
         video.font->GetStringExtents (video.font, "_", -1, NULL, &rect);
         video.font->GetHeight (video.font, &ls);
         x = rect.w;
@@ -1487,6 +1496,12 @@ splashy_printline_s (const char *string)
          */
         if (_show_textbox_area)
         {
+                /*
+                 * Copy the textbox background from off-screen surface 
+                 */
+                video.textbox->offscreen->Blit (video.textbox->surface,
+                                                video.textbox->offscreen,
+                                                NULL, 0, 0);
                 video.textbox->surface->DrawString (video.textbox->surface,
                                                     str, -1, x, y,
                                                     DSTF_BOTTOM);
