@@ -925,7 +925,7 @@ init_font ()
  */
 
 void
-_clear_offscreen ()
+_clear_offscreen (void)
 {
         gint red, green, blue, alpha;
         if (video.textbox == NULL)
@@ -1426,7 +1426,7 @@ splashy_printline (const char *string)
 
         if (last_text_y_position > 0)
         {
-                _clear_offscreen (video);
+                _clear_offscreen ();
                 last_text_y_position = 0;
         }
 
@@ -1481,7 +1481,7 @@ splashy_printline_s (const char *string)
         if (last_text_y_position >=
             (video.textbox->area.h - abs (video.fontdesc.height / 2)))
         {
-                _clear_offscreen (video);
+                _clear_offscreen ();
                 last_text_y_position = 0;
         }
 
