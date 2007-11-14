@@ -122,4 +122,13 @@ int splashy_getchar ();
  */
 void splashy_allow_vt_switching ();
 
+/*
+ * private
+ */
+
+/*
+ * Internal function to clean the offscreen textbox area.
+ */
+void _clear_offscreen(void);
+
 #endif
