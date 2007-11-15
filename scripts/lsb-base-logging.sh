@@ -129,6 +129,9 @@ stop_splashy () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
 
+    # just in case, make progressbar 100%
+    $SPL_UPD "progress 100" 2> /dev/null || true
+
     # now we can exit Splashy:
     $SPL_UPD "exit" 2> /dev/null || true
 
