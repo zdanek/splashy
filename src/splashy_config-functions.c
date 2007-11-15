@@ -176,7 +176,7 @@ install_theme (gchar * tarball_path)
                 if (tar(tar_options) != 0)
                 {
                         PRINT_FAIL;
-                        g_print (_("An error occurred checking theme \n"));
+                        g_printerr (_("An error occurred checking theme \n"));
                 }
                 else
                 {
@@ -284,7 +284,7 @@ install_theme (gchar * tarball_path)
         else
         {
                 PRINT_FAIL;
-                g_print (_("The tarball doesn't exist !\n"));
+                g_print (_("The tarball does not exist!\n"));
         }
         return ret;
 }
@@ -312,14 +312,14 @@ remove_theme (gchar * theme_name)
         if (!g_file_test (path->str, G_FILE_TEST_IS_DIR))
         {
                 PRINT_FAIL;
-                g_print (_("The theme doesn't exist !\n"));
+                g_printerr (_("The theme does not exist!\n"));
         }
         else if (g_strcasecmp
                  (theme_name,
                   splashy_get_config_string (SPL_CURRENT_THEME)) == 0)
         {
                 PRINT_FAIL;
-                g_print (_("This theme is currently used !\n"));
+                g_printerr (_("This theme is currently used!\n"));
 
         }
         else
@@ -445,7 +445,7 @@ create_theme (XmlFields * NewTheme)
         {
                 gboolean font_file_exists = FALSE;
                 const gchar *msg_file_doesnot_exists =
-                        _("This file doesn't exists: %s\n");
+                        _("This file does not exist: %s\n");
                 gchar *theme_path =
                         g_build_filename (splashy_get_config_string
                                           (SPL_THEMES_DIR), NewTheme->name,
@@ -457,7 +457,7 @@ create_theme (XmlFields * NewTheme)
                 if (theme_name_exists (NewTheme->name) == TRUE)
                 {
                         PRINT_FAIL;
-                        g_print (_("This theme already exists\n"));
+                        g_printerr (_("This theme already exists\n"));
                         return RETURN_ERROR;
                 }
 
@@ -473,7 +473,7 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (_
-                                 ("The boot image doesn't seem to be an image\n"));
+                                 ("The boot image does not seem to be an image\n"));
                         return RETURN_ERROR;
                 }
 
@@ -490,7 +490,7 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (_
-                                 ("The shutdown image doesn't seem to be an image\n"));
+                                 ("The shutdown image does not seem to be an image\n"));
                         return RETURN_ERROR;
                 }
 
@@ -506,7 +506,7 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (_
-                                 ("The error image doesn't seem to be an image\n"));
+                                 ("The error image does not seem to be an image\n"));
                         return RETURN_ERROR;
                 }
 
@@ -523,7 +523,7 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (_
-                                 ("The resume image doesn't seem to be an image\n"));
+                                 ("The resume image does not seem to be an image\n"));
                         return RETURN_ERROR;
                 }
 
@@ -540,7 +540,7 @@ create_theme (XmlFields * NewTheme)
                 {
                         PRINT_FAIL;
                         g_print (_
-                                 ("The suspend image doesn't seem to be an image\n"));
+                                 ("The suspend image does not seem to be an image\n"));
                         return RETURN_ERROR;
                 }
 
@@ -574,13 +574,13 @@ create_theme (XmlFields * NewTheme)
                 // Create the target directory
                 if (g_mkdir (theme_path, 0755) != 0)
                 {
-                        g_print (_("\nError! Can't create directory %s\n"),
+                        g_printerr (_("Error! Can't create theme directory %s\n"),
                                  theme_path);
-                        g_print (_("Writing theme %s to current directory\n"),
+                        g_printerr (_("Writing theme %s to current directory\n"),
                                  NewTheme->name);
                         if (g_mkdir (NewTheme->name, 0755) != 0)
                         {
-                                g_print (_
+                                g_printerr (_
                                          ("Error! Can't create directory %s\n"),
                                          NewTheme->name);
                                 exit (RETURN_ERROR);
@@ -600,7 +600,7 @@ create_theme (XmlFields * NewTheme)
                                                 NULL);
                 if (!copy_file (NewTheme->bg_boot, dest))
                 {
-                        g_print (_
+                        g_printerr (_
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
@@ -624,7 +624,7 @@ create_theme (XmlFields * NewTheme)
                                          NULL);
                 if (!copy_file (NewTheme->bg_shutdown, dest))
                 {
-                        g_print (_
+                        g_printerr (_
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
@@ -648,7 +648,7 @@ create_theme (XmlFields * NewTheme)
                                          NULL);
                 if (!copy_file (NewTheme->bg_error, dest))
                 {
-                        g_print (_
+                        g_printerr (_
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
@@ -672,7 +672,7 @@ create_theme (XmlFields * NewTheme)
                                          NULL);
                 if (!copy_file (NewTheme->bg_resume, dest))
                 {
-                        g_print (_
+                        g_printerr (_
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
@@ -696,7 +696,7 @@ create_theme (XmlFields * NewTheme)
                                          NULL);
                 if (!copy_file (NewTheme->bg_suspend, dest))
                 {
-                        g_print (_
+                        g_printerr (_
                                  ("Error! Unable to use the picture %s.\nAborting\n"),
                                  dest);
                         remove_theme (NewTheme->name);
@@ -723,7 +723,7 @@ create_theme (XmlFields * NewTheme)
                                                  NULL);
                         if (!copy_file (NewTheme->textfont_file, dest))
                         {
-                                g_print (_
+                                g_printerr (_
                                          ("Error! Unable to use the picture %s.\nAborting\n"),
                                          dest);
                                 remove_theme (NewTheme->name);
@@ -760,7 +760,7 @@ create_theme (XmlFields * NewTheme)
         else
         {
                 PRINT_FAIL;
-                g_print (_("You try to create a theme without a name\n"));
+                g_printerr (_("You tried to create a theme without a name\n"));
                 return RETURN_ERROR;
         }
 }
@@ -1012,7 +1012,7 @@ get_fields (void)
 
                 // Border or not
                 ask_string (_
-                            (" Do you want a border around the progress bar ? (yes|no)"),
+                            (" Do you want a border around the progress bar? (yes|no)"),
                             &NewTheme->pb_border_show);
 
                 // Border
@@ -1036,11 +1036,11 @@ get_fields (void)
         }                        // if progressbar
 
         // Auto verbose
-        ask_string (_("Pass in verbose mode on error ? (yes|no)"),
+        ask_string (_("Pass in verbose mode on error? (yes|no)"),
                     &NewTheme->verbose);
 
         // Text box or not
-        ask_string (_("Do you want to see a text box ? (yes|no)"),
+        ask_string (_("Do you want to see a text box? (yes|no)"),
                     &NewTheme->textbox_show);
 
         // Text box
@@ -1180,10 +1180,10 @@ get_fields (void)
         }
 
         // Fade in ?
-        ask_string (_("Do you want a fade in ? (yes|no)"), &NewTheme->fadein);
+        ask_string (_("Do you want a fade-in? (yes|no)"), &NewTheme->fadein);
 
         // Fade out ?
-        ask_string (_("Do you want a fade out ? (yes|no)"),
+        ask_string (_("Do you want a fade-out? (yes|no)"),
                     &NewTheme->fadeout);
 
         return NewTheme;
@@ -1226,7 +1226,7 @@ copy_file (gchar * src_path, gchar * dest_path)
 
         if ((dest_file = fopen (dest_path, "w+")) == NULL)
         {
-                g_critical (_("Error opening dest file %s\n"), dest_path);
+                g_critical (_("Error opening destination file %s\n"), dest_path);
                 return FALSE;
         }
 
@@ -1271,7 +1271,7 @@ theme_name_exists (const gchar * theme_name)
 /**
  * @desc Check if the file exists and is an image
  * @param filename The file to check
- * @return 0 if success, 1 if the file doesn't exist, 2 if it isn't an image or -1 if an internal error occured
+ * @return 0 if success, 1 if the file does not exist, 2 if it isn't an image or -1 if an internal error occured
  */
 gint
 check_image (const gchar * filename)
