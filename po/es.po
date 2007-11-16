@@ -46,15 +46,15 @@ msgstr "Ocurrió un error mientras instalaba el tema\n"
 
 #: src/splashy_config-functions.c:287
 msgid "The tarball does not exist!\n"
-msgstr ""
+msgstr "¡El paquete en formato tar no existe!\n"
 
 #: src/splashy_config-functions.c:302
 msgid ">Remove theme"
-msgstr ""
+msgstr ">Borrar tema"
 
 #: src/splashy_config-functions.c:315
 msgid "The theme does not exist!\n"
-msgstr ""
+msgstr "¡El tema no existe!\n"
 
 #: src/splashy_config-functions.c:322
 msgid "This theme is currently used!\n"
@@ -62,71 +62,73 @@ msgstr ""
 
 #: src/splashy_config-functions.c:378
 msgid ">Theme currently used:\n"
-msgstr ""
+msgstr ">El tema actual es:\n"
 
 #: src/splashy_config-functions.c:385
 #, c-format
 msgid "                      URLs %s\n"
-msgstr ""
+msgstr "                      URLs %s\n"
 
 #: src/splashy_config-functions.c:387
 #, c-format
 msgid "                      by %s\n"
-msgstr ""
+msgstr "                      por %s\n"
 
 #: src/splashy_config-functions.c:390
 msgid ">Installed themes:\n"
-msgstr ""
+msgstr ">Temas instalados:\n"
 
 #: src/splashy_config-functions.c:430
 msgid ""
 "<!> Insufficient priviledges <!>\n"
 "Root priviledges required for this function\n"
 msgstr ""
+"<¡> Deficiencia de permisos <!>\n"
+"Se necesitan privilegios de super usuario para ejecutar esta función\n"
 
 #: src/splashy_config-functions.c:443
 msgid ">Create theme "
-msgstr ""
+msgstr ">Crear tema "
 
 #: src/splashy_config-functions.c:448
 #, c-format
 msgid "This file does not exist: %s\n"
-msgstr ""
+msgstr "Este archivo no existe: %s\n"
 
 #: src/splashy_config-functions.c:476
 msgid "The boot image does not seem to be an image\n"
-msgstr ""
+msgstr "La imagen de arranque no aparenta ser un archivo de imagen\n"
 
 #: src/splashy_config-functions.c:493
 msgid "The shutdown image does not seem to be an image\n"
-msgstr ""
+msgstr "La imagen de apague no aparenta ser un archivo de imagen\n"
 
 #: src/splashy_config-functions.c:509
 msgid "The error image does not seem to be an image\n"
-msgstr ""
+msgstr "La imagen de error no aparenta ser un archivo de imagen\n"
 
 #: src/splashy_config-functions.c:526
 msgid "The resume image does not seem to be an image\n"
-msgstr ""
+msgstr "La imagen de resumir no aparenta ser un archivo de imagen\n"
 
 #: src/splashy_config-functions.c:543
 msgid "The suspend image does not seem to be an image\n"
-msgstr ""
+msgstr "La imagen de suspender no aparenta ser un archivo de imagen\n"
 
 #: src/splashy_config-functions.c:577
 #, c-format
 msgid "Error! Can't create theme directory %s\n"
-msgstr ""
+msgstr "¡Error! No pude crear el directorio del tema %s\n"
 
 #: src/splashy_config-functions.c:579
 #, c-format
 msgid "Writing theme %s to current directory\n"
-msgstr ""
+msgstr "Escribiendo el tema %s al directorio actual\n"
 
 #: src/splashy_config-functions.c:584
 #, c-format
 msgid "Error! Can't create directory %s\n"
-msgstr ""
+msgstr "¡Error! No pude crear el directorio %s\n"
 
 #: src/splashy_config-functions.c:604 src/splashy_config-functions.c:628
 #: src/splashy_config-functions.c:652 src/splashy_config-functions.c:676
@@ -136,77 +138,80 @@ msgid ""
 "Error! Unable to use the picture %s.\n"
 "Aborting\n"
 msgstr ""
+"¡Error! No pude usar la imagen %s.\n"
+"Abortando\n"
 
 #: src/splashy_config-functions.c:763
 msgid "You tried to create a theme without a name\n"
-msgstr ""
+msgstr "Trataste de crear un tema sin nombre\n"
 
 #: src/splashy_config-functions.c:788
 msgid "* Name"
-msgstr ""
+msgstr "* Nombre"
 
 #: src/splashy_config-functions.c:800
 msgid "* Boot image"
-msgstr ""
+msgstr "* Imagen de arranque"
 
 #: src/splashy_config-functions.c:812
 msgid "* Shutdown image"
-msgstr ""
+msgstr "* Imagen de apague"
 
 #: src/splashy_config-functions.c:824
 msgid "* Error image"
-msgstr ""
+msgstr "* Imagen de error"
 
 #: src/splashy_config-functions.c:836
 msgid "* Resume image"
-msgstr ""
+msgstr "* Imagen de resumir"
 
 #: src/splashy_config-functions.c:848
 msgid "* Suspend image"
-msgstr ""
+msgstr "* Imagen de suspender"
 
 #: src/splashy_config-functions.c:855
 msgid ""
 "Do you want to set the resolution (height & width) of these images ? (yes|no)"
 msgstr ""
+"¿Quieres contribuir la resolución (altura y anchura) de estas imagenes? (si|no)"
 
 #: src/splashy_config-functions.c:864
 msgid " Width"
-msgstr ""
+msgstr " Anchura"
 
 #: src/splashy_config-functions.c:868
 msgid " Height"
-msgstr ""
+msgstr " Altura"
 
 #. Version
 #: src/splashy_config-functions.c:873
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 #. Description
 #: src/splashy_config-functions.c:876
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. URLs
 #: src/splashy_config-functions.c:879
 msgid "URLs"
-msgstr ""
+msgstr "URLs"
 
 #. Author
 #: src/splashy_config-functions.c:882
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #. Progressbaronboot
 #: src/splashy_config-functions.c:885
 msgid "Do you want to see a progress bar on boot ? (yes|no)"
-msgstr ""
+msgstr "¿Quieres ver la barra de progreso durante el arranque? (si|no)"
 
 #: src/splashy_config-functions.c:890 src/splashy_config-functions.c:900
 #: src/splashy_config-functions.c:910 src/splashy_config-functions.c:920
 msgid " Direction ? (forward|backward)"
-msgstr ""
+msgstr " Dirección? (alante|atrás)"
 
 #: src/splashy_config-functions.c:895
 msgid "Do you want to see a progress bar on shutdown ? (yes|no)"
