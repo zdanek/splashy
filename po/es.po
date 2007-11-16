@@ -26,11 +26,11 @@ msgstr ">Instalar tema"
 
 #: src/splashy_config-functions.c:119
 msgid "This format is invalid\n"
-msgstr "Este formato es inválido"
+msgstr "Este formato es inválido\n"
 
 #: src/splashy_config-functions.c:156
 msgid "Did you really give me a tarball ?\n"
-msgstr "¿Ya me diste el paquete en formato tar?"
+msgstr "¿Ya me diste el paquete en formato tar?\n"
 
 #: src/splashy_config-functions.c:179
 msgid "An error occurred checking theme \n"
@@ -42,7 +42,7 @@ msgstr "Este tema ya existe\n"
 
 #: src/splashy_config-functions.c:269
 msgid "An error occurred installing theme \n"
-msgstr "Ocurrió un error mientras instalaba el tema"
+msgstr "Ocurrió un error mientras instalaba el tema\n"
 
 #: src/splashy_config-functions.c:287
 msgid "The tarball does not exist!\n"
