@@ -355,7 +355,12 @@ for configure_ac in $configure_files; do
 		autopoint --force || exit 1
 	   else
 	    	printbold "Running $GETTEXTIZE... Ignore non-fatal messages."
-	    	echo "no" | $GETTEXTIZE --force --copy || exit 1
+                # we don't want to be stopped to press ENTER
+                sed 's:read .*< /dev/tty::' `which $GETTEXTIZE` > .temp-gettextize
+                chmod +x .temp-gettextize
+                echo "no" | ./.temp-gettextize --copy --force --no-changelog > /dev/null 2>&1 || exit 1
+                rm -f .temp-gettextize
+	    	#echo "no" | $GETTEXTIZE --force --copy || exit 1
 	   fi
 	fi
 
