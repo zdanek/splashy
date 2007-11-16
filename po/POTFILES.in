@@ -1,0 +1,5 @@
+# List of source files which contain translatable strings.
+
+src/splashy_config-functions.c
+src/splashy_config-main.c
+src/xml_functions.c
