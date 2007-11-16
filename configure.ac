@@ -19,6 +19,7 @@ AC_PROG_LIBTOOL
 AC_PROG_LN_S
 
 # Splashy goes international!
+AC_DEFINE([GETTEXT_PACKAGE], [1], [Define to 1 if you have gettext libraries installed.])
 # languages that we support:
 ALL_LINGUAS="es" 
 # fr de it"
