@@ -47,13 +47,13 @@ die "unable to get total: $!" unless (/(\d+) untranslated messages/);
 $total = $1;
 
 print "<html>\n";
-print "<head><title>$PACKAGE i18n statistics</title></head>\n";
+print "<head><title>$PACKAGE i18n statistics</title><style>th { color: white; }</style></head>\n";
 print "<body>\n";
 print
   "<table cellspacing='0' cellpadding='0' border='0' bgcolor='#888888' width='100%'><tr><td><table cellspacing='1' cellpadding='2' border='0' width='100%'>\n";
 
 print
-  "<tr bgcolor='#e0e0e0'><th>language</th><th style='background: #339933;'>trans</th><th style='background: #339933;'>%</th><th style='background: #333399;'>fuzzy</th><th style='background: #333399;'>%</th><th style='background: #dd3333;'>untrans</th><th style='background: #dd3333;'>%</th><th>&nbsp;</th></tr>\n";
+  "<tr bgcolor='#c0c0c0'><th>language</th><th style='background: #339933;'>trans</th><th style='background: #339933;'>%</th><th style='background: #333399;'>fuzzy</th><th style='background: #333399;'>%</th><th style='background: #dd3333;'>untrans</th><th style='background: #dd3333;'>%</th><th>&nbsp;</th></tr>\n";
 
 foreach $index (0 .. $#pos)
 {
@@ -83,8 +83,8 @@ foreach $index (0 .. $#pos)
     $name = code2language($po) unless $name ne "";
     $name = "???" unless $name ne "";
     printf
-      "<tr$color><td>%s(%s.po)</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>",
-      $name, $po, $trans, $transp, $fuzz, $fuzzp, $untrans, $untransp;
+      "<tr$color><td>%s(<a href='%s.po'>%s.po</a>)</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>",
+      $name, $po, $po, $trans, $transp, $fuzz, $fuzzp, $untrans, $untransp;
     printf "<img src='bar_g.png' height='15' width='%0.0f' />", $transp * 2
       unless $transp * 2 < 0.5;
     printf "<img src='bar_b.png' height='15' width='%0.0f' />", $fuzzp * 2
