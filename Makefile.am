@@ -1,4 +1,4 @@
-SUBDIRS = doc src scripts
+SUBDIRS = po doc src scripts
 
 pkgsysconfdir=$(sysconfdir)/@PACKAGE@
 
@@ -17,9 +17,10 @@ install-exec-hook:
 	cd $(DESTDIR)$(pkgsysconfdir) && \
         $(LN_S) $(pkgdatadir)/themes themes
 
-EXTRA_DIST = \
+EXTRA_DIST = config.rpath m4/ChangeLog  \
 	$(nobase_pkgdata_DATA)  \
 	autogen.sh  \
 	splashy.spec \
 	HACKING 
 
+ACLOCAL_AMFLAGS = -I m4

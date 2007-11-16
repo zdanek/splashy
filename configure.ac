@@ -18,6 +18,11 @@ AC_PROG_LIBTOOL
 
 AC_PROG_LN_S
 
+# Splashy goes international!
+# languages that we support:
+ALL_LINGUAS="es fr de it"
+AM_GNU_GETTEXT([external])
+
 # Check library magic existence and its use
 AC_CHECK_HEADER([magic.h], [
     AC_CHECK_LIB(magic, magic_open, [
@@ -37,8 +42,12 @@ AC_ARG_ENABLE(debug,AC_HELP_STRING([--enable-debug],[enable debugging messages])
 # END EXTRA ARGS
 
 # All warnings are errors.
-# TODO when in --enable-debug mode, we need to enable assert in glib...
-CFLAGS="$CFLAGS -Wall -Werror -DG_DISABLE_ASSERT -DG_DISABLE_CHECKS"
+# when in --enable-debug mode, we need to enable assert in glib...
+if test x$enable_debug = x1; then
+    CFLAGS="$CFLAGS -Wall -Werror"
+else
+    CFLAGS="$CFLAGS -Wall -Werror -DG_DISABLE_ASSERT -DG_DISABLE_CHECKS"
+fi
 
 # we used to compile splashy statically
 AC_SUBST(splashy_LIBS)
@@ -85,7 +94,7 @@ AC_SUBST(DFB_LIBS)
 # AC_DEFINE([EXPANDED_XML_THEME_FORMAT], [$EXPANDED_XML_THEME_FORMAT], [our theme configuration])
 # AC_SUBST(EXPANDED_XML_THEME_FORMAT)
 
-AC_OUTPUT(
+AC_OUTPUT( po/Makefile.in
           Makefile 
           src/Makefile 
           src/xml_format.h
@@ -101,4 +110,6 @@ echo
 echo $PACKAGE $VERSION
 echo
 echo Print debugging messages...... : $enable_debug
+echo
+echo configure complete, now type \'make\'
 echo
