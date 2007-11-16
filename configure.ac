@@ -20,8 +20,9 @@ AC_PROG_LN_S
 
 # Splashy goes international!
 # languages that we support:
-ALL_LINGUAS="es fr de it"
-AM_GNU_GETTEXT([external])
+ALL_LINGUAS="es" 
+# fr de it"
+AM_GLIB_GNU_GETTEXT([external])
 
 # Check library magic existence and its use
 AC_CHECK_HEADER([magic.h], [
