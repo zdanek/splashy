@@ -19,7 +19,9 @@ AC_PROG_LIBTOOL
 AC_PROG_LN_S
 
 # Splashy goes international!
-AC_DEFINE([GETTEXT_PACKAGE], [1], [Define to 1 if you have gettext libraries installed.])
+GETTEXT_PACKAGE=splashy
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Package Name for Gettext])
 # languages that we support:
 ALL_LINGUAS="es" 
 # fr de it"
