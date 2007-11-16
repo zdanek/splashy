@@ -8,7 +8,7 @@
 
 $VERSION = "1.2.5 beta 2";
 $LANG    = $ARGV[0];
-$PACKAGE = "polidori";
+$PACKAGE = "splashy";
 
 if (!$LANG)
 {
@@ -58,7 +58,7 @@ if ($LANG =~ /^-(.)*/)
         $b =
             "xgettext --default-domain\=$PACKAGE --directory\=\.\."
           . " --add-comments --keyword\=\_ --keyword\=N\_"
-          . " --msgid-bugs-address='polidori-devel\@lists.sourceforge.net'"
+          . " --msgid-bugs-address='splashy-devel\@lists.alioth.debian.org'"
           . " --files-from\=\.\/POTFILES\.in ";
         $b1 = "test \! -f $PACKAGE\.po \|\| \( rm -f \.\/$PACKAGE\.pot "
           . "&& mv $PACKAGE\.po \.\/$PACKAGE\.pot \)";
@@ -107,7 +107,7 @@ if ($LANG =~ /^-(.)*/)
         {
             $cmd =
                 "xgettext -o - --omit-header --keyword=_ "
-              . " --msgid-bugs-address='polidori-devel\@lists.sourceforge.net'"
+              . " --msgid-bugs-address='splashy-devel\@lists.alioth.debian.org'"
               . "--keyword=N_ "
               . $file . " |";
             open XGET, $cmd;
@@ -239,7 +239,7 @@ elsif (-s "$LANG.po")
     $c =
         "xgettext --default-domain\=$PACKAGE --directory\=\.\."
       . " --add-comments --keyword\=\_ --keyword\=N\_"
-      . " --msgid-bugs-address='polidori-devel\@lists.sourceforge.net'"
+      . " --msgid-bugs-address='splashy-devel\@lists.alioth.debian.org'"
       . " --files-from\=\.\/POTFILES\.in ";
     $c1 = "test \! -f $PACKAGE\.po \|\| \( rm -f \.\/$PACKAGE\.pot "
       . "&& mv $PACKAGE\.po \.\/$PACKAGE\.pot \)";
