@@ -23,7 +23,7 @@ GETTEXT_PACKAGE=splashy
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Package Name for Gettext])
 # languages that we support:
-ALL_LINGUAS="es" 
+ALL_LINGUAS="es sk" 
 # fr de it"
 AM_GLIB_GNU_GETTEXT([external])
 
