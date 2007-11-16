@@ -1,3 +1,101 @@
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* Makefile.am, configure.ac: gettextize'd Gettextize added the right things. Adds detection for --enable-debug
+	so we enable assertions in glib when in debug-mode. Other minor
+	additions...
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* ABOUT-NLS, config.rpath, gettext.h, m4/ChangeLog, m4/gettext.m4,
+	m4/iconv.m4, m4/lib-ld.m4, m4/lib-link.m4, m4/lib-prefix.m4,
+	m4/nls.m4, m4/po.m4, m4/progtest.m4, po/ChangeLog,
+	po/Makefile.in.in, po/Makevars, po/POTFILES.in, po/Rules-quot,
+	po/boldquot.sed, po/check_po.pl, po/en@boldquot.header,
+	po/en@quot.header, po/insert-header.sin, po/quot.sed,
+	po/remove-potcdate.sin: gettextize'd * Makefile.am (SUBDIRS): Add po.      (ACLOCAL_AMFLAGS): New variable.      (EXTRA_DIST): Add config.rpath, m4/ChangeLog.  * configure.ac (AC_OUTPUT): Add po/Makefile.in.
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_config-functions.c: corrected grammar Ah, English can be so sweet sometimes...
+
+2007-11-14  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: calling stop_splashy means 100%
+	progress automatically this is just for consistency...
+
+2007-11-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy.h: private function needs prototype early for
+	splashy_video.c we need to expose this function to be able to toggle F2
+
+2007-11-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: _clear_offscreen takes no argument this makes it clear. This is a private function. no need to call it
+	from outside of libsplashy::splashy_* public interface
+
+2007-11-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: when F2 is pressed show something do the right thing when the visibility of the textbox is toggle on
+	or off
+
+2007-11-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, src/splashy.h, src/splashy_functions.c, src/splashy_video.c: 
+	implements verbose from LSB script uses "splashy_update scroll ..." to send the message being printed
+	during each initrc script completion. If the user presses F2, he/she
+	will be presented with an overlay box showing the scrolling text.
+	Also code cleanups.
+
+2007-11-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: sends initrc messages to splashy if splashy is running, send the initrc boot message so users can see
+	it if they press F2
+
+2007-11-11  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: disable static
+
+2007-11-11  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/Makefile.am: comments
+
+2007-11-11  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: note on non-static
+
+2007-11-11  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: tell killall5 to give us a longer break splashy will exit by itself when it times out
+
+2007-11-10  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: static not needed no need to define these macros
+
+2007-11-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, README, configure.ac, src/Makefile.am: drop static build by
+	default we are not using static builds any more. if you need to do this for
+	one reason or another, please see README, src/Makefile.am and
+	configure.ac. It's pretty straight forward to re-enable it.
+
+2007-10-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/contrib/git2cl: adds new functionality now it allows you to use this command as a filter if called like:
+	git log ... | git2cl Got in contact with upstream developer and
+	these changes will be included upstream as well.
+
+2007-10-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/Makefile.am: makes splashy_update static even though splashy_update is really use after the system is already
+	running, sometimes we need to use this command very early or over
+	the network (LTSP) and it needs to have all its libraries included
+	in itself. For now, we are shipping this static as well as Splashy
+	binary itself. Later we will drop all static
+
+2007-10-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: new changes
+
 2007-10-28  Luis Mondesi <lemsx1@gmail.com>
 
 	* scripts/contrib/git2cl: passed thru perltidy -gnu
