@@ -1,5 +1,52 @@
 2007-11-15  Luis Mondesi <lemsx1@gmail.com>
 
+	* po/splashy.pot, po/stats.pl: more modernizations minor touches
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html: beautify the status page This allows translators to know what's missing and to quickly pickup
+	where other translators left of:
+	http://splashy.alioth.debian.org/i18n/
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: only one language now...  we will add more later
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* autogen.sh: use glib-gettextize goes to show that there are always ways to abuse sh scripts...
+	(hint: read gettextize and look for tty)
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: Spanish translation a few strings translated to Spanish. Just to get the ball rolling...
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/splashy.pot: Splashy file for translators helps things get done faster
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/update.pl: Splashy! missed a few strings
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/update.pl: helper scripts script to help manage the translation files
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/stats.pl, po/update.pl: helper scripts scripts to help manage the translation files
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* .gitignore: sorted
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: latest and greatest
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
 	* Makefile.am, configure.ac: gettextize'd Gettextize added the right things. Adds detection for --enable-debug
 	so we enable assertions in glib when in debug-mode. Other minor
 	additions...
