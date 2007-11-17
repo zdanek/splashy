@@ -174,7 +174,7 @@ msgstr "* Imagen de suspender"
 msgid ""
 "Do you want to set the resolution (height & width) of these images ? (yes|no)"
 msgstr ""
-"¿Quieres contribuir la resolución (altura y anchura) de estas imagenes? (si|no)"
+"¿Quieres contribuir la resolución (altura y anchura) de estas imagenes? (yes|no)"
 
 #: src/splashy_config-functions.c:864
 msgid " Width"
@@ -207,189 +207,189 @@ msgstr "Autor"
 #. Progressbaronboot
 #: src/splashy_config-functions.c:885
 msgid "Do you want to see a progress bar on boot ? (yes|no)"
-msgstr "¿Quieres ver la barra de progreso durante el arranque? (si|no)"
+msgstr "¿Quieres ver la barra de progreso durante el arranque? (yes|no)"
 
 #: src/splashy_config-functions.c:890 src/splashy_config-functions.c:900
 #: src/splashy_config-functions.c:910 src/splashy_config-functions.c:920
 msgid " Direction ? (forward|backward)"
-msgstr " Dirección? (alante|atrás)"
+msgstr " Dirección? (forward|backward)"
 
 #: src/splashy_config-functions.c:895
 msgid "Do you want to see a progress bar on shutdown ? (yes|no)"
-msgstr ""
+msgstr "¿Quieres ver la barra de progreso cuando apagas? (yes|no)"
 
 #: src/splashy_config-functions.c:905
 msgid "Do you want to see a progress bar on resume ? (yes|no)"
-msgstr ""
+msgstr "¿Quieres ver la barra de progreso cuando resumes? (yes|no)"
 
 #: src/splashy_config-functions.c:915
 msgid "Do you want to see a progress bar on suspend ? (yes|no)"
-msgstr ""
+msgstr "¿Quieres ver la barra de progreso cuando suspendes? (yes|no)"
 
 #: src/splashy_config-functions.c:929
 msgid "Progress bar\n"
-msgstr ""
+msgstr "Barra de progreso\n"
 
 #: src/splashy_config-functions.c:934 src/splashy_config-functions.c:1055
 msgid " X position in pixel units"
-msgstr ""
+msgstr " X posición en unidades de pixel"
 
 #: src/splashy_config-functions.c:939 src/splashy_config-functions.c:1060
 msgid " X position in percentage"
-msgstr ""
+msgstr " X posición en porcentage"
 
 #: src/splashy_config-functions.c:946 src/splashy_config-functions.c:1068
 msgid " Y position in pixel units"
-msgstr ""
+msgstr " Y posición en unidades de pixel"
 
 #: src/splashy_config-functions.c:951 src/splashy_config-functions.c:1073
 msgid " Y position in percentage"
-msgstr ""
+msgstr " Y posición en porcentage"
 
 #: src/splashy_config-functions.c:960 src/splashy_config-functions.c:1082
 msgid " Width in pixel units"
-msgstr ""
+msgstr "Anchura en unidades de pixel"
 
 #: src/splashy_config-functions.c:965 src/splashy_config-functions.c:1087
 msgid " Width in percentage"
-msgstr ""
+msgstr " Anchura en porcentage"
 
 #: src/splashy_config-functions.c:975 src/splashy_config-functions.c:1097
 msgid " Height in pixel units"
-msgstr ""
+msgstr " Altura en unidades de pixel"
 
 #: src/splashy_config-functions.c:980 src/splashy_config-functions.c:1102
 msgid " Height in percentage"
-msgstr ""
+msgstr " Altura en porcentage"
 
 #: src/splashy_config-functions.c:985 src/splashy_config-functions.c:1107
 msgid " Color\n"
-msgstr ""
+msgstr " Color\n"
 
 #. Red
 #: src/splashy_config-functions.c:988 src/splashy_config-functions.c:1002
 #: src/splashy_config-functions.c:1024 src/splashy_config-functions.c:1110
 #: src/splashy_config-functions.c:1169
 msgid "  Red"
-msgstr ""
+msgstr " Rojo"
 
 #. Green
 #: src/splashy_config-functions.c:991 src/splashy_config-functions.c:1005
 #: src/splashy_config-functions.c:1027 src/splashy_config-functions.c:1113
 #: src/splashy_config-functions.c:1172
 msgid "  Green"
-msgstr ""
+msgstr " Verde"
 
 #. Blue
 #: src/splashy_config-functions.c:994 src/splashy_config-functions.c:1008
 #: src/splashy_config-functions.c:1030 src/splashy_config-functions.c:1116
 #: src/splashy_config-functions.c:1175
 msgid "  Blue"
-msgstr ""
+msgstr " Azul"
 
 #. Alpha
 #: src/splashy_config-functions.c:997 src/splashy_config-functions.c:1011
 #: src/splashy_config-functions.c:1033 src/splashy_config-functions.c:1119
 #: src/splashy_config-functions.c:1178
 msgid "  Alpha"
-msgstr ""
+msgstr " Alfa"
 
 #: src/splashy_config-functions.c:999
 msgid " Background color\n"
-msgstr ""
+msgstr " Color del fondo\n"
 
 #: src/splashy_config-functions.c:1015
 msgid " Do you want a border around the progress bar? (yes|no)"
-msgstr ""
+msgstr " ¿Quieres un borde alrededor de la barra de progreso? (yes|no)"
 
 #: src/splashy_config-functions.c:1021
 msgid " Border color\n"
-msgstr ""
+msgstr " Color del borde\n"
 
 #. if border
 #. if progressbar
 #. Auto verbose
 #: src/splashy_config-functions.c:1039
 msgid "Pass in verbose mode on error? (yes|no)"
-msgstr ""
+msgstr "¿Cambia a modo 'verbose' si pasa un error? (yes|no)"
 
 #. Text box or not
 #: src/splashy_config-functions.c:1043
 msgid "Do you want to see a text box? (yes|no)"
-msgstr ""
+msgstr "¿Quieres ver un cuadro de texto? (yes|no)"
 
 #: src/splashy_config-functions.c:1050
 msgid "Text box\n"
-msgstr ""
+msgstr "Cuadro de texto\n"
 
 #: src/splashy_config-functions.c:1123
 msgid " Do you want a border around the text box ? (yes|no)"
-msgstr ""
+msgstr " ¿Quieres un borde alrededor del cuadro de texto? (yes|no)"
 
 #: src/splashy_config-functions.c:1128
 msgid "  Border color\n"
-msgstr ""
+msgstr " Color del borde\n"
 
 #. Red
 #: src/splashy_config-functions.c:1131
 msgid "   Red"
-msgstr ""
+msgstr "   Rojo"
 
 #. Green
 #: src/splashy_config-functions.c:1134
 msgid "   Green"
-msgstr ""
+msgstr "   Verde"
 
 #. Blue
 #: src/splashy_config-functions.c:1138
 msgid "   Blue"
-msgstr ""
+msgstr "   Azul"
 
 #. Alpha
 #: src/splashy_config-functions.c:1142
 msgid "   Alpha"
-msgstr ""
+msgstr "   Alfa"
 
 #: src/splashy_config-functions.c:1154
 msgid " Text font file"
-msgstr ""
+msgstr " Archivo de tipografía"
 
 #: src/splashy_config-functions.c:1163
 msgid " Font size"
-msgstr ""
+msgstr " Tamaño de la tipografía"
 
 #: src/splashy_config-functions.c:1166
 msgid " Text color\n"
-msgstr ""
+msgstr " Color del texto\n"
 
 #. Fade in ?
 #: src/splashy_config-functions.c:1183
 msgid "Do you want a fade-in? (yes|no)"
-msgstr ""
+msgstr "¿Quieres una entrada desvaneciente? (yes|no)"
 
 #. Fade out ?
 #: src/splashy_config-functions.c:1186
 msgid "Do you want a fade-out? (yes|no)"
-msgstr ""
+msgstr "¿Quieres una salida desvaneciente? (yes|no)"
 
 #: src/splashy_config-functions.c:1221
 #, c-format
 msgid "Failed to read the file: %s"
-msgstr ""
+msgstr "No pude leer el archivo: %s"
 
 #: src/splashy_config-functions.c:1229
 #, c-format
 msgid "Error opening destination file %s\n"
-msgstr ""
+msgstr "Error al abrir el archivo de destino %s\n"
 
 #: src/splashy_config-functions.c:1236
 #, c-format
 msgid "Failed to write the file: %s"
-msgstr ""
+msgstr "No pude escribir al archivo: %s"
 
 #: src/splashy_config-functions.c:1338
 msgid "Author <author@mail.com>"
-msgstr ""
+msgstr "Autor <autor@example.com>"
 
 #: src/splashy_config-main.c:47
 #, c-format
@@ -419,6 +419,30 @@ msgid ""
 "            --error-image PATH           Upload the error image located at "
 "the specified PATH\n"
 msgstr ""
+"Herramienta para configurar Splashy\n"
+"\n"
+"usage: %s [option] arg \n"
+"\n"
+"-h, --help                          Muestra esta ayuda\n"
+"-g, --get-key XPATH                 Muestra el valor de una llave del archivo "
+"de configuracion Splashy o el tema actual\n"
+"-s, --set-theme TEMA                Cambia Splashy a usar el tema TEMA\n"
+"-i, --install-theme TEMA.tar.gz     Instala el TEMA del archivo de formato tar\n"
+"-r, --remove-theme TEMA             Borra el tema TEMA\n"
+"    --info                          Muestra información\n"
+"-c, --create-theme  [args...]       Crear un tema de forma interactiva si "
+"no hay argumentos\n"
+"                                    Los posibles argumentos, son los siguientes "
+"argumentos obligatorios\n"
+"                                    ver el manual para una lista completa\n"
+"            --name  NAME                 Cambia el nombre a NAME en el "
+"tema de Splashy nuevo\n"
+"            --boot-image PASO            Sube la imagen de entrada localizada en "
+"el paso PASO especificado\n"
+"            --shutdown-image PASO        Sube la imagen de salida localizada en "
+"el paso PASO especificado\n"
+"            --error-image PASO           Sube la imagen de error localizada en "
+"el paso PASO especificado\n"
 
 #: src/splashy_config-main.c:65
 #, c-format
@@ -429,18 +453,25 @@ msgid ""
 "[-g, --get-key XPATH]\n"
 "See --help for more information\n"
 msgstr ""
+"usage: %s [option] arg \n"
+"[-h, --help][-s, --set-theme TEMA][-i, --install-theme TEMA.tar.gz]\n"
+"[-r, --remove-theme TEMA][--info][-c, --create-theme  [args...]]\n"
+"[-g, --get-key XPATH]\n"
+"Ver --help para más información\n"
 
 #: src/splashy_config-main.c:152
 msgid ""
 "Error occured while starting Splashy\n"
 "Make sure that you can read Splashy's configuration file\n"
 msgstr ""
+"Un error ocurrió empezando Splashy\n"
+"Asegúrate que puedas leer el archivo de configuración de Splashy\n"
 
 #: src/splashy_config-main.c:167
 #, c-format
 msgid "Missing arguments\n"
-msgstr ""
+msgstr "Te faltaron argumentos\n"
 
 #: src/xml_functions.c:128
 msgid "Error: Could not open theme file for writing\n"
-msgstr ""
+msgstr "Error: no pude escribir el archivo del tema\n"
