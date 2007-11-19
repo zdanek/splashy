@@ -38,7 +38,7 @@ libsplashycnf_la_LDFLAGS = -export-symbols-regex splashy_.*\
 			   -version-info $(SPL_SONAME)
 
 splashy_SOURCES = splashy_main.c splashy_functions.c
-splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lm  -lglib-2.0 @DFB_LIBS@
+splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lgcc_s -lm  -lglib-2.0 @DFB_LIBS@
 
 # '-lgcc_s' is provided with -static-libgcc and this is needed when compiling statically only
 # uncomment the following for static builds:
