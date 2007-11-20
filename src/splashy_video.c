@@ -1461,7 +1461,7 @@ splashy_printline (const char *string)
  * Prints a line of text in the textbox and scroll down
  * Note that this function respects _show_textbox_area while
  * splashy_printline() does not. The reason is that this
- * function will show the texbox only when F2 is pressed.
+ * function will show the textbox only when F2 is pressed.
  * splashy_printline() is assumed to be used for displaying
  * status regardless of whether the user actually wanted to see this
  * or not.
@@ -1743,6 +1743,8 @@ _get_string (char *buf, int len, const char *prompt, int pass)
 
         /*
          * Fill it with a color (using alpha) 
+         *
+         * TODO make these colors theme-able
          */
         red = alpha = 255;
         green = blue = 0;
