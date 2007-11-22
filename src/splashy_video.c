@@ -49,10 +49,8 @@
 
 typedef struct splashy_videomode_s
 {
-        gint width;
-        gint height;
-        gint out_width;
-        gint out_height;
+        gint xres;
+        gint yres;
         gint overx;
         gint overy;
         gint bpp;
@@ -690,8 +688,8 @@ video_set_mode ()
         /*
          * DLCONF_WIDTH|DLCONF_HEIGHT|DLCONF_PIXELFORMAT|DLCONF_SURFACE_CAPS 
          */
-        video.primary_layer_config.width = video.mode->out_width;/* video.mode->width; */
-        video.primary_layer_config.height = video.mode->out_height;/* video.mode->height; */
+        video.primary_layer_config.width = video.mode->xres;
+        video.primary_layer_config.height = video.mode->yres;
         /*
          * FIXME video.primary_layer_config.pixelformat = DSPF_ARGB; 
          */
@@ -705,11 +703,8 @@ video_set_mode ()
         if (ret)
                 DEBUG_PRINT ("Error while configuring our primary layer for fullscreen mode");
 
-/* FIXME
         DEBUG_PRINT ("Set resolution to %d x %d",
-                     video.mode->width, video.mode->height);*/
-        DEBUG_PRINT ("Set resolution to %d x %d",
-                     video.mode->out_width, video.mode->out_height);
+                     video.mode->xres, video.mode->yres);
 }
 
 gint
@@ -1118,13 +1113,13 @@ splashy_start_splash ()
          * set our expectation to a very big number 
          */
         fb_preinit (&fb_vinfo);
-        video.mode->out_height = fb_vinfo.yres;
-        video.mode->out_width = fb_vinfo.xres;
+        video.mode->yres = fb_vinfo.yres;
+        video.mode->xres = fb_vinfo.xres;
 
         DEBUG_PRINT ("Setting min Width (x) resolution to %d",
-                     video.mode->out_width);
+                     video.mode->xres);
         DEBUG_PRINT ("Setting min Height (y) resolution to %d",
-                     video.mode->out_height);
+                     video.mode->yres);
 
         if (video.dfb->CreateImageProvider (video.dfb,
                                             _current_background,
@@ -1179,8 +1174,8 @@ splashy_start_splash ()
                           DWDESC_WIDTH | DWDESC_HEIGHT);
         win_desc.posx = 0;
         win_desc.posy = 0;
-        win_desc.width = video.mode->out_width;
-        win_desc.height = video.mode->out_height;
+        win_desc.width = video.mode->xres;
+        win_desc.height = video.mode->yres;
         /*
          * TODO do we really need this? win_desc.caps = DWCAPS_ALPHACHANNEL; 
          */
