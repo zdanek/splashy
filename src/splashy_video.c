@@ -103,6 +103,10 @@ static const char *valid_modes[NRMODES] =
 static enum
 { BOOT, SHUTDOWN, RESUME, SUSPEND } _current_mode;      /* boot, halt,
                                                          * resume, suspend */
+/*
+ * prototype for local helpers
+ */
+
 
 /*
  * helper functions 
@@ -240,7 +244,7 @@ splashy_allow_vt_switching ()
 }
 
 void
-_get_divider (gint * divider_w, gint * divider_h)
+_get_divider (gint * divider_width, gint * divider_height)
 {
         /*
          * Source image width and height 
@@ -262,18 +266,52 @@ _get_divider (gint * divider_w, gint * divider_h)
                 /*
                  * The value is based on specified units 
                  */
-                *divider_w = source_width;
-                *divider_h = source_height;
+                *divider_width = source_width;
+                *divider_height = source_height;
         }
         else
         {
                 /*
                  * The value is based on percentage 
                  */
-                *divider_w = *divider_h = 100;
+                *divider_width = *divider_height = 100;
         }
 
-        DEBUG_PRINT("Set divider to (w,h) = %d, %d\n", *divider_w, *divider_h);
+        DEBUG_PRINT ("Divider is (width x height) = %d x %d\n",
+                     *divider_width, *divider_height);
+}
+
+/**
+ * gets the real (resolution related) dimension for our primary_window_surface
+ * (which should match our primary_surface since we are in fullscreen mode)
+ * On dual-head systems the value of height is sometimes 2 times heigher than
+ * what's reported by xres from /dev/fb0 (@see fb_preinit())
+ * fb_preinit() must be called before this function
+ */
+void
+_get_screen_size (gint * width, gint * height)
+{
+        /*
+         * Let's not rely on this since it reports the wrong size 
+         * (on dual-head video cards):
+         *
+         * gint screen_width, screen_height;
+         * video.primary_window_surface->GetSize
+         * (video.primary_window_surface, &screen_width, &screen_height); 
+         *
+         * DEBUG_PRINT ("Screen original dimensions (wxh): %dx%d\n",
+         * screen_width, screen_height);
+         */
+
+        /*
+         * trust the values set by fb_preinit() from calling
+         * ioctl (fb_dev_fd, FBIOGET_VSCREENINFO, fb_vinfo)
+         */
+        *width = video.mode->xres;
+        *height = video.mode->yres;
+
+        DEBUG_PRINT ("Screen size (width x height): %d x %d",
+                     *width, *height);
 }
 
 gint
@@ -305,11 +343,7 @@ draw_progressbar ()
         DEBUG_PRINT ("Printing progress border: %d", draw_progress_border);
 
         _get_divider (&divider_w, &divider_h);
-
-        video.primary_window_surface->GetSize (video.primary_window_surface,
-                                        &screen_width, &screen_height);
-
-        DEBUG_PRINT ("Screen dimensions (wxh): %dx%d", screen_width, screen_height);
+        _get_screen_size (&screen_width, &screen_height);
 
         progressbar->x = screen_width *
                 splashy_get_config_int ("/splashy/progressbar/dimension/x",
@@ -852,13 +886,11 @@ init_font ()
 {
         const gchar *fontface;
         gint temp;
-        gint screen_w, screen_h;
-        gint divider_w, divider_h;
+        gint screen_width, screen_height;
+        gint divider_width, divider_height;
 
-        video.primary_window_surface->GetSize (video.primary_window_surface,
-                                        &screen_w, &screen_h);
-
-        _get_divider (&divider_w, &divider_h);
+        _get_screen_size (&screen_width, &screen_height);
+        _get_divider (&divider_width, &divider_height);
 
         video.fontdesc.flags = DFDESC_HEIGHT;
         fontface =
@@ -866,7 +898,7 @@ init_font ()
         temp = splashy_get_config_int ("/splashy/textbox/text/font/height",
                                        10);
 
-        video.fontdesc.height = temp * screen_h / divider_h;
+        video.fontdesc.height = temp * screen_height / divider_height;
         video.dfb->CreateFont (video.dfb, fontface,
                                &video.fontdesc, &video.font);
         if (video.font == NULL)
@@ -963,8 +995,7 @@ start_text_area ()
         if (g_ascii_strncasecmp (enable, "yes", 3) != 0)
                 return;
 
-        video.primary_window_surface->GetSize (video.primary_window_surface,
-                                        &screen_width, &screen_height);
+        _get_screen_size (&screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
 
         video.textbox = g_new0 (splashy_box_t, 1);
@@ -1667,9 +1698,9 @@ _get_string (char *buf, int len, const char *prompt, int pass)
         int font_height, r_len;
         video.font->GetHeight (video.font, &font_height);
 
-        video.primary_window_surface->GetSize (video.primary_window_surface,
-                                        &screen_width, &screen_height);
+        _get_screen_size (&screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
+
         /*
          * Set up the size of the box and input line and title box 
          */
@@ -1771,7 +1802,6 @@ splashy_get_password (char *buf, int len, const char *prompt)
 {
         return _get_string (buf, len, prompt, 1);
 }
-
 
 /*
  * Initialize the library 
