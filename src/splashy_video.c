@@ -309,6 +309,8 @@ draw_progressbar ()
         video.primary_surface->GetSize (video.primary_surface,
                                         &screen_width, &screen_height);
 
+        DEBUG_PRINT ("Screen dimensions (wxh): %dx%d", screen_width, screen_height);
+
         progressbar->x = screen_width *
                 splashy_get_config_int ("/splashy/progressbar/dimension/x",
                                         10) / divider_w;
