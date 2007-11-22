@@ -272,6 +272,8 @@ _get_divider (gint * divider_w, gint * divider_h)
                  */
                 *divider_w = *divider_h = 100;
         }
+
+        DEBUG_PRINT("Set divider to (w,h) = %d, %d\n", *divider_w, *divider_h);
 }
 
 gint
