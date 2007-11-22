@@ -1149,13 +1149,17 @@ splashy_start_splash ()
         {
                 video.mode->bpp = 32;
         }
+        else if (fb_vinfo.bits_per_pixel > 16)
+        {
+                video.mode->bpp = 24;
+        }
         else if (fb_vinfo.bits_per_pixel > 8)
         {
                 video.mode->bpp = 16;
         }
         else
         {
-                video.mode->bpp = fb_vinfo.bits_per_pixel;
+                video.mode->bpp = 8;
         }
 
         DEBUG_PRINT ("Setting min Width (x) resolution to %d\n",
