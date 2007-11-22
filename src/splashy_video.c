@@ -666,51 +666,10 @@ splashy_update_progressbar_quick (gint perc)
         return 0;
 }
 
-static DFBEnumerationResult
-video_modes_callback (gint width, gint height, gint bpp, void *data)
-{
-        splashy_videomode_t *video_m = (splashy_videomode_t *) data;
-        gint overx = 0, overy = 0, closer = 0, over = 0;
-        gint we_are_under = 0;
-
-        DEBUG_PRINT ("%s: Validator entered %i %i %i\n", __FUNCTION__,
-                     width, height, bpp);
-
-        overx = width - video_m->out_width;
-        overy = height - video_m->out_height;
-        if (!video_m->width)
-        {
-                video_m->width = width;
-                video_m->height = height;
-                video_m->overx = overx;
-                video_m->overy = overy;
-
-                DEBUG_PRINT ("%s: Mode added %i %i %i\n", __FUNCTION__,
-                             width, height, bpp);
-        }
-        if ((video_m->overy < 0) || (video_m->overx < 0))
-                we_are_under = 1;       /* stored mode is smaller than req
-                                         * mode */
-        if (abs (overx * overy) < abs (video_m->overx * video_m->overy))
-                closer = 1;     /* current mode is closer to desired res */
-        if ((overx >= 0) && (overy >= 0))
-                over = 1;       /* current mode is bigger or equaul to
-                                 * desired res */
-        if ((closer && (over || we_are_under)) || (we_are_under && over))
-        {
-                video_m->width = width;
-                video_m->height = height;
-                video_m->overx = overx;
-                video_m->overy = overy;
-                DEBUG_PRINT ("%s: Better mode added %i %i %i\n", __FUNCTION__,
-                             width, height, bpp);
-        };
-        return DFENUM_OK;
-}
-
 void
 video_set_mode ()
 {
+        DFBResult ret;
         /*
          * used to disable inputs from mouse and reduce overhead (about 15%
          * of CPU usage)
@@ -724,12 +683,6 @@ video_set_mode ()
         video.primary_layer->GetConfiguration (video.primary_layer,
                                                &video.primary_layer_config);
 
-        DFBResult ret =
-                video.dfb->EnumVideoModes (video.dfb, video_modes_callback,
-                                           video.mode);
-        if (ret)
-                DEBUG_PRINT ("Error while detecting full screen video modes");
-
         /*
          * http://directfb.org/docs/DirectFB_Reference/types.html#DFBSurfacePixelFormat 
          */
@@ -737,8 +690,8 @@ video_set_mode ()
         /*
          * DLCONF_WIDTH|DLCONF_HEIGHT|DLCONF_PIXELFORMAT|DLCONF_SURFACE_CAPS 
          */
-        video.primary_layer_config.width = video.mode->width;
-        video.primary_layer_config.height = video.mode->height;
+        video.primary_layer_config.width = video.mode->out_width;/* video.mode->width; */
+        video.primary_layer_config.height = video.mode->out_height;/* video.mode->height; */
         /*
          * FIXME video.primary_layer_config.pixelformat = DSPF_ARGB; 
          */
@@ -749,9 +702,14 @@ video_set_mode ()
         ret = video.primary_layer->SetConfiguration (video.primary_layer,
                                                      &video.
                                                      primary_layer_config);
+        if (ret)
+                DEBUG_PRINT ("Error while configuring our primary layer for fullscreen mode");
 
+/* FIXME
         DEBUG_PRINT ("Set resolution to %d x %d",
-                     video.mode->width, video.mode->height);
+                     video.mode->width, video.mode->height);*/
+        DEBUG_PRINT ("Set resolution to %d x %d",
+                     video.mode->out_width, video.mode->out_height);
 }
 
 gint
