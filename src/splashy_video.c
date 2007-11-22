@@ -701,7 +701,8 @@ video_set_mode ()
                                                      &video.
                                                      primary_layer_config);
         if (ret)
-                DEBUG_PRINT ("Error while configuring our primary layer for fullscreen mode");
+                DEBUG_PRINT
+                        ("Error while configuring our primary layer for fullscreen mode");
 
         DEBUG_PRINT ("Set resolution to %d x %d",
                      video.mode->xres, video.mode->yres);
@@ -1189,6 +1190,10 @@ splashy_start_splash ()
                 video.primary_surface->Release (video.primary_surface);
                 return -7;
         }
+
+        DEBUG_PRINT
+                ("Window was created with (x_start,y_start,x_end,y_end) 0,0,%d,%d dimensions\n",
+                 win_desc.width, win_desc.height);
 
         if (video.primary_window->GetSurface (video.primary_window,
                                               &video.primary_window_surface)
