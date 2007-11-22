@@ -294,14 +294,15 @@ _get_screen_size (gint * width, gint * height)
         /*
          * Let's not rely on this since it reports the wrong size 
          * (on dual-head video cards):
-         *
-         * gint screen_width, screen_height;
-         * video.primary_window_surface->GetSize
-         * (video.primary_window_surface, &screen_width, &screen_height); 
-         *
-         * DEBUG_PRINT ("Screen original dimensions (wxh): %dx%d\n",
-         * screen_width, screen_height);
          */
+#ifdef DEBUG
+        gint screen_width, screen_height;
+        video.primary_surface->GetSize
+                (video.primary_surface, &screen_width, &screen_height);
+
+        DEBUG_PRINT ("Primary surface actual size (width x height): %d x %d\n",
+                     screen_width, screen_height);
+#endif
 
         /*
          * trust the values set by fb_preinit() from calling
