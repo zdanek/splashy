@@ -171,11 +171,6 @@ fb_preinit (struct fb_var_screeninfo *fb_vinfo)
         gchar *fb_dev_name = NULL;      /* such as /dev/fb0 */
 
         gint fb_dev_fd;         /* handle for fb_dev_name */
-#if 0
-        fb_var_screeninfo fb_orig_vinfo;        /* variable info to restore * 
-                                                 * later */
-        gint fb_bpp;            /* 32: 32 24: 24 16: 16 15: 15 */
-#endif
 
         if (fb_preinit_done)
                 return fb_err;
@@ -198,19 +193,6 @@ fb_preinit (struct fb_var_screeninfo *fb_vinfo)
                              strerror (errno));
                 goto err_out;
         }
-#if 0
-
-        fb_orig_vinfo = *fb_vinfo;
-
-        fb_bpp = fb_vinfo.bits_per_pixel;
-
-        /*
-         * 16 and 15 bpp is reported as 16 bpp 
-         */
-        if (fb_bpp == 16)
-                fb_bpp = fb_vinfo.red.length + fb_vinfo.green.length +
-                        fb_vinfo.blue.length;
-#endif
 
         fb_err = 0;
         return 0;
@@ -300,8 +282,9 @@ _get_screen_size (gint * width, gint * height)
         video.primary_surface->GetSize
                 (video.primary_surface, &screen_width, &screen_height);
 
-        DEBUG_PRINT ("Primary surface actual size (width x height): %d x %d\n",
-                     screen_width, screen_height);
+        DEBUG_PRINT
+                ("Primary surface actual size (width x height): %d x %d\n",
+                 screen_width, screen_height);
 #endif
 
         /*
@@ -743,6 +726,14 @@ video_set_mode ()
                 DEBUG_PRINT
                         ("Error while configuring our primary layer for fullscreen mode");
 
+        /*
+         * for vesafb this doesn't help since the resolution is set 
+         * on boot:
+         */
+        video.dfb->SetVideoMode (video.dfb, video.mode->xres,
+                                 video.mode->yres, video.mode->bpp);
+
+
         DEBUG_PRINT ("Set resolution to %d x %d",
                      video.mode->xres, video.mode->yres);
 }
@@ -1085,7 +1076,8 @@ create_event_buffer ()
          */
         /*
          * TODO would we leak if we don't check if video.keyboard is not NULL 
-         * ? We should make sure splashy can't be launched twice from this
+         * ? We should make sure splashy can't be launched indent: Standard input:1067: Warning:Extra )
+         twice from this
          * same thread 
          */
         if (video.dfb->GetInputDevice (video.dfb, DIDID_KEYBOARD,
@@ -1153,10 +1145,25 @@ splashy_start_splash ()
         video.mode->yres = fb_vinfo.yres;
         video.mode->xres = fb_vinfo.xres;
 
-        DEBUG_PRINT ("Setting min Width (x) resolution to %d",
+        if (fb_vinfo.bits_per_pixel > 24)
+        {
+                video.mode->bpp = 32;
+        }
+        else if (fb_vinfo.bits_per_pixel > 8)
+        {
+                video.mode->bpp = 16;
+        }
+        else
+        {
+                video.mode->bpp = fb_vinfo.bits_per_pixel;
+        }
+
+        DEBUG_PRINT ("Setting min Width (x) resolution to %d\n",
                      video.mode->xres);
-        DEBUG_PRINT ("Setting min Height (y) resolution to %d",
+        DEBUG_PRINT ("Setting min Height (y) resolution to %d\n",
                      video.mode->yres);
+        DEBUG_PRINT ("Setting min bits_per_pixel to %d (was %d)\n",
+                     video.mode->bpp, fb_vinfo.bits_per_pixel);
 
         if (video.dfb->CreateImageProvider (video.dfb,
                                             _current_background,
@@ -1650,7 +1657,8 @@ _gets_from_input_bar (char *buf, int max_length, splashy_box_t * input,
                                 break;
                                 // case DIKI_SPACE:
                         default:
-                                // if( DFB_KEY_TYPE(event.key_symbol) !=
+                                // if( DFB_KEY_TYPE(event.key_symbol) 
+                                // !=
                                 // DIKT_UNICODE ) continue;
                                 if (!DFB_KEY_IS_ASCII (event.key_symbol))
                                         continue;
