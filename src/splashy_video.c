@@ -306,7 +306,7 @@ draw_progressbar ()
 
         _get_divider (&divider_w, &divider_h);
 
-        video.primary_surface->GetSize (video.primary_surface,
+        video.primary_window_surface->GetSize (video.primary_window_surface,
                                         &screen_width, &screen_height);
 
         DEBUG_PRINT ("Screen dimensions (wxh): %dx%d", screen_width, screen_height);
@@ -855,7 +855,7 @@ init_font ()
         gint screen_w, screen_h;
         gint divider_w, divider_h;
 
-        video.primary_surface->GetSize (video.primary_surface,
+        video.primary_window_surface->GetSize (video.primary_window_surface,
                                         &screen_w, &screen_h);
 
         _get_divider (&divider_w, &divider_h);
@@ -963,7 +963,7 @@ start_text_area ()
         if (g_ascii_strncasecmp (enable, "yes", 3) != 0)
                 return;
 
-        video.primary_surface->GetSize (video.primary_surface,
+        video.primary_window_surface->GetSize (video.primary_window_surface,
                                         &screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
 
@@ -1667,7 +1667,7 @@ _get_string (char *buf, int len, const char *prompt, int pass)
         int font_height, r_len;
         video.font->GetHeight (video.font, &font_height);
 
-        video.primary_surface->GetSize (video.primary_surface,
+        video.primary_window_surface->GetSize (video.primary_window_surface,
                                         &screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
         /*
