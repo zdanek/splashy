@@ -16,6 +16,8 @@ Changes between 0.3.6 and 0.3.7
    killall5 all processes at shutdown/reboot. This tells the system to ignore killing splashy during
    shutdown/reboot.
  * adds international support. Translators needed! http://splashy.alioth.debian.org/i18n/
+ * uses the real size of the screen and not that reported by the surface (Thanks to DeX77 
+   from #frugalware for helping to get this fixed)
 
 Changes between 0.3.5 and 0.3.6
 -------------------------------

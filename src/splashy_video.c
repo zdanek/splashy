@@ -49,10 +49,8 @@
 
 typedef struct splashy_videomode_s
 {
-        gint width;
-        gint height;
-        gint out_width;
-        gint out_height;
+        gint xres;
+        gint yres;
         gint overx;
         gint overy;
         gint bpp;
@@ -105,6 +103,10 @@ static const char *valid_modes[NRMODES] =
 static enum
 { BOOT, SHUTDOWN, RESUME, SUSPEND } _current_mode;      /* boot, halt,
                                                          * resume, suspend */
+/*
+ * prototype for local helpers
+ */
+
 
 /*
  * helper functions 
@@ -169,11 +171,6 @@ fb_preinit (struct fb_var_screeninfo *fb_vinfo)
         gchar *fb_dev_name = NULL;      /* such as /dev/fb0 */
 
         gint fb_dev_fd;         /* handle for fb_dev_name */
-#if 0
-        fb_var_screeninfo fb_orig_vinfo;        /* variable info to restore * 
-                                                 * later */
-        gint fb_bpp;            /* 32: 32 24: 24 16: 16 15: 15 */
-#endif
 
         if (fb_preinit_done)
                 return fb_err;
@@ -196,19 +193,6 @@ fb_preinit (struct fb_var_screeninfo *fb_vinfo)
                              strerror (errno));
                 goto err_out;
         }
-#if 0
-
-        fb_orig_vinfo = *fb_vinfo;
-
-        fb_bpp = fb_vinfo.bits_per_pixel;
-
-        /*
-         * 16 and 15 bpp is reported as 16 bpp 
-         */
-        if (fb_bpp == 16)
-                fb_bpp = fb_vinfo.red.length + fb_vinfo.green.length +
-                        fb_vinfo.blue.length;
-#endif
 
         fb_err = 0;
         return 0;
@@ -242,7 +226,7 @@ splashy_allow_vt_switching ()
 }
 
 void
-_get_divider (gint * divider_w, gint * divider_h)
+_get_divider (gint * divider_width, gint * divider_height)
 {
         /*
          * Source image width and height 
@@ -264,16 +248,54 @@ _get_divider (gint * divider_w, gint * divider_h)
                 /*
                  * The value is based on specified units 
                  */
-                *divider_w = source_width;
-                *divider_h = source_height;
+                *divider_width = source_width;
+                *divider_height = source_height;
         }
         else
         {
                 /*
                  * The value is based on percentage 
                  */
-                *divider_w = *divider_h = 100;
+                *divider_width = *divider_height = 100;
         }
+
+        DEBUG_PRINT ("Divider is (width x height) = %d x %d\n",
+                     *divider_width, *divider_height);
+}
+
+/**
+ * gets the real (resolution related) dimension for our primary_window_surface
+ * (which should match our primary_surface since we are in fullscreen mode)
+ * On dual-head systems the value of height is sometimes 2 times heigher than
+ * what's reported by xres from /dev/fb0 (@see fb_preinit())
+ * fb_preinit() must be called before this function
+ */
+void
+_get_screen_size (gint * width, gint * height)
+{
+        /*
+         * Let's not rely on this since it reports the wrong size 
+         * (on dual-head video cards):
+         */
+#ifdef DEBUG
+        gint screen_width, screen_height;
+        video.primary_surface->GetSize
+                (video.primary_surface, &screen_width, &screen_height);
+
+        DEBUG_PRINT
+                ("Primary surface actual size (width x height): %d x %d\n",
+                 screen_width, screen_height);
+#endif
+
+        /*
+         * trust the values set by fb_preinit() from calling
+         * ioctl (fb_dev_fd, FBIOGET_VSCREENINFO, fb_vinfo)
+         */
+        *width = video.mode->xres;
+        *height = video.mode->yres;
+
+        DEBUG_PRINT ("Screen size (width x height): %d x %d",
+                     *width, *height);
 }
 
 gint
@@ -305,9 +327,7 @@ draw_progressbar ()
         DEBUG_PRINT ("Printing progress border: %d", draw_progress_border);
 
         _get_divider (&divider_w, &divider_h);
-
-        video.primary_surface->GetSize (video.primary_surface,
-                                        &screen_width, &screen_height);
+        _get_screen_size (&screen_width, &screen_height);
 
         progressbar->x = screen_width *
                 splashy_get_config_int ("/splashy/progressbar/dimension/x",
@@ -666,51 +686,10 @@ splashy_update_progressbar_quick (gint perc)
         return 0;
 }
 
-static DFBEnumerationResult
-video_modes_callback (gint width, gint height, gint bpp, void *data)
-{
-        splashy_videomode_t *video_m = (splashy_videomode_t *) data;
-        gint overx = 0, overy = 0, closer = 0, over = 0;
-        gint we_are_under = 0;
-
-        DEBUG_PRINT ("%s: Validator entered %i %i %i\n", __FUNCTION__,
-                     width, height, bpp);
-
-        overx = width - video_m->out_width;
-        overy = height - video_m->out_height;
-        if (!video_m->width)
-        {
-                video_m->width = width;
-                video_m->height = height;
-                video_m->overx = overx;
-                video_m->overy = overy;
-
-                DEBUG_PRINT ("%s: Mode added %i %i %i\n", __FUNCTION__,
-                             width, height, bpp);
-        }
-        if ((video_m->overy < 0) || (video_m->overx < 0))
-                we_are_under = 1;       /* stored mode is smaller than req
-                                         * mode */
-        if (abs (overx * overy) < abs (video_m->overx * video_m->overy))
-                closer = 1;     /* current mode is closer to desired res */
-        if ((overx >= 0) && (overy >= 0))
-                over = 1;       /* current mode is bigger or equaul to
-                                 * desired res */
-        if ((closer && (over || we_are_under)) || (we_are_under && over))
-        {
-                video_m->width = width;
-                video_m->height = height;
-                video_m->overx = overx;
-                video_m->overy = overy;
-                DEBUG_PRINT ("%s: Better mode added %i %i %i\n", __FUNCTION__,
-                             width, height, bpp);
-        };
-        return DFENUM_OK;
-}
-
 void
 video_set_mode ()
 {
+        DFBResult ret;
         /*
          * used to disable inputs from mouse and reduce overhead (about 15%
          * of CPU usage)
@@ -724,12 +703,6 @@ video_set_mode ()
         video.primary_layer->GetConfiguration (video.primary_layer,
                                                &video.primary_layer_config);
 
-        DFBResult ret =
-                video.dfb->EnumVideoModes (video.dfb, video_modes_callback,
-                                           video.mode);
-        if (ret)
-                DEBUG_PRINT ("Error while detecting full screen video modes");
-
         /*
          * http://directfb.org/docs/DirectFB_Reference/types.html#DFBSurfacePixelFormat 
          */
@@ -737,8 +710,8 @@ video_set_mode ()
         /*
          * DLCONF_WIDTH|DLCONF_HEIGHT|DLCONF_PIXELFORMAT|DLCONF_SURFACE_CAPS 
          */
-        video.primary_layer_config.width = video.mode->width;
-        video.primary_layer_config.height = video.mode->height;
+        video.primary_layer_config.width = video.mode->xres;
+        video.primary_layer_config.height = video.mode->yres;
         /*
          * FIXME video.primary_layer_config.pixelformat = DSPF_ARGB; 
          */
@@ -749,9 +722,20 @@ video_set_mode ()
         ret = video.primary_layer->SetConfiguration (video.primary_layer,
                                                      &video.
                                                      primary_layer_config);
+        if (ret)
+                DEBUG_PRINT
+                        ("Error while configuring our primary layer for fullscreen mode");
+
+        /*
+         * for vesafb this doesn't help since the resolution is set 
+         * on boot:
+         */
+        video.dfb->SetVideoMode (video.dfb, video.mode->xres,
+                                 video.mode->yres, video.mode->bpp);
+
 
         DEBUG_PRINT ("Set resolution to %d x %d",
-                     video.mode->width, video.mode->height);
+                     video.mode->xres, video.mode->yres);
 }
 
 gint
@@ -894,13 +878,11 @@ init_font ()
 {
         const gchar *fontface;
         gint temp;
-        gint screen_w, screen_h;
-        gint divider_w, divider_h;
+        gint screen_width, screen_height;
+        gint divider_width, divider_height;
 
-        video.primary_surface->GetSize (video.primary_surface,
-                                        &screen_w, &screen_h);
-
-        _get_divider (&divider_w, &divider_h);
+        _get_screen_size (&screen_width, &screen_height);
+        _get_divider (&divider_width, &divider_height);
 
         video.fontdesc.flags = DFDESC_HEIGHT;
         fontface =
@@ -908,7 +890,7 @@ init_font ()
         temp = splashy_get_config_int ("/splashy/textbox/text/font/height",
                                        10);
 
-        video.fontdesc.height = temp * screen_h / divider_h;
+        video.fontdesc.height = temp * screen_height / divider_height;
         video.dfb->CreateFont (video.dfb, fontface,
                                &video.fontdesc, &video.font);
         if (video.font == NULL)
@@ -1005,8 +987,7 @@ start_text_area ()
         if (g_ascii_strncasecmp (enable, "yes", 3) != 0)
                 return;
 
-        video.primary_surface->GetSize (video.primary_surface,
-                                        &screen_width, &screen_height);
+        _get_screen_size (&screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
 
         video.textbox = g_new0 (splashy_box_t, 1);
@@ -1095,7 +1076,8 @@ create_event_buffer ()
          */
         /*
          * TODO would we leak if we don't check if video.keyboard is not NULL 
-         * ? We should make sure splashy can't be launched twice from this
+         * ? We should make sure splashy can't be launched indent: Standard input:1067: Warning:Extra )
+         twice from this
          * same thread 
          */
         if (video.dfb->GetInputDevice (video.dfb, DIDID_KEYBOARD,
@@ -1160,13 +1142,32 @@ splashy_start_splash ()
          * set our expectation to a very big number 
          */
         fb_preinit (&fb_vinfo);
-        video.mode->out_height = fb_vinfo.yres;
-        video.mode->out_width = fb_vinfo.xres;
+        video.mode->yres = fb_vinfo.yres;
+        video.mode->xres = fb_vinfo.xres;
 
-        DEBUG_PRINT ("Setting min Width (x) resolution to %d",
-                     video.mode->out_width);
-        DEBUG_PRINT ("Setting min Height (y) resolution to %d",
-                     video.mode->out_height);
+        if (fb_vinfo.bits_per_pixel > 24)
+        {
+                video.mode->bpp = 32;
+        }
+        else if (fb_vinfo.bits_per_pixel > 16)
+        {
+                video.mode->bpp = 24;
+        }
+        else if (fb_vinfo.bits_per_pixel > 8)
+        {
+                video.mode->bpp = 16;
+        }
+        else
+        {
+                video.mode->bpp = 8;
+        }
+
+        DEBUG_PRINT ("Setting min Width (x) resolution to %d\n",
+                     video.mode->xres);
+        DEBUG_PRINT ("Setting min Height (y) resolution to %d\n",
+                     video.mode->yres);
+        DEBUG_PRINT ("Setting min bits_per_pixel to %d (was %d)\n",
+                     video.mode->bpp, fb_vinfo.bits_per_pixel);
 
         if (video.dfb->CreateImageProvider (video.dfb,
                                             _current_background,
@@ -1221,8 +1222,8 @@ splashy_start_splash ()
                           DWDESC_WIDTH | DWDESC_HEIGHT);
         win_desc.posx = 0;
         win_desc.posy = 0;
-        win_desc.width = video.mode->out_width;
-        win_desc.height = video.mode->out_height;
+        win_desc.width = video.mode->xres;
+        win_desc.height = video.mode->yres;
         /*
          * TODO do we really need this? win_desc.caps = DWCAPS_ALPHACHANNEL; 
          */
@@ -1236,6 +1237,10 @@ splashy_start_splash ()
                 video.primary_surface->Release (video.primary_surface);
                 return -7;
         }
+
+        DEBUG_PRINT
+                ("Window was created with (x_start,y_start,x_end,y_end) 0,0,%d,%d dimensions\n",
+                 win_desc.width, win_desc.height);
 
         if (video.primary_window->GetSurface (video.primary_window,
                                               &video.primary_window_surface)
@@ -1656,7 +1661,8 @@ _gets_from_input_bar (char *buf, int max_length, splashy_box_t * input,
                                 break;
                                 // case DIKI_SPACE:
                         default:
-                                // if( DFB_KEY_TYPE(event.key_symbol) !=
+                                // if( DFB_KEY_TYPE(event.key_symbol) 
+                                // !=
                                 // DIKT_UNICODE ) continue;
                                 if (!DFB_KEY_IS_ASCII (event.key_symbol))
                                         continue;
@@ -1705,9 +1711,9 @@ _get_string (char *buf, int len, const char *prompt, int pass)
         int font_height, r_len;
         video.font->GetHeight (video.font, &font_height);
 
-        video.primary_surface->GetSize (video.primary_surface,
-                                        &screen_width, &screen_height);
+        _get_screen_size (&screen_width, &screen_height);
         _get_divider (&divider_w, &divider_h);
+
         /*
          * Set up the size of the box and input line and title box 
          */
@@ -1809,7 +1815,6 @@ splashy_get_password (char *buf, int len, const char *prompt)
 {
         return _get_string (buf, len, prompt, 1);
 }
-
 
 /*
  * Initialize the library 

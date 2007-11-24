@@ -442,7 +442,7 @@ xml_parser_get_int (const gchar * ctag, gint base)
         long ret = 0.0;
         gint _base = 0;         /* special base. strtol will do the right
                                  * thing */
-        if (base >= 0 || base < 36)
+        if (base == 0 || base >= 2 || base < 36)
         {
                 _base = base;
         }
