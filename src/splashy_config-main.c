@@ -34,6 +34,10 @@
  * 2006-02-26 16:14 EST - Luis Mondesi <lemsx1@gmail.com> 
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <unistd.h>                /* getuid */
 #include <getopt.h>                /* getopt_long */
 #include <glib/gi18n.h>
@@ -145,6 +149,12 @@ static struct option create_options[] = {
 gint
 main (gint argc, gchar * argv[])
 {
+
+#ifdef ENABLE_NLS
+  setlocale(LC_ALL, "");
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+  textdomain (GETTEXT_PACKAGE);
+#endif
 
         if (!splashy_init_config (SPL_CONFIG_FILE))
         {
