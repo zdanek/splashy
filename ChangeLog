@@ -1,3 +1,139 @@
+2007-11-24  Vincent Amouret <vincent.amouret@gmail.com>
+
+	* : commit 832b2d902f00116b8e194a71df222879ca2ec13a Author: Vincent
+	Amouret <vincent.amouret@gmail.com> Date:   Sat Nov 24 22:44:54 2007
+	+0100
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: avoids oddities in bits per pixel settings this is more precise
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: attempts to set the resolution with
+	SetVideoMode this only works for drivers other than vesafb. Also, note that
+	directfb uses /sys/class/graphics/fb0/* to set the (virtual) size
+	for the screen. this might or might not match the size of the actual
+	resolution. we are working on a work around
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: shows resolution of primary surface for
+	debugging purposes
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS: note about screen size this should seal this problem
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: do not trust the resolution as reported by
+	primary_{window,}_surface->GetSize() the resolution reported by the ->GetSize() call for the *surface
+	tends to be according to whatever size is reported by directfb from
+	adding (double+) the size of the actual screen size. This means that
+	on dual-head video cards, the height is twice as much as it should
+	be (from what ioctl() reports from /dev/fb0). Since Splashy is only
+	concern on the size of the screen visible by the user, and not the
+	view that it's possible to go to, we introduced a _get_screen_size()
+	helper that should eliminate this problem
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: calls getsize from window surface primary_surface and primary_window_surface should be the same
+	anyway, but we really mean primary_window_surface on these
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: shows more debug info shows dimension values
+
+2007-11-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/xml_parser.c: base value cannot be 1 the values are 1 < N < 36 or 0. So, N is never 1 but it can be the
+	special value 0. See: man 3 strtol.
+
+2007-11-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: divider info reports actual divider size. this helps us troubleshooting
+	resolution problems
+
+2007-11-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: shows what the actual dimension for the
+	created window is just in case something goes wrong and we are using different values
+
+2007-11-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: code cleanups. xres/yres implies resolution ok, this makes a distinction between the surface/screen/window all
+	treated as the same thing. width and height really means the size of
+	one of those 3 (in fullscreen mode, it makes no difference). We now
+	use xres and yres to refer to the resolution of the actual screen as
+	reported by /dev/fb* (loaded framebuffer). minor and subtle way of
+	thinking about it
+
+2007-11-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: uses values from /dev/fb0 or whatever
+	FRAMEBUFFER device reported from the environment This avoids problems where the resolution and viewport values happen
+	to be mismatched
+
+2007-11-19  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: adds TODO we need to make the _get_string() colors theme-able
+
+2007-11-19  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/default/splashy: by default stay in your tty do not go to 6 or any tty number. let the system decide
+
+2007-11-19  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/Makefile.am: libgcc is needed adds back libgcc_s. we need this to use pthread* correctly
+
+2007-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po, po/index.html, po/splashy.pot: Spanish translation done 2nd translation ready
+
+2007-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/sk.po: needed to add fuzzy back to validate ./check_po.pl complaints about msgid being empty... go figure
+
+2007-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: adds plural plus more validates correctly
+
+2007-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: slovak (sk) added
+
+2007-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/sk.po: Slovak translation Here is the first translation from a non-splashy developer. Thanks a
+	bunch Ivan Masár < helix84 NOSPAMAT centrum ! sk > for taking time
+	to send us this.
+
+2007-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: more strings more translations
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: really fixes intl install now files are installed with the right name
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: missing variable fixes issue with intl files (after installation)
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: missing new-lines
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS: let them know about translations
+
+2007-11-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: We got international support
+
 2007-11-15  Luis Mondesi <lemsx1@gmail.com>
 
 	* po/splashy.pot, po/stats.pl: more modernizations minor touches
