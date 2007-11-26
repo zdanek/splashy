@@ -66,7 +66,7 @@ msgid ">Theme currently used:\n"
 msgstr ">El tema actual es:\n"
 
 #: src/splashy_config-functions.c:381
-#, fuzzy, c-format
+#, c-format
 msgid "                      version %s\n"
 msgstr "                      versión %s\n"
 
@@ -377,7 +377,7 @@ msgid "Author <author@mail.com>"
 msgstr "Autor <autor@example.com>"
 
 #: src/splashy_config-main.c:51
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A Splashy Configuration Tool\n"
 "\n"
@@ -462,14 +462,3 @@ msgstr "Te faltaron argumentos\n"
 msgid "Error: Could not open theme file for writing\n"
 msgstr "Error: no pude escribir el archivo del tema\n"
 
-#~ msgid "   Red"
-#~ msgstr "   Rojo"
-
-#~ msgid "   Green"
-#~ msgstr "   Verde"
-
-#~ msgid "   Blue"
-#~ msgstr "   Azul"
-
-#~ msgid "   Alpha"
-#~ msgstr "   Alfa"
