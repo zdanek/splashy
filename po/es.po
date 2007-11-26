@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: splashy\n"
 "Report-Msgid-Bugs-To: splashy-devel@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-11-15 22:10-0500\n"
+"POT-Creation-Date: 2007-11-25 22:07-0500\n"
 "PO-Revision-Date: 2007-11-15 22:10-0500\n"
 "Last-Translator: Luis Mondesi <lemsx1@gmail.com>\n"
 "Language-Team: splashy-devel@lists.alioth.debian.org\n"
@@ -59,16 +59,21 @@ msgstr "¡El tema no existe!\n"
 
 #: src/splashy_config-functions.c:322
 msgid "This theme is currently used!\n"
-msgstr ""
+msgstr "¡Este tema ya esta siendo usado!"
 
 #: src/splashy_config-functions.c:378
 msgid ">Theme currently used:\n"
 msgstr ">El tema actual es:\n"
 
+#: src/splashy_config-functions.c:381
+#, fuzzy, c-format
+msgid "                      version %s\n"
+msgstr "                      versión %s\n"
+
 #: src/splashy_config-functions.c:385
 #, c-format
 msgid "                      URLs %s\n"
-msgstr "                      URLs %s\n"
+msgstr "                      URL %s\n"
 
 #: src/splashy_config-functions.c:387
 #, c-format
@@ -269,28 +274,28 @@ msgstr " Color\n"
 #. Red
 #: src/splashy_config-functions.c:988 src/splashy_config-functions.c:1002
 #: src/splashy_config-functions.c:1024 src/splashy_config-functions.c:1110
-#: src/splashy_config-functions.c:1169
+#: src/splashy_config-functions.c:1131 src/splashy_config-functions.c:1169
 msgid "  Red"
 msgstr " Rojo"
 
 #. Green
 #: src/splashy_config-functions.c:991 src/splashy_config-functions.c:1005
 #: src/splashy_config-functions.c:1027 src/splashy_config-functions.c:1113
-#: src/splashy_config-functions.c:1172
+#: src/splashy_config-functions.c:1134 src/splashy_config-functions.c:1172
 msgid "  Green"
 msgstr " Verde"
 
 #. Blue
 #: src/splashy_config-functions.c:994 src/splashy_config-functions.c:1008
 #: src/splashy_config-functions.c:1030 src/splashy_config-functions.c:1116
-#: src/splashy_config-functions.c:1175
+#: src/splashy_config-functions.c:1138 src/splashy_config-functions.c:1175
 msgid "  Blue"
 msgstr " Azul"
 
 #. Alpha
 #: src/splashy_config-functions.c:997 src/splashy_config-functions.c:1011
 #: src/splashy_config-functions.c:1033 src/splashy_config-functions.c:1119
-#: src/splashy_config-functions.c:1178
+#: src/splashy_config-functions.c:1142 src/splashy_config-functions.c:1178
 msgid "  Alpha"
 msgstr " Alfa"
 
@@ -329,26 +334,6 @@ msgstr " ¿Quieres un borde alrededor del cuadro de texto? (yes|no)"
 #: src/splashy_config-functions.c:1128
 msgid "  Border color\n"
 msgstr " Color del borde\n"
-
-#. Red
-#: src/splashy_config-functions.c:1131
-msgid "   Red"
-msgstr "   Rojo"
-
-#. Green
-#: src/splashy_config-functions.c:1134
-msgid "   Green"
-msgstr "   Verde"
-
-#. Blue
-#: src/splashy_config-functions.c:1138
-msgid "   Blue"
-msgstr "   Azul"
-
-#. Alpha
-#: src/splashy_config-functions.c:1142
-msgid "   Alpha"
-msgstr "   Alfa"
 
 #: src/splashy_config-functions.c:1154
 msgid " Text font file"
@@ -391,8 +376,8 @@ msgstr "No pude escribir al archivo: %s"
 msgid "Author <author@mail.com>"
 msgstr "Autor <autor@example.com>"
 
-#: src/splashy_config-main.c:47
-#, c-format
+#: src/splashy_config-main.c:51
+#, fuzzy, c-format
 msgid ""
 "A Splashy Configuration Tool\n"
 "\n"
@@ -406,7 +391,7 @@ msgid ""
 "-r, --remove-theme THEME            Remove the THEME\n"
 "    --info                          Display some information\n"
 "-c, --create-theme  [args...]       Create a theme in an interactive mode if "
-"no arguments\n"
+"no arguments were given\n"
 "                                    Inline mode arguments, the following "
 "arguments are obligatory\n"
 "                                    see the man page for a complete list\n"
@@ -424,27 +409,28 @@ msgstr ""
 "usage: %s [option] arg \n"
 "\n"
 "-h, --help                          Muestra esta ayuda\n"
-"-g, --get-key XPATH                 Muestra el valor de una llave del archivo "
-"de configuracion Splashy o el tema actual\n"
+"-g, --get-key XPATH                 Muestra el valor de una llave del "
+"archivo de configuracion Splashy o el tema actual\n"
 "-s, --set-theme TEMA                Cambia Splashy a usar el tema TEMA\n"
-"-i, --install-theme TEMA.tar.gz     Instala el TEMA del archivo de formato tar\n"
+"-i, --install-theme TEMA.tar.gz     Instala el TEMA del archivo de formato "
+"tar\n"
 "-r, --remove-theme TEMA             Borra el tema TEMA\n"
 "    --info                          Muestra información\n"
-"-c, --create-theme  [args...]       Crear un tema de forma interactiva si "
-"no hay argumentos\n"
-"                                    Los posibles argumentos, son los siguientes "
-"argumentos obligatorios\n"
+"-c, --create-theme  [args...]       Crear un tema de forma interactiva si no "
+"hay argumentos\n"
+"                                    Los posibles argumentos, son los "
+"siguientes argumentos obligatorios\n"
 "                                    ver el manual para una lista completa\n"
-"            --name  NAME                 Cambia el nombre a NAME en el "
-"tema de Splashy nuevo\n"
-"            --boot-image PASO            Sube la imagen de entrada localizada en "
-"el paso PASO especificado\n"
-"            --shutdown-image PASO        Sube la imagen de salida localizada en "
-"el paso PASO especificado\n"
-"            --error-image PASO           Sube la imagen de error localizada en "
-"el paso PASO especificado\n"
+"            --name  NAME                 Cambia el nombre a NAME en el tema "
+"de Splashy nuevo\n"
+"            --boot-image PASO            Sube la imagen de entrada "
+"localizada en el paso PASO especificado\n"
+"            --shutdown-image PASO        Sube la imagen de salida localizada "
+"en el paso PASO especificado\n"
+"            --error-image PASO           Sube la imagen de error localizada "
+"en el paso PASO especificado\n"
 
-#: src/splashy_config-main.c:65
+#: src/splashy_config-main.c:69
 #, c-format
 msgid ""
 "usage: %s [option] arg \n"
@@ -459,7 +445,7 @@ msgstr ""
 "[-g, --get-key XPATH]\n"
 "Ver --help para más información\n"
 
-#: src/splashy_config-main.c:152
+#: src/splashy_config-main.c:162
 msgid ""
 "Error occured while starting Splashy\n"
 "Make sure that you can read Splashy's configuration file\n"
@@ -467,7 +453,7 @@ msgstr ""
 "Un error ocurrió empezando Splashy\n"
 "Asegúrate que puedas leer el archivo de configuración de Splashy\n"
 
-#: src/splashy_config-main.c:167
+#: src/splashy_config-main.c:177
 #, c-format
 msgid "Missing arguments\n"
 msgstr "Te faltaron argumentos\n"
@@ -475,3 +461,15 @@ msgstr "Te faltaron argumentos\n"
 #: src/xml_functions.c:128
 msgid "Error: Could not open theme file for writing\n"
 msgstr "Error: no pude escribir el archivo del tema\n"
+
+#~ msgid "   Red"
+#~ msgstr "   Rojo"
+
+#~ msgid "   Green"
+#~ msgstr "   Verde"
+
+#~ msgid "   Blue"
+#~ msgstr "   Azul"
+
+#~ msgid "   Alpha"
+#~ msgstr "   Alfa"
