@@ -1,0 +1,487 @@
+# Spanish translation for Splashy
+# Copyright (C) 2007
+# This file is distributed under the same license as the Splashy package.
+# And also under the BSD License
+# Stefan von Halenbach <vonHalenbach at users dot sf .net>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: splashy\n"
+"Report-Msgid-Bugs-To: splashy-devel@lists.alioth.debian.org\n"
+"POT-Creation-Date: 2007-11-15 22:10-0500\n"
+"PO-Revision-Date: 2007-11-25 23:43+0100\n"
+"Last-Translator: Stefan von Halenbach <vonHalenbach at users dot sf .net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: src/splashy_config-functions.c:73
+msgid ">Set theme as: "
+msgstr ">Setze Thema als:"
+
+#: src/splashy_config-functions.c:113
+msgid ">Install theme"
+msgstr ">Installiere neue Themendatei"
+
+#: src/splashy_config-functions.c:119
+msgid "This format is invalid\n"
+msgstr "Dieses Format ist ungültig\n"
+
+#: src/splashy_config-functions.c:156
+msgid "Did you really give me a tarball ?\n"
+msgstr "Haben Sie mir wirklich eine Tar-Datei gegeben ?\n"
+
+#: src/splashy_config-functions.c:179
+msgid "An error occurred checking theme \n"
+msgstr "Es trat ein Fehler bei der Untersuchung der Themendatei auf \n"
+
+#: src/splashy_config-functions.c:248
+#: src/splashy_config-functions.c:460
+msgid "This theme already exists\n"
+msgstr "Diese Themendatei gibt es bereits\n"
+
+#: src/splashy_config-functions.c:269
+msgid "An error occurred installing theme \n"
+msgstr "Es trat ein Fehler bei der Installation der Themendatei auf \n"
+
+#: src/splashy_config-functions.c:287
+msgid "The tarball does not exist!\n"
+msgstr "Die Tar-Datei ist nicht zu finden!\n"
+
+#: src/splashy_config-functions.c:302
+msgid ">Remove theme"
+msgstr ">Entferne Themendatei"
+
+#: src/splashy_config-functions.c:315
+msgid "The theme does not exist!\n"
+msgstr "Diese Themendatei gibt es nicht!\n"
+
+#: src/splashy_config-functions.c:322
+msgid "This theme is currently used!\n"
+msgstr "Diese Themendatei wird gerade benutzt!\n"
+
+#: src/splashy_config-functions.c:378
+msgid ">Theme currently used:\n"
+msgstr ">Zur Zeit benutzte Themendatei:\n"
+
+#: src/splashy_config-functions.c:385
+#, c-format
+msgid "                      URLs %s\n"
+msgstr "                      Webadressen %s\n"
+
+#: src/splashy_config-functions.c:387
+#, c-format
+msgid "                      by %s\n"
+msgstr "                      von %s\n"
+
+#: src/splashy_config-functions.c:390
+msgid ">Installed themes:\n"
+msgstr ">Installierte Themendateien:\n"
+
+#: src/splashy_config-functions.c:430
+msgid ""
+"<!> Insufficient priviledges <!>\n"
+"Root priviledges required for this function\n"
+msgstr ""
+"<!> Keine ausreichenden Dateirechte <!>\n"
+"Superbenutzerrechte sind für diese Aktion erforderlich\n"
+
+#: src/splashy_config-functions.c:443
+msgid ">Create theme "
+msgstr ">Erstelle neue Themendatei"
+
+#: src/splashy_config-functions.c:448
+#, c-format
+msgid "This file does not exist: %s\n"
+msgstr "Diese Datei gibt es nicht im Verzeichnis: %s\n"
+
+#: src/splashy_config-functions.c:476
+msgid "The boot image does not seem to be an image\n"
+msgstr "Das Bootimage scheint keine gültige Imagedatei zu sein\n"
+
+#: src/splashy_config-functions.c:493
+msgid "The shutdown image does not seem to be an image\n"
+msgstr "Das Shutdownimage scheint keine gültige Imagedatei zu sein\n"
+
+#: src/splashy_config-functions.c:509
+msgid "The error image does not seem to be an image\n"
+msgstr "Das Fehlerimage scheint keine gültige Imagedatei zu sein\n"
+
+#: src/splashy_config-functions.c:526
+msgid "The resume image does not seem to be an image\n"
+msgstr "Das Aufwachimage scheint keine gültige Imagedatei zu sein\n"
+
+#: src/splashy_config-functions.c:543
+msgid "The suspend image does not seem to be an image\n"
+msgstr "Das Schlafenlegeimage scheint keine gültige Imagedatei zu sein\n"
+
+#: src/splashy_config-functions.c:577
+#, c-format
+msgid "Error! Can't create theme directory %s\n"
+msgstr "Fehler! Kann Verzeichnis %s für Themendateien nicht anlegen\n"
+
+#: src/splashy_config-functions.c:579
+#, c-format
+msgid "Writing theme %s to current directory\n"
+msgstr "Schreibe Themendatei %s in das aktuell gültige Verzeichnis\n"
+
+#: src/splashy_config-functions.c:584
+#, c-format
+msgid "Error! Can't create directory %s\n"
+msgstr "Fehler! Kann Verzeichnis %s nicht erstellen.\n"
+
+#: src/splashy_config-functions.c:604
+#: src/splashy_config-functions.c:628
+#: src/splashy_config-functions.c:652
+#: src/splashy_config-functions.c:676
+#: src/splashy_config-functions.c:700
+#: src/splashy_config-functions.c:727
+#, c-format
+msgid ""
+"Error! Unable to use the picture %s.\n"
+"Aborting\n"
+msgstr ""
+"Fehler! Kann Bilddatei %s nicht benutzen.\n"
+"Abbruch\n"
+
+#: src/splashy_config-functions.c:763
+msgid "You tried to create a theme without a name\n"
+msgstr "Sie versuchten eine Themendatei ohne einen Dateinamen zu erstellen\n"
+
+#: src/splashy_config-functions.c:788
+msgid "* Name"
+msgstr "* Dateiname"
+
+#: src/splashy_config-functions.c:800
+msgid "* Boot image"
+msgstr "* Bootimage"
+
+#: src/splashy_config-functions.c:812
+msgid "* Shutdown image"
+msgstr "* Abschaltimage"
+
+#: src/splashy_config-functions.c:824
+msgid "* Error image"
+msgstr "* Fehlerimage"
+
+#: src/splashy_config-functions.c:836
+msgid "* Resume image"
+msgstr "* Aufwachimage"
+
+#: src/splashy_config-functions.c:848
+msgid "* Suspend image"
+msgstr "* Schlafimage"
+
+#: src/splashy_config-functions.c:855
+msgid "Do you want to set the resolution (height & width) of these images ? (yes|no)"
+msgstr "Möchten Sie die Auflösung (Höhe & Breite) dieser Bilder festlegen? (Ja|nein)"
+
+#: src/splashy_config-functions.c:864
+msgid " Width"
+msgstr "Breite"
+
+#: src/splashy_config-functions.c:868
+msgid " Height"
+msgstr "Höhe"
+
+#. Version
+#: src/splashy_config-functions.c:873
+msgid "Version"
+msgstr "Version"
+
+#. Description
+#: src/splashy_config-functions.c:876
+msgid "Description"
+msgstr "Beschreibung"
+
+#. URLs
+#: src/splashy_config-functions.c:879
+msgid "URLs"
+msgstr "Webadressen"
+
+#. Author
+#: src/splashy_config-functions.c:882
+msgid "Author"
+msgstr "Autor"
+
+#. Progressbaronboot
+#: src/splashy_config-functions.c:885
+msgid "Do you want to see a progress bar on boot ? (yes|no)"
+msgstr "Möchten Sie einen Fortschrittsbalken während des Bootvorgangs sehen? (ja|nein)"
+
+#: src/splashy_config-functions.c:890
+#: src/splashy_config-functions.c:900
+#: src/splashy_config-functions.c:910
+#: src/splashy_config-functions.c:920
+msgid " Direction ? (forward|backward)"
+msgstr "Richtung ? (Vorwärts|Rückwärts)"
+
+#: src/splashy_config-functions.c:895
+msgid "Do you want to see a progress bar on shutdown ? (yes|no)"
+msgstr "Möchten Sie beim Herunterfahren des Computers einen Fortschrittsbalken sehen ? (ja|nein)"
+
+#: src/splashy_config-functions.c:905
+msgid "Do you want to see a progress bar on resume ? (yes|no)"
+msgstr "Möchten Sie einen Fortschrittsbalken beim Aufwachen des Computers sehen ? (ja|nein)"
+
+#: src/splashy_config-functions.c:915
+msgid "Do you want to see a progress bar on suspend ? (yes|no)"
+msgstr "Möchten Sie einen Fortschrittsbalken beim Schlafenlegen des Computers sehen ? (ja|nein)"
+
+#: src/splashy_config-functions.c:929
+msgid "Progress bar\n"
+msgstr "Fortschrittsbalken\n"
+
+#: src/splashy_config-functions.c:934
+#: src/splashy_config-functions.c:1055
+msgid " X position in pixel units"
+msgstr "Position X in Pixeleinheiten"
+
+#: src/splashy_config-functions.c:939
+#: src/splashy_config-functions.c:1060
+msgid " X position in percentage"
+msgstr "Position X in Prozent"
+
+#: src/splashy_config-functions.c:946
+#: src/splashy_config-functions.c:1068
+msgid " Y position in pixel units"
+msgstr "Position Y in Pixeleinheiten"
+
+#: src/splashy_config-functions.c:951
+#: src/splashy_config-functions.c:1073
+msgid " Y position in percentage"
+msgstr "Position Y in Prozent"
+
+#: src/splashy_config-functions.c:960
+#: src/splashy_config-functions.c:1082
+msgid " Width in pixel units"
+msgstr " Breite in Pixeleinheiten"
+
+#: src/splashy_config-functions.c:965
+#: src/splashy_config-functions.c:1087
+msgid " Width in percentage"
+msgstr " Breite in Prozent"
+
+#: src/splashy_config-functions.c:975
+#: src/splashy_config-functions.c:1097
+msgid " Height in pixel units"
+msgstr " Höhe in Pixeleinheiten"
+
+#: src/splashy_config-functions.c:980
+#: src/splashy_config-functions.c:1102
+msgid " Height in percentage"
+msgstr " Höhe in Prozent"
+
+#: src/splashy_config-functions.c:985
+#: src/splashy_config-functions.c:1107
+msgid " Color\n"
+msgstr "  Farbe\n"
+
+#. Red
+#: src/splashy_config-functions.c:988
+#: src/splashy_config-functions.c:1002
+#: src/splashy_config-functions.c:1024
+#: src/splashy_config-functions.c:1110
+#: src/splashy_config-functions.c:1169
+msgid "  Red"
+msgstr "  Rot"
+
+#. Green
+#: src/splashy_config-functions.c:991
+#: src/splashy_config-functions.c:1005
+#: src/splashy_config-functions.c:1027
+#: src/splashy_config-functions.c:1113
+#: src/splashy_config-functions.c:1172
+msgid "  Green"
+msgstr "  Grün"
+
+#. Blue
+#: src/splashy_config-functions.c:994
+#: src/splashy_config-functions.c:1008
+#: src/splashy_config-functions.c:1030
+#: src/splashy_config-functions.c:1116
+#: src/splashy_config-functions.c:1175
+msgid "  Blue"
+msgstr "  Blau"
+
+#. Alpha
+#: src/splashy_config-functions.c:997
+#: src/splashy_config-functions.c:1011
+#: src/splashy_config-functions.c:1033
+#: src/splashy_config-functions.c:1119
+#: src/splashy_config-functions.c:1178
+msgid "  Alpha"
+msgstr "  Alphakanal (Transparenz)"
+
+#: src/splashy_config-functions.c:999
+msgid " Background color\n"
+msgstr " Hintergrundfarbe\n"
+
+#: src/splashy_config-functions.c:1015
+msgid " Do you want a border around the progress bar? (yes|no)"
+msgstr "Möchten Sie einen Rahmen um den Fortschrittsbalken haben? (ja|nein)"
+
+#: src/splashy_config-functions.c:1021
+msgid " Border color\n"
+msgstr " Rahmenfarbe\n"
+
+#. if border
+#. if progressbar
+#. Auto verbose
+#: src/splashy_config-functions.c:1039
+msgid "Pass in verbose mode on error? (yes|no)"
+msgstr "Im Fehlerfall in den Allesausgabemodus schalten? (ja|nein)"
+
+#. Text box or not
+#: src/splashy_config-functions.c:1043
+msgid "Do you want to see a text box? (yes|no)"
+msgstr "Möchten Sie eine Textfläche haben? (ja|nein)"
+
+#: src/splashy_config-functions.c:1050
+msgid "Text box\n"
+msgstr "Textfläche\n"
+
+#: src/splashy_config-functions.c:1123
+msgid " Do you want a border around the text box ? (yes|no)"
+msgstr "Möchten Sie einen Rahmen um die Textfläche haben ? (ja|nein)"
+
+#: src/splashy_config-functions.c:1128
+msgid "  Border color\n"
+msgstr " Rahmenfarbe\n"
+
+#. Red
+#: src/splashy_config-functions.c:1131
+msgid "   Red"
+msgstr " Rot"
+
+#. Green
+#: src/splashy_config-functions.c:1134
+msgid "   Green"
+msgstr " Grün"
+
+#. Blue
+#: src/splashy_config-functions.c:1138
+msgid "   Blue"
+msgstr " Blau"
+
+#. Alpha
+#: src/splashy_config-functions.c:1142
+msgid "   Alpha"
+msgstr " Alphakanal (Transparenz)"
+
+#: src/splashy_config-functions.c:1154
+msgid " Text font file"
+msgstr "Zeichensatzhöhe"
+
+#: src/splashy_config-functions.c:1163
+msgid " Font size"
+msgstr "Zeichensatzhöhe"
+
+#: src/splashy_config-functions.c:1166
+msgid " Text color\n"
+msgstr " Textfarbe\n"
+
+#. Fade in ?
+#: src/splashy_config-functions.c:1183
+msgid "Do you want a fade-in? (yes|no)"
+msgstr "Möchten Sie einen Einblendungseffekt? (ja|nein)"
+
+#. Fade out ?
+#: src/splashy_config-functions.c:1186
+msgid "Do you want a fade-out? (yes|no)"
+msgstr "Möchten Sie einen Ausblendungseffekt? (Ja|nein)"
+
+#: src/splashy_config-functions.c:1221
+#, c-format
+msgid "Failed to read the file: %s"
+msgstr "Konnte Datei %s nicht lesen."
+
+#: src/splashy_config-functions.c:1229
+#, c-format
+msgid "Error opening destination file %s\n"
+msgstr "Fehler: Konnte Ausgabedatei %s nicht öffnen.\n"
+
+#: src/splashy_config-functions.c:1236
+#, c-format
+msgid "Failed to write the file: %s"
+msgstr "Konnte nicht in Datei %s schreiben."
+
+#: src/splashy_config-functions.c:1338
+msgid "Author <author@mail.com>"
+msgstr "Autor <autor@Internetanbieter.de>"
+
+#: src/splashy_config-main.c:47
+#, c-format
+msgid ""
+"A Splashy Configuration Tool\n"
+"\n"
+"usage: %s [option] arg \n"
+"\n"
+"-h, --help                          Display this help\n"
+"-g, --get-key XPATH                 Returns the value of a key from Splashy config file, or the current theme\n"
+"-s, --set-theme THEME               Set THEME as the Splashy theme\n"
+"-i, --install-theme THEME.tar.gz    Install the THEME from a tarball\n"
+"-r, --remove-theme THEME            Remove the THEME\n"
+"    --info                          Display some information\n"
+"-c, --create-theme  [args...]       Create a theme in an interactive mode if no arguments\n"
+"                                    Inline mode arguments, the following arguments are obligatory\n"
+"                                    see the man page for a complete list\n"
+"            --name  NAME                 Set the NAME of the new Splashy theme\n"
+"            --boot-image PATH            Upload the boot image located at the specified PATH\n"
+"            --shutdown-image PATH        Upload the shutdown image located at the specified PATH\n"
+"            --error-image PATH           Upload the error image located at the specified PATH\n"
+msgstr ""
+"Das Splashy Konfigurationswerkzeug\n"
+"\n"
+"Benutzungssyntax: %s [Option] Argument \n"
+"\n"
+"-h, --help                          Diese Hilfe anzeigen\n"
+"-g, --get-key XPFAD                 Gibt als Rückgabewert einen Schlüssel aus der Splashy Konfigurationsdatei, oder des derzeitigen Themas\n"
+"-s, --set-theme THEMENDATEI               Setze THEMENDATEI als das aktuelle Splashy-Thema\n"
+"-i, --install-theme THEMENDATEI.tar.gz    Installiert eine THEMENDATEI aus einer gepackten Tar-Datei\n"
+"-r, --remove-theme THEMENDATEI            Entfernt die THEMENDATEI wieder\n"
+"    --info                          Zeigt einige Informationen an\n"
+"-c, --create-theme  [Argumente...]       Erstellt eine Themendatei interaktiv wenn keine Argumente angegeben wurden\n"
+"                                    Im Inlinemodus sind diese Argumente notwendig\n"
+"                                    sehen Sie sich die man-Datei für weitere Einzelheiten an\n"
+"            --name  NAME                 Gibt der neuen Themendatei den Namen NAME\n"
+"            --boot-image PFAD            Lädt das Bootimage vom angegebenen PFAD\n"
+"            --shutdown-image PFAD        Lädt das Abschaltimage vom angegebenen PFAD\n"
+"            --error-image PFAD           Lädt das Fehlerimage vom angegebenen PFAD\n"
+
+#: src/splashy_config-main.c:65
+#, c-format
+msgid ""
+"usage: %s [option] arg \n"
+"[-h, --help][-s, --set-theme THEME][-i, --install-theme THEME.tar.gz]\n"
+"[-r, --remove-theme THEME][--info][-c, --create-theme  [args...]]\n"
+"[-g, --get-key XPATH]\n"
+"See --help for more information\n"
+msgstr ""
+"Benutzungssyntax: %s [Option] Argument \n"
+"[-h, --help][-s, --set-theme THEME][-i, --install-theme THEME.tar.gz]\n"
+"[-r, --remove-theme THEME][--info][-c, --create-theme  [Argumente...]]\n"
+"[-g, --get-key XPFAD]\n"
+"Benutzen Sie --help für weitere Informationen\n"
+
+#: src/splashy_config-main.c:152
+msgid ""
+"Error occured while starting Splashy\n"
+"Make sure that you can read Splashy's configuration file\n"
+msgstr ""
+"Ein Fehler trat während des Starts von Splashy auf.\n"
+"Stellen Sie sicher, dass die Konfigurationsdatei von Splashy gelesen werden kann.\n"
+
+#: src/splashy_config-main.c:167
+#, c-format
+msgid "Missing arguments\n"
+msgstr "Fehlende Argumente auf der Kommandozeile\n"
+
+#: src/xml_functions.c:128
+msgid "Error: Could not open theme file for writing\n"
+msgstr "Fehler: Kann Themendatei nicht zur Bearbeitung öffnen\n"
+
