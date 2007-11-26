@@ -378,7 +378,7 @@ information (void)
         g_print (_(">Theme currently used:\n"));
         g_print ("                      %s\n",
                  splashy_get_config_string ("/splashy/current_theme"));
-        g_print ("                      version %s\n",
+        g_print (_("                      version %s\n"),
                  splashy_get_config_string ("/splashy/info/version"));
         g_print ("                         %s\n",
                  splashy_get_config_string ("/splashy/info/description"));
@@ -1128,18 +1128,18 @@ get_fields (void)
                         g_print (_("  Border color\n"));
 
                         // Red
-                        ask_uint (_("   Red"), &NewTheme->textbox_border_red);
+                        ask_uint (_("  Red"), &NewTheme->textbox_border_red);
 
                         // Green
-                        ask_uint (_("   Green"),
+                        ask_uint (_("  Green"),
                                   &NewTheme->textbox_border_green);
 
                         // Blue
-                        ask_uint (_("   Blue"),
+                        ask_uint (_("  Blue"),
                                   &NewTheme->textbox_border_blue);
 
                         // Alpha
-                        ask_uint (_("   Alpha"),
+                        ask_uint (_("  Alpha"),
                                   &NewTheme->textbox_border_alpha);
                 }
 
@@ -1710,7 +1710,7 @@ tar (gchar * argv[])
         {
                 if (execv ("/bin/tar", argv) == -1)
                 {
-                        fprintf (stderr, "tar failed to start\n");
+                        fprintf (stderr, "/bin/tar failed to start\n");
                         _exit (1);
                 }
         }

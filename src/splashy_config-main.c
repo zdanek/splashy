@@ -38,8 +38,8 @@
 #include <config.h>
 #endif
 
-#include <unistd.h>                /* getuid */
-#include <getopt.h>                /* getopt_long */
+#include <unistd.h>             /* getuid */
+#include <getopt.h>             /* getopt_long */
 #include <glib/gi18n.h>
 
 #include "common_macros.h"
@@ -58,7 +58,7 @@ _("A Splashy Configuration Tool\n"\
 "-i, --install-theme THEME.tar.gz    Install the THEME from a tarball\n"\
 "-r, --remove-theme THEME            Remove the THEME\n"\
 "    --info                          Display some information\n"\
-"-c, --create-theme  [args...]       Create a theme in an interactive mode if no arguments\n"\
+"-c, --create-theme  [args...]       Create a theme in an interactive mode if no arguments were given\n"\
 "                                    Inline mode arguments, the following arguments are obligatory\n"\
 "                                    see the man page for a complete list\n"\
 "            --name  NAME                 Set the NAME of the new Splashy theme\n"\
@@ -151,9 +151,9 @@ main (gint argc, gchar * argv[])
 {
 
 #ifdef ENABLE_NLS
-  setlocale(LC_ALL, "");
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-  textdomain (GETTEXT_PACKAGE);
+        setlocale (LC_ALL, "");
+        bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+        textdomain (GETTEXT_PACKAGE);
 #endif
 
         if (!splashy_init_config (SPL_CONFIG_FILE))
@@ -178,7 +178,7 @@ main (gint argc, gchar * argv[])
                 printf (USAGE, g_get_prgname ());
                 return R_OK;
         }
-        
+
         gint ret = RETURN_ERROR;
         switch (retopt)
         {
@@ -195,9 +195,9 @@ main (gint argc, gchar * argv[])
                 ret = information ();
                 break;
         case 'c':
-                if (argv[optind] == NULL)        // interactive mode */
-                       ret = create_theme (get_fields ());
-                else                // inline mode
+                if (argv[optind] == NULL)       // interactive mode */
+                        ret = create_theme (get_fields ());
+                else            // inline mode
                 {
 
                         while (argc > optind)
