@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: splashy-devel@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-11-16 19:31-0500\n"
+"POT-Creation-Date: 2007-11-25 22:05-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,6 +62,11 @@ msgstr ""
 
 #: src/splashy_config-functions.c:378
 msgid ">Theme currently used:\n"
+msgstr ""
+
+#: src/splashy_config-functions.c:381
+#, c-format
+msgid "                      version %s\n"
 msgstr ""
 
 #: src/splashy_config-functions.c:385
@@ -263,28 +268,28 @@ msgstr ""
 #. Red
 #: src/splashy_config-functions.c:988 src/splashy_config-functions.c:1002
 #: src/splashy_config-functions.c:1024 src/splashy_config-functions.c:1110
-#: src/splashy_config-functions.c:1169
+#: src/splashy_config-functions.c:1131 src/splashy_config-functions.c:1169
 msgid "  Red"
 msgstr ""
 
 #. Green
 #: src/splashy_config-functions.c:991 src/splashy_config-functions.c:1005
 #: src/splashy_config-functions.c:1027 src/splashy_config-functions.c:1113
-#: src/splashy_config-functions.c:1172
+#: src/splashy_config-functions.c:1134 src/splashy_config-functions.c:1172
 msgid "  Green"
 msgstr ""
 
 #. Blue
 #: src/splashy_config-functions.c:994 src/splashy_config-functions.c:1008
 #: src/splashy_config-functions.c:1030 src/splashy_config-functions.c:1116
-#: src/splashy_config-functions.c:1175
+#: src/splashy_config-functions.c:1138 src/splashy_config-functions.c:1175
 msgid "  Blue"
 msgstr ""
 
 #. Alpha
 #: src/splashy_config-functions.c:997 src/splashy_config-functions.c:1011
 #: src/splashy_config-functions.c:1033 src/splashy_config-functions.c:1119
-#: src/splashy_config-functions.c:1178
+#: src/splashy_config-functions.c:1142 src/splashy_config-functions.c:1178
 msgid "  Alpha"
 msgstr ""
 
@@ -322,26 +327,6 @@ msgstr ""
 
 #: src/splashy_config-functions.c:1128
 msgid "  Border color\n"
-msgstr ""
-
-#. Red
-#: src/splashy_config-functions.c:1131
-msgid "   Red"
-msgstr ""
-
-#. Green
-#: src/splashy_config-functions.c:1134
-msgid "   Green"
-msgstr ""
-
-#. Blue
-#: src/splashy_config-functions.c:1138
-msgid "   Blue"
-msgstr ""
-
-#. Alpha
-#: src/splashy_config-functions.c:1142
-msgid "   Alpha"
 msgstr ""
 
 #: src/splashy_config-functions.c:1154
@@ -385,7 +370,7 @@ msgstr ""
 msgid "Author <author@mail.com>"
 msgstr ""
 
-#: src/splashy_config-main.c:47
+#: src/splashy_config-main.c:51
 #, c-format
 msgid ""
 "A Splashy Configuration Tool\n"
@@ -400,7 +385,7 @@ msgid ""
 "-r, --remove-theme THEME            Remove the THEME\n"
 "    --info                          Display some information\n"
 "-c, --create-theme  [args...]       Create a theme in an interactive mode if "
-"no arguments\n"
+"no arguments were given\n"
 "                                    Inline mode arguments, the following "
 "arguments are obligatory\n"
 "                                    see the man page for a complete list\n"
@@ -414,7 +399,7 @@ msgid ""
 "the specified PATH\n"
 msgstr ""
 
-#: src/splashy_config-main.c:65
+#: src/splashy_config-main.c:69
 #, c-format
 msgid ""
 "usage: %s [option] arg \n"
@@ -424,13 +409,13 @@ msgid ""
 "See --help for more information\n"
 msgstr ""
 
-#: src/splashy_config-main.c:152
+#: src/splashy_config-main.c:162
 msgid ""
 "Error occured while starting Splashy\n"
 "Make sure that you can read Splashy's configuration file\n"
 msgstr ""
 
-#: src/splashy_config-main.c:167
+#: src/splashy_config-main.c:177
 #, c-format
 msgid "Missing arguments\n"
 msgstr ""
