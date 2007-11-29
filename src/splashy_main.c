@@ -44,20 +44,21 @@
 int
 main (int argc, char *argv[])
 {
-        /* 
+        /*
          * we are a daemon ... no need for STDOUT or STDIN
          */
-	FILE *fp;
-        fp = freopen("/dev/null","r+",stdin);
-        fp = freopen("/dev/null","r+",stdout);
-	DEBUG_PRINT ("main() invoked %d", argc);
+        FILE *fp;
+        fp = freopen ("/dev/null", "r+", stdin);
+        fp = freopen ("/dev/null", "r+", stdout);
+        DEBUG_PRINT ("main() invoked %d", argc);
 
-	/* grep single /proc/cmdline */
+        /*
+         * grep single /proc/cmdline 
+         */
         if (g_getenv ("RUNLEVEL") &&
-                        g_ascii_strncasecmp (g_getenv ("RUNLEVEL"), "1", 1) == 0)
+            g_ascii_strncasecmp (g_getenv ("RUNLEVEL"), "1", 1) == 0)
         {
-                ERROR_PRINT ("%s",
-                                "Single user mode detected. Exiting...");
+                ERROR_PRINT ("%s", "Single user mode detected. Exiting...");
                 return 1;
         }
 
@@ -66,27 +67,40 @@ main (int argc, char *argv[])
                 g_printerr ("%s\n", USAGE);
                 return 1;
         }
-        
-        if ( g_ascii_strncasecmp (basename(argv[0]),"splashy_chvt",12) == 0 )
+
+        if (g_ascii_strncasecmp (basename (argv[0]), "splashy_chvt", 12) == 0)
         {
+                if (g_ascii_strncasecmp (argv[1], "auto", 4) == 0)
+                {
+                        /*
+                         * This is deprecated 
+                         */
+                        g_printerr ("keyword 'auto' is deprecated\n%s\n",
+                                    USAGE);
+                        return 1;
+                }
                 char *c = argv[1];
                 for (c = argv[1]; *c != '\0'; c++)
-                        if ( ! isdigit(*c) )
+                {
+                        if (!isdigit (*c))
                         {
                                 g_printerr ("%s\n", USAGE);
                                 return 1;
                         }
-                /* behave like chvt */
-                splashy_chvt (atoi(argv[1]));
+                }
+                /*
+                 * behave like chvt 
+                 */
+                splashy_chvt (atoi (argv[1]));
                 return 0;
         }
 
-        if (!splashy_init_config (SPL_CONFIG_FILE)) 
-	{
-		ERROR_PRINT ("%s",
-			     "Error occured while starting Splashy\n"
-			     "Make sure that you can read Splashy's configuration file\n");
-		return 1;
+        if (!splashy_init_config (SPL_CONFIG_FILE))
+        {
+                ERROR_PRINT ("%s",
+                             "Error occured while starting Splashy\n"
+                             "Make sure that you can read Splashy's configuration file\n");
+                return 1;
         }
 
         DEBUG_PRINT ("before child, my pid is %d\n", getpid ());
@@ -94,7 +108,7 @@ main (int argc, char *argv[])
         if (child < 0)
         {
                 ERROR_PRINT ("%s",
-                                "Sorry, could not send Splashy to the background. Bailing out...");
+                             "Sorry, could not send Splashy to the background. Bailing out...");
                 exit (1);
         }
         if (child == 0)
@@ -106,18 +120,20 @@ main (int argc, char *argv[])
                 /*
                  * save your pid if file doesn't exist 
                  */
-                /* FIXME const gchar *_pid_file = xml_parser_get_text ("/splashy/pid"); */
+                /*
+                 * FIXME const gchar *_pid_file = xml_parser_get_text
+                 * ("/splashy/pid"); 
+                 */
                 /*
                  * We assume that there is NO splashy running. In fact, this shouldn't 
                  * be our problem if it is already running. the pid file holds the PID 
                  * of the last instance of splashy started. 
                  */
-                /* FIXME FILE *file = g_fopen (_pid_file, "w+");
-                if (file != NULL)
-                {
-                        fprintf (file, "%d\n", getpid ());
-                        fclose (file);
-                } */
+                /*
+                 * FIXME FILE *file = g_fopen (_pid_file, "w+"); if (file !=
+                 * NULL) { fprintf (file, "%d\n", getpid ()); fclose (file);
+                 * } 
+                 */
                 /*
                  * handle arguments 
                  */
@@ -132,7 +148,7 @@ main (int argc, char *argv[])
                         splashy_child_stop ();
                 }
                 else if (g_ascii_strncasecmp (argv[1], "preview", 7) == 0
-                                || g_ascii_strncasecmp (argv[1], "test", 4) == 0)
+                         || g_ascii_strncasecmp (argv[1], "test", 4) == 0)
                 {
                         DEBUG_PRINT ("Calling splashy_child_test()");
                         splashy_child_test ();
