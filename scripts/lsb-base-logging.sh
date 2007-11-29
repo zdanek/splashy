@@ -51,7 +51,7 @@ log_end_msg () {
 
     # It makes no sense for us to send this step if splashy is not running
     # Although then splashy_update would just return
-    (pidof splashy > /dev/null) || return $1; 
+    pidof splashy > /dev/null || return $1; 
 
     # Get progress percentage of this script
     # was calculated by update-progress-steps
