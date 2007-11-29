@@ -129,17 +129,20 @@ stop_splashy () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
 
-    # just in case, make progressbar 100%
-    $SPL_UPD "progress 100" 2> /dev/null || true
-
-    # now we can exit Splashy:
-    $SPL_UPD "exit" 2> /dev/null || true
+    # it makes no sense to do this if splashy is not running
+    #  - if running:
+    #    * set progress to 100%
+    #    * send exit
+    pidof splashy > /dev/null && \
+        $SPL_UPD "progress 100" 2> /dev/null && \
+        $SPL_UPD "exit" 2> /dev/null 
 
     [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
 
     # Write to log (for testing)
     if [ "x$DEBUG" != "x0" ]; then
-	echo "exit was called" >> $STEPS_DIR/splashy.log
+	echo "passed 'exit' was call" >> $STEPS_DIR/splashy.log
+        pidof splashy > /dev/null && echo 'Splashy is still running!' >> $STEPS_DIR/splashy.log
 	cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
     fi
 
