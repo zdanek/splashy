@@ -1,3 +1,69 @@
+2007-11-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* splashy.spec: Fedora 8 Supports Fedora 8 building process (better). Thanks Rehan Khan for
+	submitting this to us.
+
+2007-11-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_main.c: keyword auto is deprecated users need to update /etc/default/splashy
+
+2007-11-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: improvements to minimize bug 451846 this makes sure that we only call splashy_update in the event that
+	splashy is actually running in stop_splashy. in other words, set the
+	progress to 100% and exit
+
+2007-11-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: as suggested on bug 451846
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html, po/splashy.pot: new stats
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: eliminates fuzzy strings all translated correctly
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html, po/splashy.pot: new strings consolidated
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: completes translation Spanish is done
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/splashy.pot: consolidates string see patch from Alitoh BTS 307527
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_config-functions.c, src/splashy_config-main.c: 
+	modified strings according to patch alioth BTS 307527 submitted by Stefan. Thanks
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/de.po: checks finishes without errors error-free now
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: German added linguas are growing!
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/de.po: German translation Thanks Stefan von Halenbach <vonHalenbach at users dot sf .net>
+
+2007-11-25  Vincent Amouret <vincent.amouret@gmail.com>
+
+	* : commit 0ad5c65afc43ee4337510b1539c8bd20c4774b90 Author: Vincent
+	Amouret <vincent.amouret@gmail.com> Date:   Sun Nov 25 22:22:52 2007
+	+0100
+
+2007-11-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: all new changes ah, la vie!
+
 2007-11-24  Vincent Amouret <vincent.amouret@gmail.com>
 
 	* : commit 832b2d902f00116b8e194a71df222879ca2ec13a Author: Vincent
