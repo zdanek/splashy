@@ -59,7 +59,7 @@ msgstr "¡El tema no existe!\n"
 
 #: src/splashy_config-functions.c:322
 msgid "This theme is currently used!\n"
-msgstr "¡Este tema ya esta siendo usado!"
+msgstr "¡Este tema ya esta siendo usado!\n"
 
 #: src/splashy_config-functions.c:378
 msgid ">Theme currently used:\n"
