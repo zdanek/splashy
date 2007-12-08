@@ -3,39 +3,46 @@ Authors
 
 Main Developers
 ===============
+Elliot Peele <elliot @nospam@ rpath! com>
+    * RPath Master
+    * C Genius
+    * Master Bug Hunter
 
-Jacobo Vilella <jacobo221@gmail.com>
-    * Master Jedi (Theme Validation Master)
-    * Init rc and sh* master
-    * Wiki genius
-    * Documentation Master
+Fathi Boudra <fabo @nospam@ debian! org>
+    * QT Genius
+    * DD
+    * C++ Genius
+    * Jedi Bug Hunter
 
-Luis Mondesi <lemsx1@gmail.com>
+Luis Mondesi <lemsx1 @nospam@ gmail! com>
     * Master Jedi
     * XML Parsing Ninja
-    * Jedi Bug Hunter
+    * Master Bug Hunter
     * Responsible for Elegant Code Design Policy
 
-Otavio Salvador <otavio@debian.org>
+Mark Walling <alioth @nospam@ markwalling! org>
+    * Slack* Master
+    * 64Bit Genius
+    * Jedi Bug Hunter
+
+Otavio Salvador <otavio @nospam@ debian! org>
     * Master Jedi
+    * DD
     * Packaging Guru
     * Jedi Bug Hunter
     * C Genius
     * Implements Elegant Code Design Policy
 
-Tim Dijkstra <newsuser@famdijkstra.org>
+Tim Dijkstra <newsuser @nospam@ famdijkstra! org>
+    * Master Jedi
+    * DD
     * Socket Master
     * Master Bug Hunter
     * C Genius
     * Implements Elegant Code Design Policy
 
-Vicenzo Ampolo <Vicenzo.Ampolo@gmail.com>
-    * Ex-Master Jedi
-    * Jedi Bug Hunter
-    * Ubuntu Packaging Guru
-    * Implements Elegant Code Design Policy
-
-Vincent Amouret <vincent.amouret@gmail.com>
+Vincent Amouret <vincent.amouret @nospam@ gmail! com>
+    * GTK Genius
     * Config and Theme Master
     * XML Genius
     * C Jedi
@@ -43,7 +50,7 @@ Vincent Amouret <vincent.amouret@gmail.com>
 Volatile Developers
 ===================
 
-Andrew Williams <mistik1@geeksinthehood.net>
+Andrew Williams <mistik1 @nospam@ geeksinthehood! net>
     * splashy_update.c Master
     * helped/inspired the initramfs integration
 
@@ -52,16 +59,28 @@ Bas v D
 
 Goedson Teixeira Paixao
 
+Jacobo Vilella <jacobo221 @nospam@ gmail! com>
+    * Master Jedi (Theme Validation Master)
+    * Init rc and sh* master
+    * Wiki genius
+    * Documentation Master
+
 Mario Izquierdo
 
-Pat Suwalski <pats@xandros.com>
+Pat Suwalski <pats @nospam@ xandros! com>
     * helped fixing the font issue with libdirectfb
     * submitted patch for allowing borders in themes
-    
+
+Vicenzo Ampolo <Vicenzo.Ampolo @nospam@ gmail! com>
+    * Ex-Master Jedi
+    * Jedi Bug Hunter
+    * Ubuntu Packaging Guru
+    * Implements Elegant Code Design Policy
+   
 Former Developers
 =================
 
-Alban Browaeys <prahal@yahoo.com>
+Alban Browaeys <prahal @nospam@ yahoo! com>
     * Static Link Master
     * Jedi Bug Hunter
     * C Genius
