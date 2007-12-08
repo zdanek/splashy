@@ -38,7 +38,7 @@ libsplashycnf_la_LDFLAGS = -export-symbols-regex splashy_.*\
 			   -version-info $(SPL_SONAME)
 
 splashy_SOURCES = splashy_main.c splashy_functions.c
-splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lglib-2.0 @DFB_LIBS@
+splashy_LDADD = libsplashycnf.la libsplashy.la -lpthread -lgcc_s -lm  -lglib-2.0 @DFB_LIBS@
 
 # '-lgcc_s' is provided with -static-libgcc and this is needed when compiling statically only
 # uncomment the following for static builds:
@@ -49,7 +49,7 @@ splashy_LDFLAGS = -rpath $(libdir)/directfb-1.0-0/systems:$(libdir)/directfb-1.0
 
 splashy_config_SOURCES = splashy_config-main.c splashy_config-functions.c \
 	xml_functions.c
-splashy_config_LDFLAGS = -lsplashycnf -lglib-2.0 -lmagic
+splashy_config_LDFLAGS = -lsplashycnf -lglib-2.0 -lmagic -lz
 
 # uncomment the following if you need static builds for splashy_update as well:
 #splashy_update_LDFLAGS = -all-static -static-libgcc
