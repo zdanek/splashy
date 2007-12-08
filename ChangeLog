@@ -1,5 +1,17 @@
 2007-12-08  Luis Mondesi <lemsx1@gmail.com>
 
+	* NEWS, configure.ac: starts splashy 0.3.8 the journey begins again
+
+2007-12-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/contrib/git2cl: fixes bug minor bug in date parsing fixed
+
+2007-12-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: correct dates on last entries in the log sorry about this
+
+2007-12-08  Luis Mondesi <lemsx1@gmail.com>
+
 	* ChangeLog: 0.3.7 is here! and it's here to stay!
 
 2007-12-08  Otavio Salvador <otavio@ossystems.com.br>
