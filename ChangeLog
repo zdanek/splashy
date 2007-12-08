@@ -1,3 +1,28 @@
+2008-01-08  Otavio Salvador <otavio@ossystems.com.br>
+
+	* src/Makefile.am: Revert "remove a cuple of useless linking
+	libraries" This reverts commit b0b2741dc58b8aae3901daa7f9c761a2121fd6b9.
+
+2008-01-08  Otavio Salvador <otavio@ossystems.com.br>
+
+	* src/Makefile.am: remove a cuple of useless linking libraries
+
+2008-01-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* AUTHORS: emails updated mistk1 is back!
+
+2008-01-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* AUTHORS: reorganized names some developers are back, others are gone
+
+2008-01-01  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: fixes missing \n as reported by mwalling
+
+2007-11-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: more and more never ending
+
 2007-11-29  Luis Mondesi <lemsx1@gmail.com>
 
 	* splashy.spec: Fedora 8 Supports Fedora 8 building process (better). Thanks Rehan Khan for
