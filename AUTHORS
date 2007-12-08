@@ -3,6 +3,14 @@ Authors
 
 Main Developers
 ===============
+
+Andrew Williams <mistik1 @nospam@ geeksinthehood! net>
+    * Gentoo Master
+    * splashy_update.c Master
+    * helped/inspired the initramfs integration
+    * C Jedi
+    * Jedi Bug Hunter
+
 Elliot Peele <elliot @nospam@ rpath! com>
     * RPath Master
     * C Genius
@@ -20,7 +28,7 @@ Luis Mondesi <lemsx1 @nospam@ gmail! com>
     * Master Bug Hunter
     * Responsible for Elegant Code Design Policy
 
-Mark Walling <alioth @nospam@ markwalling! org>
+Mark Walling <mark @nospam@ markwalling! org>
     * Slack* Master
     * 64Bit Genius
     * Jedi Bug Hunter
@@ -49,10 +57,6 @@ Vincent Amouret <vincent.amouret @nospam@ gmail! com>
 
 Volatile Developers
 ===================
-
-Andrew Williams <mistik1 @nospam@ geeksinthehood! net>
-    * splashy_update.c Master
-    * helped/inspired the initramfs integration
 
 Bas v D
     * Graphics and Themes guru
