@@ -10,7 +10,7 @@
 
 Summary:    A complete user-space boot splash system 
 Name:       splashy
-Version:    0.3.7
+Version:    0.3.8
 Release:    1
 License:    GPL
 Group:      System/Boot
