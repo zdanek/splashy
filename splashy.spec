@@ -99,18 +99,17 @@ developing programs using libsplashy.
 
 %build
 
-        ./autogen.sh --prefix=/ --sbindir=/sbin --sysconfdir=/etc \
-        --includedir=/usr/include --datarootdir=/usr/share \
-        --mandir=/usr/share/man --disable-static
+        ./autogen.sh --prefix=/ --libdir=/lib --sbindir=/sbin \
+	--sysconfdir=/etc --includedir=/usr/include \
+	--datarootdir=/usr/share --mandir=/usr/share/man \
+	--disable-static
 
 %{__make} %{?_smp_mflags}
 
 %install
         export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL="1"
-        
-%makeinstall
 
-rm %{buildroot}/usr/lib*/libsplashy*.la
+%makeinstall
 
 # remove Debian-specific files
         cd %{buildroot}
@@ -132,7 +131,7 @@ rm %{buildroot}/usr/lib*/libsplashy*.la
 
 %post -p /sbin/ldconfig
         #make the themes link (see above)
-        ln -s /usr/share/splashy/themes/ /etc/splashy/themes 
+        ln -s /usr/share/splashy/themes /etc/splashy/themes 
 
 %postun -p /sbin/ldconfig
         rm -f  etc/splashy/themes
@@ -148,6 +147,8 @@ rm %{buildroot}/usr/lib*/libsplashy*.la
 %dir %{_datadir}/splashy
 %{_datadir}/splashy/*
 %{_libdir}/lib%{name}*.so.*
+%{_libdir}/lib%{name}*.la
+#%{_libdir}/lib%{name}*.a
 
 #package language files
 %{_datadir}/locale/*/*/*.mo
@@ -158,6 +159,8 @@ rm %{buildroot}/usr/lib*/libsplashy*.la
 %{_libdir}/lib%{name}*.so
 
 %changelog
+* Sun Dec 09 2007 Luis Mondesi <lemsx1@gmail.com>
+- Fedora 7 bug fixes. Includes .la files now.
 * Fri Nov 28 2007 Rehan Khan <rehan.khan@dsl.pipex.com>
 - Initial import for Fedora (it works but it's not perfect)
 * Fri Sep 28 2007 Luis Mondesi <lemsx1@gmail.com>
