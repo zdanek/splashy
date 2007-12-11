@@ -42,11 +42,17 @@ depmod -a
 silent modprobe fbcon
 silent modprobe vesafb
 
-test -c "/dev/fb0" ||
-	mknod /dev/fb0 c 29 0
+if [ -e /proc/fb ]; then
+        while read fbno desc; do
+                mknod /dev/fb${fbno} c 29 ${fbno}
+        done < /proc/fb
+else
+        mknod /dev/fb0 c 29 0
+fi
+
 for i in 0 1 2 3 4 5 6 7 8; do
-	test -c "/dev/tty$i" ||
-		mknod /dev/tty$i c 4 $i
+	test -c /dev/tty${i} || \
+            mknod /dev/tty${i} c 4 ${i}
 done
 
 # [ tdykstra ]
