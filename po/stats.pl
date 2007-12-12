@@ -98,7 +98,9 @@ foreach $index (0 .. $#pos)
 }
 print "</table></td></tr></table>\n";
 print
-  "Latest $PACKAGE.pot generated $now: <a href='$PACKAGE.pot'>$PACKAGE.pot</a><br />\n";
+  "Latest $PACKAGE.pot generated $now: <a href='http://git.debian.org/?p=splashy/splashy.git;a=blob_plain;f=po/splashy.pot;hb=HEAD'>$PACKAGE.pot</a><br />\n";
+print
+  "Use <a href='http://git.debian.org/?p=splashy/splashy.git;a=blob_plain;f=po/check_po.pl;hb=HEAD'>check_po.pl</a> to ensure your po file works. Example: ./check_po.pl foo.po. $PACKAGE.pot must exist where foo.po is.<br />\n";
 print "</body>\n";
 print "</html>\n";
 
