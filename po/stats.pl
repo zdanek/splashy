@@ -83,7 +83,7 @@ foreach $index (0 .. $#pos)
     $name = code2language($po) unless $name ne "";
     $name = "???" unless $name ne "";
     printf
-      "<tr$color><td>%s(<a href='%s.po'>%s.po</a>)</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>",
+      "<tr$color><td>%s(<a href='http://git.debian.org/?p=splashy/splashy.git;a=blob_plain;f=po/%s.po;hb=HEAD'>%s.po</a>)</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>%d</td><td>%0.2f</td><td>",
       $name, $po, $po, $trans, $transp, $fuzz, $fuzzp, $untrans, $untransp;
     printf "<img src='bar_g.png' height='15' width='%0.0f' />", $transp * 2
       unless $transp * 2 < 0.5;
