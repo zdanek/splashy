@@ -10,6 +10,12 @@ NAME="splashy"
 [ -r "/etc/default/$NAME" ] && . "/etc/default/$NAME"
 
 if pidof $NAME > /dev/null; then
+    case ${0} in
+        *console-tools*)
+            touch /dev/shm/splashy-stopped-console-screen ;;
+        *kbd*)
+            touch /dev/shm/splashy-stopped-keymap ;;
+    esac
     exit 0
 fi
 

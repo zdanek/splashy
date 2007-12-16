@@ -166,34 +166,28 @@ stop_splashy () {
 
     # Do some magic with the TTYs
     [ -z "$CHVT_TTY" ] || splashy_chvt $CHVT_TTY || true
-
-    # Bug #400598,#401999
-    if [ -z "${RUNLEVEL:-}" ]; then
-        # we need only the current level
-        RUNLEVEL=`runlevel | sed 's/^. //'`
+    
+    # we need to re-run keymap.sh and console-screen.sh only if Splashy scripts stopped it
+    # see /etc/kbd/conf.d/splashy and /etc/console-tools/config.d/splashy
+    if [ -x "/etc/init.d/keymap.sh" -a -f "/dev/shm/splashy-stopped-keymap" ]; then
+        if [ "x$DEBUG" != "x0" ]; then
+            cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
+            echo "calling keymap.sh" >> $STEPS_DIR/splashy.log
+        fi
+        /etc/init.d/keymap.sh start &
+        rm -f /dev/shm/splashy-stopped-keymap
     fi
-    # Bug #400598
-    # if Splashy was running from initramfs,
-    # and our runlevel is currently a number between 2 and 5,
-    # we need to re-run keymap.sh and console-screen.sh
-    if [ $RUNLEVEL -gt 1 -a $RUNLEVEL -lt 6 ]; then 
-	if [ -x "/etc/init.d/keymap.sh" ]; then
-	    if [ "x$DEBUG" != "x0" ]; then
-		cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
-		echo "calling keymap.sh" >> $STEPS_DIR/splashy.log
-	    fi
-	    /etc/init.d/keymap.sh start
-	fi
 
-        # console-screen.sh still stops Splashy at this point. Do we still need to run this?? - Luis
-	if [ -x "/etc/init.d/console-screen.sh" ]; then
-	    if [ "x$DEBUG" != "x0" ]; then
-		cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
-		echo "calling console-screen.sh" >> $STEPS_DIR/splashy.log
-	    fi
-	    #FIXME /etc/init.d/console-screen.sh start
-	fi
-    fi 
+    # console-screen.sh still stops Splashy at this point. Do we still need to run this?? - Luis
+    if [ -x "/etc/init.d/console-screen.sh" -a -f "/dev/shm/splashy-stopped-console-screen" ]; then
+        if [ "x$DEBUG" != "x0" ]; then
+            cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
+            echo "calling console-screen.sh" >> $STEPS_DIR/splashy.log
+        fi
+        /etc/init.d/console-screen.sh start &
+        # whether it worked or not, we do not care
+        rm -f /dev/shm/splashy-stopped-console-screen
+    fi
 
     # when not in debug mode, umount our tmpfs
     if [ "x$DEBUG" = "x0" ]; then
