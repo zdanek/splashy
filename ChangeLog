@@ -1,3 +1,48 @@
+2007-12-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/console-tools/config.d/splashy,
+	scripts/lsb-base-logging.sh: only run keymap.sh/console-screen.sh if
+	we stopped it before this only mean something on Debian systems. and now it means less
+	for any other distro.
+
+2007-12-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html: make bold
+
+2007-12-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/stats.pl: make bold
+
+2007-12-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html, po/splashy.pot, po/stats.pl: po files also come
+	straight from git now
+
+2007-12-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html, po/splashy.pot, po/stats.pl: new pot file. stats.pl
+	uses link from Git repo directly
+
+2007-12-11  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/init-top/splashy: adds better
+	framebuffer setup
+
+2007-12-09  Luis Mondesi <lemsx1@gmail.com>
+
+	* splashy.spec: ready for new release
+
+2007-12-09  Luis Mondesi <lemsx1@gmail.com>
+
+	* splashy.spec: fixes a number of bugs Splashy should be installed in /lib,/sbin and not /usr/* The reason
+	is because /usr is mounted late for some people (unless users are
+	planning to use Splashy from initramfs, which is not the case for
+	Fedora/Redhat yet)
+
+2007-12-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: new release starts
+
 2007-12-08  Luis Mondesi <lemsx1@gmail.com>
 
 	* NEWS, configure.ac: starts splashy 0.3.8 the journey begins again
