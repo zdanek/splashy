@@ -4,6 +4,12 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 
 Changes between 0.3.7 and 0.3.8
 -------------------------------
+ * Bug fixes: 
+   - /etc/lsb-base-logging.sh now checks whether it should unmount $STEPS_DIR before doing so
+   - /etc/lsb-base-logging.sh now checks whether it should start keymap.sh/console-screen.sh on
+     debian systems
+   - console-tools/config.d/splashy touches /dev/shm/splashy* files to signal lsb-base-loggin.sh
+     that it needs to start a process like keymap.sh/console-screen.sh
 
 Changes between 0.3.6 and 0.3.7
 -------------------------------
