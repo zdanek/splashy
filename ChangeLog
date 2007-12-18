@@ -1,3 +1,13 @@
+2007-12-17  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: closes bug #455259 Bug 455259 talks about Splashy trying to umount something that does
+	not exist the second time some initrc script calls log_daemon_msg().
+	This fixes that.
+
+2007-12-15  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: ditto to say
+
 2007-12-15  Luis Mondesi <lemsx1@gmail.com>
 
 	* scripts/console-tools/config.d/splashy,
