@@ -189,9 +189,11 @@ stop_splashy () {
         rm -f /dev/shm/splashy-stopped-console-screen
     fi
 
+    # Bug #455259
     # when not in debug mode, umount our tmpfs
     if [ "x$DEBUG" = "x0" ]; then
-        umount $STEPS_DIR 2> /dev/null
+        mount | grep $STEPS_DIR > /dev/null \
+            && umount $STEPS_DIR 2> /dev/null
     fi
 }
 
