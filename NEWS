@@ -2,6 +2,10 @@ Send your Thanks emails to:
 Splashy Developers <splashy-devel@lists.alioth.debian.org>
 -------------------------------------------------------------------------------
 
+Changes between 0.3.8 and 0.3.9
+-------------------------------
+ * hu translation added (Thanks Miklos Vajna)
+
 Changes between 0.3.7 and 0.3.8
 -------------------------------
  * Bug fixes: 
