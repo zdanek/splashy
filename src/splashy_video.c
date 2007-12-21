@@ -183,13 +183,13 @@ fb_preinit (struct fb_var_screeninfo *fb_vinfo)
 
         if ((fb_dev_fd = open (fb_dev_name, O_RDWR)) == -1)
         {
-                ERROR_PRINT (_("libsplashy: Cannot open %s"), fb_dev_name);
+                ERROR_PRINT ("libsplashy: Cannot open %s", fb_dev_name);
                 ERROR_PRINT ("%s\n", strerror (errno));
                 goto err_out;
         }
         if (ioctl (fb_dev_fd, FBIOGET_VSCREENINFO, fb_vinfo))
         {
-                ERROR_PRINT (_("libsplashy: [fbdev2] Can't get VSCREENINFO: %s\n"),
+                ERROR_PRINT ("libsplashy: [fbdev2] Can't get VSCREENINFO: %s\n",
                              strerror (errno));
                 goto err_out;
         }
@@ -409,7 +409,7 @@ draw_progressbar ()
                          rectangle_blue < 0 || rectangle_alpha < 0)
                 {
                         ERROR_PRINT
-                                (_("Progress bar border color not properly specified"));
+                                ("libsplashy: Progress bar border color not properly specified");
                 }
                 else
                 {
@@ -441,7 +441,7 @@ draw_progressbar ()
             rectangle_blue > 255 || rectangle_alpha > 255)
         {
                 ERROR_PRINT
-                        (_("Red, green, blue or alpha tags in the configuration file contain wrong values"));
+                        ("libsplashy: Red, green, blue or alpha tags in the configuration file contain wrong values");
                 return 3;
         }
 
@@ -1160,7 +1160,7 @@ splashy_start_splash ()
 
         if (DirectFBCreate (&video.dfb) != DFB_OK)
         {
-                ERROR_PRINT (_("libsplashy: Framebuffer is not configured properly please see %s"), "http://tinyurl.com/339h67");
+                ERROR_PRINT ("libsplashy: Framebuffer is not configured properly please see %s", "http://tinyurl.com/339h67");
                 return -2;
         }
 
@@ -1861,7 +1861,7 @@ splashy_init (const char *file, const char *mode)
 
         if (!splashy_init_config ((file != NULL ? file : SPL_CONFIG_FILE)))
         {
-                ERROR_PRINT (_("libsplashy: No config file found at %s"), file);
+                ERROR_PRINT ("libsplashy: No config file found at %s", file);
                 return -1;
         }
 
@@ -1878,7 +1878,7 @@ splashy_init (const char *file, const char *mode)
 
         if (_current_mode == -1)
         {
-                ERROR_PRINT (_("libsplashy: %s is not a legal mode"), mode);
+                ERROR_PRINT ("libsplashy: %s is not a legal mode", mode);
                 return -2;
         }
 
@@ -1909,7 +1909,7 @@ splashy_init (const char *file, const char *mode)
         cnf_item = splashy_image_path (xpath->str);
         if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR))
         {
-                ERROR_PRINT (_("libsplashy: Could not find error image at %s."),
+                ERROR_PRINT ("libsplashy: Could not find error image at %s.",
                              cnf_item);
                 return -3;
         }
@@ -1921,7 +1921,7 @@ splashy_init (const char *file, const char *mode)
         if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR))
         {
                 ERROR_PRINT
-                        (_("libsplashy: Could not find background image at %s."),
+                        ("libsplashy: Could not find background image at %s.",
                          cnf_item);
                 return -4;
         }
