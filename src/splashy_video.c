@@ -183,13 +183,13 @@ fb_preinit (struct fb_var_screeninfo *fb_vinfo)
 
         if ((fb_dev_fd = open (fb_dev_name, O_RDWR)) == -1)
         {
-                ERROR_PRINT ("Can't open %s", fb_dev_name);
+                ERROR_PRINT (_("libsplashy: Cannot open %s"), fb_dev_name);
                 ERROR_PRINT ("%s\n", strerror (errno));
                 goto err_out;
         }
         if (ioctl (fb_dev_fd, FBIOGET_VSCREENINFO, fb_vinfo))
         {
-                ERROR_PRINT ("[fbdev2] Can't get VSCREENINFO: %s\n",
+                ERROR_PRINT (_("libsplashy: [fbdev2] Can't get VSCREENINFO: %s\n"),
                              strerror (errno));
                 goto err_out;
         }
@@ -409,7 +409,7 @@ draw_progressbar ()
                          rectangle_blue < 0 || rectangle_alpha < 0)
                 {
                         ERROR_PRINT
-                                ("Progress bar border colour not properly specified");
+                                (_("Progress bar border color not properly specified"));
                 }
                 else
                 {
@@ -441,7 +441,7 @@ draw_progressbar ()
             rectangle_blue > 255 || rectangle_alpha > 255)
         {
                 ERROR_PRINT
-                        ("Red, green, blue or alpha tags in the configuration file contain wrong values");
+                        (_("Red, green, blue or alpha tags in the configuration file contain wrong values"));
                 return 3;
         }
 
@@ -1116,14 +1116,38 @@ splashy_start_splash ()
 
         DirectFBSetOption ("quiet", NULL);
         DirectFBSetOption ("no-debug", NULL);
-        DirectFBSetOption ("graphics-vt", NULL);
+        /*
+         * graphics-vt avoids kernel text displaying on top
+         * of our code
+         * 2007-12-21 01:20 EST Luis Mondesi
+         * - disabled this for now (remove 'no-' to reenable)
+         */
+        DirectFBSetOption ("no-graphics-vt", NULL);
         DirectFBSetOption ("no-cursor", NULL);
         /*
-         * I disabled these modules, because they were causing problems on my 
-         * machine. 
+         * we want to avoid keyboard problems when running from initramfs
+         * - we tell directfb to use vt 8 instead of 2
          */
-        DirectFBSetOption ("disable-module", "radeon");
-        DirectFBSetOption ("disable-module", "linux_input");
+        DirectFBSetOption ("vt-num", 8);
+        /*
+         * Now we tell directfb to NOT use vt's at all!
+         * That way we should not have problems of loosing our input device
+         * (keyboard)
+         * - Luis Mondesi
+         */
+        DirectFBSetOption ("no-vt", NULL);
+
+        /*
+         * 2007-12-21 01:17 EST Luis Mondesi
+         * - re-enabling radeon
+         * DirectFBSetOption ("disable-module", "radeon");
+         */
+        /* 
+         * 2007-12-21 01:14 EST Luis Mondesi
+         * - re-enabling linux_input
+         *
+         * DirectFBSetOption ("disable-module", "linux_input");
+         */
 
         /*
          * TODO doesn't solve anything: DirectFBSetOption ("dont-catch",
@@ -1135,7 +1159,10 @@ splashy_start_splash ()
 
 
         if (DirectFBCreate (&video.dfb) != DFB_OK)
+        {
+                ERROR_PRINT (_("libsplashy: Framebuffer is not configured properly please see %s"), "http://tinyurl.com/339h67");
                 return -2;
+        }
 
         video.mode = g_new0 (splashy_videomode_t, 1);
         /*
@@ -1834,7 +1861,7 @@ splashy_init (const char *file, const char *mode)
 
         if (!splashy_init_config ((file != NULL ? file : SPL_CONFIG_FILE)))
         {
-                ERROR_PRINT ("libsplashy: No config file found at %s", file);
+                ERROR_PRINT (_("libsplashy: No config file found at %s"), file);
                 return -1;
         }
 
@@ -1851,7 +1878,7 @@ splashy_init (const char *file, const char *mode)
 
         if (_current_mode == -1)
         {
-                ERROR_PRINT ("libsplashy: %s is not a legal mode", mode);
+                ERROR_PRINT (_("libsplashy: %s is not a legal mode"), mode);
                 return -2;
         }
 
@@ -1882,7 +1909,7 @@ splashy_init (const char *file, const char *mode)
         cnf_item = splashy_image_path (xpath->str);
         if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR))
         {
-                ERROR_PRINT ("libsplashy: Could not find error image at %s.",
+                ERROR_PRINT (_("libsplashy: Could not find error image at %s."),
                              cnf_item);
                 return -3;
         }
@@ -1894,7 +1921,7 @@ splashy_init (const char *file, const char *mode)
         if (!g_file_test (cnf_item, G_FILE_TEST_IS_REGULAR))
         {
                 ERROR_PRINT
-                        ("libsplashy: Could not find background image at %s.",
+                        (_("libsplashy: Could not find background image at %s."),
                          cnf_item);
                 return -4;
         }
