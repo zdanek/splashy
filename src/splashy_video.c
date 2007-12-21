@@ -1104,25 +1104,25 @@ splashy_start_splash ()
         /*
          * initializing Directfb
          */
+        
+        if (DirectFBInit (NULL, NULL) != DFB_OK)
+                return -1;
         /*
          * - no-debug           := suppresses debug messages
          * - quiet              := suppresses all messages (but debug)
          * - graphics-vt        := puts directfb vt in graphics mode
+         *                         text won't display on top of image
          * - no-cursor          := disallow showing a cursor
+         * - vt-num             := puts splashy in vt number 8
+         * - vt                 := in order to use keyboard event buffer
+         *                         we need to dfb to handle vt's
+         * disable modules:
+         * - linux_input        := we loose input from keyboard on dfb 0.9.25
+         * - radeon             := we use fbdev on Linux
          */
-
-        if (DirectFBInit (NULL, NULL) != DFB_OK)
-                return -1;
-
         DirectFBSetOption ("quiet", NULL);
         DirectFBSetOption ("no-debug", NULL);
-        /*
-         * graphics-vt avoids kernel text displaying on top
-         * of our code
-         * 2007-12-21 01:20 EST Luis Mondesi
-         * - disabled this for now (remove 'no-' to reenable)
-         */
-        DirectFBSetOption ("no-graphics-vt", NULL);
+        DirectFBSetOption ("graphics-vt", NULL);
         DirectFBSetOption ("no-cursor", NULL);
         /*
          * we want to avoid keyboard problems when running from initramfs
@@ -1130,24 +1130,17 @@ splashy_start_splash ()
          */
         DirectFBSetOption ("vt-num", "8");
         /*
-         * Now we tell directfb to NOT use vt's at all!
-         * That way we should not have problems of loosing our input device
-         * (keyboard)
-         * - Luis Mondesi
-         */
-        DirectFBSetOption ("no-vt", NULL);
+         * we can't call create_event_buffer() with dfb:no-vt option
+         *
+         *DirectFBSetOption ("no-vt", NULL);*/
 
-        /*
-         * 2007-12-21 01:17 EST Luis Mondesi
-         * - re-enabling radeon
-         * DirectFBSetOption ("disable-module", "radeon");
-         */
+         DirectFBSetOption ("disable-module", "radeon");
         /* 
          * 2007-12-21 01:14 EST Luis Mondesi
-         * - re-enabling linux_input
-         *
-         * DirectFBSetOption ("disable-module", "linux_input");
+         * - linux_input looses input on dfb 0.9.25. disabling
          */
+         DirectFBSetOption ("disable-module", "linux_input");
+         
 
         /*
          * TODO doesn't solve anything: DirectFBSetOption ("dont-catch",
