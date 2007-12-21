@@ -58,7 +58,11 @@ done
 # [ tdykstra ]
 # This is supposed to replace the test for vga=
 # on the command line. Didn't test it much...
-grep -q '\(VESA\|VGA\)' /proc/fb || exit
+# Luis Mondesi
+# Splashy will show error if /proc/fb is not
+# set correctly. This assumes users have vesafb
+# commenting it out
+#grep -q '\(VESA\|VGA\)' /proc/fb || exit
 
 /sbin/splashy boot
 
