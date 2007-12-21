@@ -192,6 +192,7 @@ POST RELEASE
    1. Increment version number in configure.ac and add new entry on NEWS
    2. Update freshmeat.net
    3. (Optional) Update #splashy topic
+   4. Update wiki
 
 TROUBLESHOOTING
 ===============
