@@ -64,5 +64,9 @@ done
 # commenting it out
 #grep -q '\(VESA\|VGA\)' /proc/fb || exit
 
+if [ -x /sbin/splashy_chvt ]; then
+	/sbin/splashy_chvt 8
+fi
+
 /sbin/splashy boot
 

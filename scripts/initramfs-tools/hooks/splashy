@@ -23,9 +23,10 @@ test -x /sbin/splashy ||
 
 . /usr/share/initramfs-tools/hook-functions
 
-
-
+# splashy and _chvt are 24k!
 copy_exec /sbin/splashy /sbin
+copy_exec /sbin/splashy_chvt /sbin
+
 # Luis Mondesi
 # we don't need splashy_update in initramfs yet
 #copy_exec /sbin/splashy_update /sbin
