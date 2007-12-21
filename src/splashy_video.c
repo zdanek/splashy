@@ -1128,7 +1128,7 @@ splashy_start_splash ()
          * we want to avoid keyboard problems when running from initramfs
          * - we tell directfb to use vt 8 instead of 2
          */
-        DirectFBSetOption ("vt-num", 8);
+        DirectFBSetOption ("vt-num", "8");
         /*
          * Now we tell directfb to NOT use vt's at all!
          * That way we should not have problems of loosing our input device
