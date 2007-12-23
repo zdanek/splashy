@@ -118,7 +118,7 @@ log_daemon_msg () {
 
     # Stop splashy on *dm
     case $2 in 
-	?dm) stop_splashy ;;
+	?dm) stop_splashy || return 0 ;;
     esac
 }
 
