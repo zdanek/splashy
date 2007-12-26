@@ -1,0 +1,458 @@
+# Portuguese translation for splashy.
+# Copyright (C) 2007
+# This file is distributed under the same license as the Splashy package.
+# Amadeu Andrade Barbosa Júnior <amadeu@gmail.com>, 2007.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: splashy\n"
+"Report-Msgid-Bugs-To: splashy-devel@lists.alioth.debian.org\n"
+"POT-Creation-Date: 2007-11-25 22:16-0500\n"
+"PO-Revision-Date: 2007-11-28 13:00-0200\n"
+"Last-Translator: Amadeu Andrade Barbosa Júnior <amadeu@gmail.com>\n"
+"Language-Team: Portuguese/Brazil\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: src/splashy_config-functions.c:73
+msgid ">Set theme as: "
+msgstr ">Configurar tema como: "
+
+#: src/splashy_config-functions.c:113
+msgid ">Install theme"
+msgstr ">Instalar tema"
+
+#: src/splashy_config-functions.c:119
+msgid "This format is invalid\n"
+msgstr "Este formato não é valido\n"
+
+#: src/splashy_config-functions.c:156
+msgid "Did you really give me a tarball ?\n"
+msgstr "Você realmente forneceu um pacote tar?\n"
+
+#: src/splashy_config-functions.c:179
+msgid "An error occurred checking theme \n"
+msgstr "Ocorreu um erro verificando o tema \n"
+
+#: src/splashy_config-functions.c:248 src/splashy_config-functions.c:460
+msgid "This theme already exists\n"
+msgstr "Este tema já existe\n"
+
+#: src/splashy_config-functions.c:269
+msgid "An error occurred installing theme \n"
+msgstr "Ocorreu um erro instalando o tema \n"
+
+#: src/splashy_config-functions.c:287
+msgid "The tarball does not exist!\n"
+msgstr "O pacote tar não existe!\n"
+
+#: src/splashy_config-functions.c:302
+msgid ">Remove theme"
+msgstr ">Remover tema"
+
+#: src/splashy_config-functions.c:315
+msgid "The theme does not exist!\n"
+msgstr "O tema não existe!\n"
+
+#: src/splashy_config-functions.c:322
+msgid "This theme is currently used!\n"
+msgstr "Este tema está sendo usado!\n"
+
+#: src/splashy_config-functions.c:378
+msgid ">Theme currently used:\n"
+msgstr ">Tema atual:\n"
+
+#: src/splashy_config-functions.c:381
+#, c-format
+msgid "                      version %s\n"
+msgstr ""
+
+#: src/splashy_config-functions.c:385
+#, c-format
+msgid "                      URLs %s\n"
+msgstr ""
+
+#: src/splashy_config-functions.c:387
+#, c-format
+msgid "                      by %s\n"
+msgstr ""
+
+#: src/splashy_config-functions.c:390
+msgid ">Installed themes:\n"
+msgstr ">Temas instalados:\n"
+
+#: src/splashy_config-functions.c:430
+msgid ""
+"<!> Insufficient priviledges <!>\n"
+"Root priviledges required for this function\n"
+msgstr ""
+"<!> Permissão negada <!>\n"
+"É necessário ser root para executar esta função\n"
+
+#: src/splashy_config-functions.c:443
+msgid ">Create theme "
+msgstr ">Criar tema "
+
+#: src/splashy_config-functions.c:448
+#, c-format
+msgid "This file does not exist: %s\n"
+msgstr "Este arquivo não existe: %s\n"
+
+#: src/splashy_config-functions.c:476
+msgid "The boot image does not seem to be an image\n"
+msgstr "A imagem de inicialização não parece ser válida\n"
+
+#: src/splashy_config-functions.c:493
+msgid "The shutdown image does not seem to be an image\n"
+msgstr "A imagem de desligamento não parece ser válida\n"
+
+#: src/splashy_config-functions.c:509
+msgid "The error image does not seem to be an image\n"
+msgstr "A imagem de erro não parece ser válida\n"
+
+#: src/splashy_config-functions.c:526
+msgid "The resume image does not seem to be an image\n"
+msgstr "A imagem de restauração da hibernação não parece ser válida\n"
+
+#: src/splashy_config-functions.c:543
+msgid "The suspend image does not seem to be an image\n"
+msgstr "A imagem de suspender não parece ser válida\n"
+
+#: src/splashy_config-functions.c:577
+#, c-format
+msgid "Error! Can't create theme directory %s\n"
+msgstr "Erro! Não foi possível criar diretório do tema %s\n"
+
+#: src/splashy_config-functions.c:579
+#, c-format
+msgid "Writing theme %s to current directory\n"
+msgstr "Escrevendo tema %s para o diretório atual\n"
+
+#: src/splashy_config-functions.c:584
+#, c-format
+msgid "Error! Can't create directory %s\n"
+msgstr "Erro! Não foi possível criar o diretório %s\n"
+
+#: src/splashy_config-functions.c:604 src/splashy_config-functions.c:628
+#: src/splashy_config-functions.c:652 src/splashy_config-functions.c:676
+#: src/splashy_config-functions.c:700 src/splashy_config-functions.c:727
+#, c-format
+msgid ""
+"Error! Unable to use the picture %s.\n"
+"Aborting\n"
+msgstr ""
+"Erro! Impossível usar esta imagem %s.\n"
+"Abortando\n"
+
+#: src/splashy_config-functions.c:763
+msgid "You tried to create a theme without a name\n"
+msgstr "Você tentou criar um tema sem um nome\n"
+
+#: src/splashy_config-functions.c:788
+msgid "* Name"
+msgstr "* Nome"
+
+#: src/splashy_config-functions.c:800
+msgid "* Boot image"
+msgstr "* Imagem de inicialização"
+
+#: src/splashy_config-functions.c:812
+msgid "* Shutdown image"
+msgstr "* Imagem de desligamento"
+
+#: src/splashy_config-functions.c:824
+msgid "* Error image"
+msgstr "* Imagem de erro"
+
+#: src/splashy_config-functions.c:836
+msgid "* Resume image"
+msgstr "* Imagem de restauração da hibernação"
+
+#: src/splashy_config-functions.c:848
+msgid "* Suspend image"
+msgstr "* Imagem de suspender"
+
+#: src/splashy_config-functions.c:855
+msgid ""
+"Do you want to set the resolution (height & width) of these images ? (yes|no)"
+msgstr ""
+"Você quer configurar a resolução de tela (altura e largura) destas imagens ? (yes|no)"
+
+#: src/splashy_config-functions.c:864
+msgid " Width"
+msgstr " Largura"
+
+#: src/splashy_config-functions.c:868
+msgid " Height"
+msgstr " Altura"
+
+#. Version
+#: src/splashy_config-functions.c:873
+msgid "Version"
+msgstr "Versão"
+
+#. Description
+#: src/splashy_config-functions.c:876
+msgid "Description"
+msgstr "Descrição"
+
+#. URLs
+#: src/splashy_config-functions.c:879
+msgid "URLs"
+msgstr "URLs"
+
+#. Author
+#: src/splashy_config-functions.c:882
+msgid "Author"
+msgstr "Autor"
+
+#. Progressbaronboot
+#: src/splashy_config-functions.c:885
+msgid "Do you want to see a progress bar on boot ? (yes|no)"
+msgstr "Você quer configurar um barra de progresso na inicialização ? (yes|no)"
+
+#: src/splashy_config-functions.c:890 src/splashy_config-functions.c:900
+#: src/splashy_config-functions.c:910 src/splashy_config-functions.c:920
+msgid " Direction ? (forward|backward)"
+msgstr " Direção ? (forward|backward)"
+
+#: src/splashy_config-functions.c:895
+msgid "Do you want to see a progress bar on shutdown ? (yes|no)"
+msgstr "Você quer configurar um barra de progresso no desligamento ? (yes|no)"
+
+#: src/splashy_config-functions.c:905
+msgid "Do you want to see a progress bar on resume ? (yes|no)"
+msgstr "Você quer configurar um barra de progresso na restauração da hibernação ? (yes|no)"
+
+#: src/splashy_config-functions.c:915
+msgid "Do you want to see a progress bar on suspend ? (yes|no)"
+msgstr "Você quer configurar um barra de progresso ao suspender ? (yes|no)"
+
+#: src/splashy_config-functions.c:929
+msgid "Progress bar\n"
+msgstr "Barra de progresso\n"
+
+#: src/splashy_config-functions.c:934 src/splashy_config-functions.c:1055
+msgid " X position in pixel units"
+msgstr " Posição no eixo X em unidades de pixel"
+
+#: src/splashy_config-functions.c:939 src/splashy_config-functions.c:1060
+msgid " X position in percentage"
+msgstr " Posição no eixo X em porcentagem"
+
+#: src/splashy_config-functions.c:946 src/splashy_config-functions.c:1068
+msgid " Y position in pixel units"
+msgstr " Posição no eixo Y em unidades de pixel"
+
+#: src/splashy_config-functions.c:951 src/splashy_config-functions.c:1073
+msgid " Y position in percentage"
+msgstr " Posição no eixo Y em porcentagem"
+
+#: src/splashy_config-functions.c:960 src/splashy_config-functions.c:1082
+msgid " Width in pixel units"
+msgstr " Largura em unidades de pixel"
+
+#: src/splashy_config-functions.c:965 src/splashy_config-functions.c:1087
+msgid " Width in percentage"
+msgstr " Largura em porcentagem"
+
+#: src/splashy_config-functions.c:975 src/splashy_config-functions.c:1097
+msgid " Height in pixel units"
+msgstr " Altura em unidades de pixel"
+
+#: src/splashy_config-functions.c:980 src/splashy_config-functions.c:1102
+msgid " Height in percentage"
+msgstr " Altura em porcentagem"
+
+#: src/splashy_config-functions.c:985 src/splashy_config-functions.c:1107
+msgid " Color\n"
+msgstr " Cor\n"
+
+#. Red
+#: src/splashy_config-functions.c:988 src/splashy_config-functions.c:1002
+#: src/splashy_config-functions.c:1024 src/splashy_config-functions.c:1110
+#: src/splashy_config-functions.c:1131 src/splashy_config-functions.c:1169
+msgid "  Red"
+msgstr "  Vermelho"
+
+#. Green
+#: src/splashy_config-functions.c:991 src/splashy_config-functions.c:1005
+#: src/splashy_config-functions.c:1027 src/splashy_config-functions.c:1113
+#: src/splashy_config-functions.c:1134 src/splashy_config-functions.c:1172
+msgid "  Green"
+msgstr "  Verde"
+
+#. Blue
+#: src/splashy_config-functions.c:994 src/splashy_config-functions.c:1008
+#: src/splashy_config-functions.c:1030 src/splashy_config-functions.c:1116
+#: src/splashy_config-functions.c:1138 src/splashy_config-functions.c:1175
+msgid "  Blue"
+msgstr "  Azul"
+
+#. Alpha
+#: src/splashy_config-functions.c:997 src/splashy_config-functions.c:1011
+#: src/splashy_config-functions.c:1033 src/splashy_config-functions.c:1119
+#: src/splashy_config-functions.c:1142 src/splashy_config-functions.c:1178
+msgid "  Alpha"
+msgstr "  Transparência"
+
+#: src/splashy_config-functions.c:999
+msgid " Background color\n"
+msgstr " Cor de fundo\n"
+
+#: src/splashy_config-functions.c:1015
+msgid " Do you want a border around the progress bar? (yes|no)"
+msgstr " Você quer uma borda em volta da barra de progresso? (yes|no)"
+
+#: src/splashy_config-functions.c:1021
+msgid " Border color\n"
+msgstr " Cor da borda\n"
+
+#. if border
+#. if progressbar
+#. Auto verbose
+#: src/splashy_config-functions.c:1039
+msgid "Pass in verbose mode on error? (yes|no)"
+msgstr "Alterar automaticamente para modo detalhado em caso de erro? (yes|no)"
+
+#. Text box or not
+#: src/splashy_config-functions.c:1043
+msgid "Do you want to see a text box? (yes|no)"
+msgstr "Você quer configurar uma caixa de texto? (yes|no)"
+
+#: src/splashy_config-functions.c:1050
+msgid "Text box\n"
+msgstr "Caixa de texto\n"
+
+#: src/splashy_config-functions.c:1123
+msgid " Do you want a border around the text box ? (yes|no)"
+msgstr " Você quer uma borda em volta da caixa de texto ? (yes|no)"
+
+#: src/splashy_config-functions.c:1128
+msgid "  Border color\n"
+msgstr "  Cor da borda\n"
+
+#: src/splashy_config-functions.c:1154
+msgid " Text font file"
+msgstr " Arquivo da fonte do texto"
+
+#: src/splashy_config-functions.c:1163
+msgid " Font size"
+msgstr " Tamanho da fonte"
+
+#: src/splashy_config-functions.c:1166
+msgid " Text color\n"
+msgstr " Cor do texto\n"
+
+#. Fade in ?
+#: src/splashy_config-functions.c:1183
+msgid "Do you want a fade-in? (yes|no)"
+msgstr "Você quer o efeito de surgimento (fade-in)? (yes|no)"
+
+#. Fade out ?
+#: src/splashy_config-functions.c:1186
+msgid "Do you want a fade-out? (yes|no)"
+msgstr "Você quer o efeito de esmaecimento (fade-out)? (yes|no)"
+
+#: src/splashy_config-functions.c:1221
+#, c-format
+msgid "Failed to read the file: %s"
+msgstr "Erro ao ler o arquivo: %s"
+
+#: src/splashy_config-functions.c:1229
+#, c-format
+msgid "Error opening destination file %s\n"
+msgstr "Erro ao abrir arquivo de destino %s\n"
+
+#: src/splashy_config-functions.c:1236
+#, c-format
+msgid "Failed to write the file: %s"
+msgstr "Erro ao escrever no arquivo: %s"
+
+#: src/splashy_config-functions.c:1338
+msgid "Author <author@mail.com>"
+msgstr "Autor <author@mail.com>"
+
+#: src/splashy_config-main.c:51
+#, c-format
+msgid ""
+"A Splashy Configuration Tool\n"
+"\n"
+"usage: %s [option] arg \n"
+"\n"
+"-h, --help                          Display this help\n"
+"-g, --get-key XPATH                 Returns the value of a key from Splashy "
+"config file, or the current theme\n"
+"-s, --set-theme THEME               Set THEME as the Splashy theme\n"
+"-i, --install-theme THEME.tar.gz    Install the THEME from a tarball\n"
+"-r, --remove-theme THEME            Remove the THEME\n"
+"    --info                          Display some information\n"
+"-c, --create-theme  [args...]       Create a theme in an interactive mode if "
+"no arguments were given\n"
+"                                    Inline mode arguments, the following "
+"arguments are obligatory\n"
+"                                    see the man page for a complete list\n"
+"            --name  NAME                 Set the NAME of the new Splashy "
+"theme\n"
+"            --boot-image PATH            Upload the boot image located at "
+"the specified PATH\n"
+"            --shutdown-image PATH        Upload the shutdown image located "
+"at the specified PATH\n"
+"            --error-image PATH           Upload the error image located at "
+"the specified PATH\n"
+msgstr ""
+"Uma ferramenta de configuração para o Splashy\n"
+"\n"
+"uso: %s [opção] arg \n"
+"\n"
+"-h, --help                         Mosta esta ajuda\n"
+"-g, --get-key CHAVE                Retorna o valor de uma chave do arquivo de configuração do Splashy, ou o tema atual\n"
+"-s, --set-theme TEMA               Configura o TEMA no Splashy\n"
+"-i, --install-theme TEMA.tar.gz    Instala o TEMA a partir de um pacote tar\n"
+"-r, --remove-theme TEMA            Remove o TEMA\n"
+"    --info                         Mostra alguma informação extra\n"
+"-c, --create-theme  [args...]      Cria um tema em modo interativo caso nenhum argumento seja fornecido\n"
+"                                   Caso existam argumentos, então os seguintes são obrigatórios\n"
+"                                   consulte a página de manuais para uma lista completa\n"
+"            --name  NOME                 Configura o NOME do novo tema Splashy\n"
+"            --boot-image CAMINHO         Carrega a imagem de inicialização localizada no "
+"CAMINHO definido\n"
+"            --shutdown-image PATH        Carrega a imagem de desligamento localizada no "
+"CAMINHO definido\n"
+"            --error-image PATH           Carrega a imagem de erro localizada no "
+"CAMINHO definido\n"
+
+#: src/splashy_config-main.c:69
+#, c-format
+msgid ""
+"usage: %s [option] arg \n"
+"[-h, --help][-s, --set-theme THEME][-i, --install-theme THEME.tar.gz]\n"
+"[-r, --remove-theme THEME][--info][-c, --create-theme  [args...]]\n"
+"[-g, --get-key XPATH]\n"
+"See --help for more information\n"
+msgstr ""
+"uso: %s [opção] arg \n"
+"[-h, --help][-s, --set-theme TEMA][-i, --install-theme TEMA.tar.gz]\n"
+"[-r, --remove-theme TEMA][--info][-c, --create-theme  [args...]]\n"
+"[-g, --get-key CHAVE]\n"
+"Consulte --help para mais informações\n"
+
+#: src/splashy_config-main.c:162
+msgid ""
+"Error occured while starting Splashy\n"
+"Make sure that you can read Splashy's configuration file\n"
+msgstr ""
+"Ocorreu um erro ao iniciar o Splashy\n"
+"Verifique se você tem permissão de leitura no arquivo de configuração do Splashy\n"
+
+#: src/splashy_config-main.c:177
+#, c-format
+msgid "Missing arguments\n"
+msgstr "Argumentos faltando\n"
+
+#: src/xml_functions.c:128
+msgid "Error: Could not open theme file for writing\n"
+msgstr "Erro: Não foi possível abrir o arquivo de tema para escrita\n"
+
