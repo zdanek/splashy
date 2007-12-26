@@ -1,3 +1,77 @@
+2007-12-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html, po/splashy.pot: portuguese added
+
+2007-12-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac, po/index.html, po/splashy.pot: oops. sorry. br->pt
+
+2007-12-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/br.po, po/pt.po: oops. sorry. br->pt
+
+2007-12-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, configure.ac, po/br.po: Portuguese translation added. Thanks
+	Amadeu A Barbosa
+
+2007-12-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: due to bug#455685 we are adding || return 0 to the LSB function that's called from
+	gdm/kdm and the like. This will prevent gdm to break even if
+	stop_splashy() does not work correctly. Thanks Steve Fosdick (and
+	others who suggested the same) for suggesting this.
+
+2007-12-21  Luis Mondesi <luigi@tuxy.i.kiskeyix.org>
+
+	* scripts/initramfs-tools/hooks/splashy,
+	scripts/initramfs-tools/scripts/init-top/splashy: copies
+	splashy_chvt to initramfs we use vt8 by default
+
+2007-12-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/init-top/splashy: no need to call
+	grep /proc/fb this assumes user use vesafb. splashy will show the right error
+
+2007-12-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: back to catching input - enabling linux_input causes system to loose keyboard events - no-vt option causes -9 errors because create_event_buffer() fails - we need graphic-vts unless we go to vt 8 where no text is printed - we tell directfb to switch to vt 8 regardless, this should avoid   issues from initramfs
+
+2007-12-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: oops
+
+2007-12-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: strings not international yet we should enable them at a later time
+
+2007-12-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* HACKING: update wiki version information and link in the wiki needs to be updated
+
+2007-12-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* configure.ac: new version
+
+2007-12-21  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: module madness - disables vt* (and makes sure that vt number 8 is preferred just in
+	case) and disables graphics-vt - points to FAQ using tinyurl http://tinyurl.com/339h67. This should
+	help people fix Splashy when they don't follow the README
+	instructions
+
+2007-12-20  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, configure.ac: hungarian translation added
+
+2007-12-20  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/hu.po: hungarian translation added
+
+2007-12-18  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: splashy 0.3.8 the endless circle of samsara
+
 2007-12-18  Luis Mondesi <lemsx1@gmail.com>
 
 	* NEWS: splashy 0.3.8 bug fixing release is just as fun!
