@@ -163,7 +163,7 @@ stop_splashy () {
     fi
 
     # if splashy does not exit. we kill -9 it...
-    while `pidof splashy > /dev/null`; do
+    while pidof splashy > /dev/null; do
         if [ "x$DEBUG" != "x0" ]; then
 	    echo "Splashy didn't die!" >> $STEPS_DIR/splashy.log
 	fi
