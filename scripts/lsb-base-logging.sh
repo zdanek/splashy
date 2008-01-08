@@ -169,12 +169,7 @@ stop_splashy () {
     if [ "$(fgconsole 2>/dev/null)" = "8" ]; then
         clear >/dev/tty8 || true
     fi
-
-    # Do some magic with the TTYs
-    if [ -z "$CHVT_TTY" ] && [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
-        splashy_chvt $CHVT_TTY || true
-    fi
-    
+ 
     # we need to re-run keymap.sh and console-screen.sh only if Splashy scripts stopped it
     # see /etc/kbd/conf.d/splashy and /etc/console-tools/config.d/splashy
     if [ -x "/etc/init.d/keymap.sh" -a -f "/dev/shm/splashy-stopped-keymap" ]; then
@@ -184,6 +179,11 @@ stop_splashy () {
         fi
         /etc/init.d/keymap.sh start || true
         rm -f /dev/shm/splashy-stopped-keymap
+        # clear tty8 of console messages
+        # (see splashy_video.c:splashy_start_splash().DirectFBSetOption("vt-num","8"))
+        if [ "$(fgconsole 2>/dev/null)" = "8" ]; then
+            clear >/dev/tty8 || true
+        fi
     fi
 
     # console-screen.sh still stops Splashy at this point. Do we still need to run this?? - Luis
@@ -195,8 +195,18 @@ stop_splashy () {
         /etc/init.d/console-screen.sh start || true
         # whether it worked or not, we do not care
         rm -f /dev/shm/splashy-stopped-console-screen
+        # clear tty8 of console messages
+        # (see splashy_video.c:splashy_start_splash().DirectFBSetOption("vt-num","8"))
+        if [ "$(fgconsole 2>/dev/null)" = "8" ]; then
+            clear >/dev/tty8 || true
+        fi
     fi
-    
+
+    # Do some magic with the TTYs
+    if [ -z "$CHVT_TTY" ] && [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
+        splashy_chvt $CHVT_TTY || true
+    fi
+
     # splashy is now stopped. cleanup
 
     # Bug #455259
