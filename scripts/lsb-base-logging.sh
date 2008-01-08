@@ -164,8 +164,16 @@ stop_splashy () {
 	killall -9 splashy > /dev/null 2>&1
     done
 
+    # clear tty8 of console messages
+    # (see splashy_video.c:splashy_start_splash().DirectFBSetOption("vt-num","8"))
+    if [ "$(fgconsole 2>/dev/null)" = "8" ]; then
+        clear >/dev/tty8 || true
+    fi
+
     # Do some magic with the TTYs
-    [ -z "$CHVT_TTY" ] || splashy_chvt $CHVT_TTY || true
+    if [ -z "$CHVT_TTY" ] && [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
+        splashy_chvt $CHVT_TTY || true
+    fi
     
     # we need to re-run keymap.sh and console-screen.sh only if Splashy scripts stopped it
     # see /etc/kbd/conf.d/splashy and /etc/console-tools/config.d/splashy
@@ -174,7 +182,7 @@ stop_splashy () {
             cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
             echo "calling keymap.sh" >> $STEPS_DIR/splashy.log
         fi
-        /etc/init.d/keymap.sh start &
+        /etc/init.d/keymap.sh start || true
         rm -f /dev/shm/splashy-stopped-keymap
     fi
 
@@ -184,17 +192,19 @@ stop_splashy () {
             cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
             echo "calling console-screen.sh" >> $STEPS_DIR/splashy.log
         fi
-        /etc/init.d/console-screen.sh start &
+        /etc/init.d/console-screen.sh start || true
         # whether it worked or not, we do not care
         rm -f /dev/shm/splashy-stopped-console-screen
     fi
+    
+    # splashy is now stopped. cleanup
 
     # Bug #455259
     # when not in debug mode, umount our tmpfs
     if [ "x$DEBUG" = "x0" ]; then
         mount | grep $STEPS_DIR > /dev/null 2>&1 \
             && umount $STEPS_DIR 2> /dev/null \
-            || return 0
+            || true
     fi
 }
 
