@@ -7,14 +7,19 @@
 # LICENSE: GPL
 
 NAME="splashy"
+STEPS_DIR=/lib/init/rw/splashy
 [ -r "/etc/default/$NAME" ] && . "/etc/default/$NAME"
 
 if pidof $NAME > /dev/null; then
     case ${0} in
         *console-tools*)
-            touch /dev/shm/splashy-stopped-console-screen ;;
+            [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
+            touch $STEPS_DIR/splashy-stopped-console-screen 
+            ;;
         *kbd*)
-            touch /dev/shm/splashy-stopped-keymap ;;
+            [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
+            touch $STEPS_DIR/splashy-stopped-keymap 
+            ;;
     esac
     exit 0
 fi

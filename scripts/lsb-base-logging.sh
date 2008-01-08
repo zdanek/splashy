@@ -124,6 +124,15 @@ log_daemon_msg () {
 
 
 stop_splashy () { 
+    # 
+    # when we exit Splashy there are a few things that need to be done:
+    # - set progressbar to 100%
+    # - Splashy always runs on tty8, if the user wants us to switch TTYs, 
+    #   we will do it with splashy_chvt
+    # - if Splashy stopped console-screen.sh and keyboard.sh, this is the time to re-run those
+    #   console-screen.sh sets the fonts for the console and it cannot be done while in 
+    #   graphics mode
+    # - umount our STEPS_DIR
     STEPS_DIR=/lib/init/rw/splashy
     SPL_UPD=/sbin/splashy_update
     # load some default variables
@@ -132,10 +141,17 @@ stop_splashy () {
     # it makes no sense to do this if splashy is not running
     #  - if running:
     #    * set progress to 100%
+    #    * wait a bit for it to actually show
     #    * send exit
     pidof splashy > /dev/null && \
         $SPL_UPD "progress 100" 2> /dev/null && \
+        sleep 0.3 && \
         $SPL_UPD "exit" 2> /dev/null 
+
+    # wait until splashy exits before changing tty's
+    # this is because of the fade-out effect mostly
+    # so 200 ms should do it
+    pidof splashy > /dev/null && sleep 0.2
 
     [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
 
@@ -146,22 +162,17 @@ stop_splashy () {
 	cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
     fi
 
-    # wait until splashy exits before changing tty's
-    # this is because of the fade-out effect mostly
-    # so 200 ms should do it
-    sleep 0.2
-
-    # FIXME what if splashy never exits? infinite loop!
+    # if splashy does not exit. we kill -9 it...
     while `pidof splashy > /dev/null`; do
         if [ "x$DEBUG" != "x0" ]; then
 	    echo "Splashy didn't die!" >> $STEPS_DIR/splashy.log
 	fi
 
-        killall -15 splashy > /dev/null 2>&1
+        kill -15 `pidof splashy`
 	sleep 0.2
 
 	#echo "calling killall -9 splashy" >> $STEPS_DIR/splashy.log
-	killall -9 splashy > /dev/null 2>&1
+	killall -9 `pidof splashy` > /dev/null 2>&1
     done
 
     # clear tty8 of console messages
@@ -172,13 +183,13 @@ stop_splashy () {
  
     # we need to re-run keymap.sh and console-screen.sh only if Splashy scripts stopped it
     # see /etc/kbd/conf.d/splashy and /etc/console-tools/config.d/splashy
-    if [ -x "/etc/init.d/keymap.sh" -a -f "/dev/shm/splashy-stopped-keymap" ]; then
+    if [ -x "/etc/init.d/keymap.sh" -a -f "$STEPS_DIR/splashy-stopped-keymap" ]; then
         if [ "x$DEBUG" != "x0" ]; then
             cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
             echo "calling keymap.sh" >> $STEPS_DIR/splashy.log
         fi
         /etc/init.d/keymap.sh start || true
-        rm -f /dev/shm/splashy-stopped-keymap
+        rm -f $STEPS_DIR/splashy-stopped-keymap
         # clear tty8 of console messages
         # (see splashy_video.c:splashy_start_splash().DirectFBSetOption("vt-num","8"))
         if [ "$(fgconsole 2>/dev/null)" = "8" ]; then
@@ -187,14 +198,14 @@ stop_splashy () {
     fi
 
     # console-screen.sh still stops Splashy at this point. Do we still need to run this?? - Luis
-    if [ -x "/etc/init.d/console-screen.sh" -a -f "/dev/shm/splashy-stopped-console-screen" ]; then
+    if [ -x "/etc/init.d/console-screen.sh" -a -f "$STEPS_DIR/splashy-stopped-console-screen" ]; then
         if [ "x$DEBUG" != "x0" ]; then
             cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
             echo "calling console-screen.sh" >> $STEPS_DIR/splashy.log
         fi
         /etc/init.d/console-screen.sh start || true
         # whether it worked or not, we do not care
-        rm -f /dev/shm/splashy-stopped-console-screen
+        rm -f $STEPS_DIR/splashy-stopped-console-screen
         # clear tty8 of console messages
         # (see splashy_video.c:splashy_start_splash().DirectFBSetOption("vt-num","8"))
         if [ "$(fgconsole 2>/dev/null)" = "8" ]; then
