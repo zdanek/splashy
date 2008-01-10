@@ -6,6 +6,7 @@ Changes between 0.3.8 and 0.3.9
 -------------------------------
  * hu translation added (Thanks Miklos Vajna)
  * br translation added (Thanks Amadeu Andrade Barbosa Júnior)
+ * added more checks at initramfs to ensure Splashy can be started (Thanks Luca Capello)
 
 Changes between 0.3.7 and 0.3.8
 -------------------------------
