@@ -13,6 +13,7 @@
 
 # Author: Tim Dijkstra <newsuser@famdijkstra.org>, 
 #         Luis Mondesi <lemsx1@gmail.com> 
+#         Luca Capello <luca@pca.it>
 #
 # If called in the rc[06].d runlevels with the stop target it will start 
 # splashy in 'shutdown' mode. In the rcS.d runlevel it will try 
@@ -55,12 +56,39 @@ fi
 
 set -e
 
-[ "$ENABLE" = "1" ] && log_warning_message "To enable $NAME add 'splash' to the kernel command line. Use of ENABLE in /etc/default/$NAME is deprecated.";
-ENABLE=0
-# Enable splash parameter if it is set on the kernel command line.
-grep -q -e '[[:space:]]splash\([[:space:]]\|$\)' /proc/cmdline && ENABLE=1
-grep -q -e '[[:space:]]nosplash\([[:space:]]\|$\)' /proc/cmdline && ENABLE=0
 
+[ "$ENABLE" = "1" ] && log_warning_msg "To enable $NAME add 'splash' to the kernel command line. Use of ENABLE in /etc/default/$NAME is deprecated.";
+
+check_to_enable () {
+	ENABLE=0
+	SINGLE=false
+	SPLASH=false
+	FBMODESET=false
+
+	for x in $(cat /proc/cmdline); do
+	    case $x in
+		single)
+		    SINGLE=true
+		;;
+		splash)
+		    SPLASH=true
+		;;
+		nosplash)
+		    SPLASH=false
+		;;
+		vga=*|video=*)
+		    FBMODESET=true
+		;;
+	    esac
+	done
+	[ "$SPLASH" = "true" -a "$FBMODESET" = "true" ] && ENABLE=1
+	[ "$SINGLE" = "true" ] && ENABLE=0
+
+	if [ "$ENABLE" = "0" ]; then
+	    log_warning_msg "To enable $NAME on multiuser runlevel add 'splash' and a valid framebuffer videomode to the kernel command line"
+	    exit 0
+	fi
+}
 
 calculate_steps () {
         log_daemon_msg "(Re)generating splash steps for"
@@ -115,24 +143,24 @@ fi
 
 case "$1" in
     start)
-        # We start splashy in rcS.d if we haven't already in initramfs
-        if [ "x$RUNLEVEL" = "xN S" -o "x$RUNLEVEL" = "xS" ]; then
-	    [ "$ENABLE" = "1" ] || exit 0;
+	check_to_enable
 
-	    calculate_steps
+	# We start splashy in rcS.d if we haven't already in initramfs
+	[ "x$RUNLEVEL" = "xN S" -o "x$RUNLEVEL" = "xS" ] || exit 0
 
-            log_daemon_msg "Starting $DESC" $NAME
-            if [ "$DEBUG" = "1" ]; then
-                pidof $NAME > /dev/null || \
-                echo "$0: Splashy not running?" >> $STEPS_DIR/splashy.log
-            fi
-            pidof $NAME > /dev/null || /sbin/$NAME boot
-            log_end_msg $?
+        calculate_steps
+
+        log_daemon_msg "Starting $DESC" $NAME
+        if [ "$DEBUG" = "1" ]; then
+            pidof $NAME > /dev/null || \
+            echo "$0: Splashy not running?" >> $STEPS_DIR/splashy.log
         fi
+        pidof $NAME > /dev/null || /sbin/$NAME boot
+        log_end_msg $?
     ;;
     stop)
+	check_to_enable
 
-	[ "$ENABLE" = "1" ] || exit 0;
 	calculate_steps
 
         log_daemon_msg "Starting $DESC" $NAME
