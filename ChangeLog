@@ -1,3 +1,47 @@
+2008-01-10  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS: honor a quien honor merece Mentions Luca here as well
+
+2008-01-10  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy,
+	scripts/initramfs-tools/scripts/init-top/splashy: Thanks Luca
+	Capello <luca@pca.it> Applied patch as reported on Bug #459457 reported by Luca.  This
+	patch checks whether all system functionality are in place before
+	starting Splashy at all.
+
+2008-01-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: minor fix while pidof splashy > /dev/null instead of the output of that
+	command
+
+2008-01-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/console-tools/config.d/splashy,
+	scripts/lsb-base-logging.sh: do not use /dev/shm anymore to hold
+	temp files now we use our own STEPS_DIR
+
+2008-01-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: cleanup after console-screen and
+	keymap.sh have finished we need to do this before we switch tty's so the end-user does not
+	see any text
+
+2008-01-08  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: clears tty8 after Splashy exits we don't want to see any text no the screen while Splashy is running
+	(or after)
+
+2007-12-30  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: reports no errors if grep fails to find our mount, we still report no errors. this
+	should fix problems with /etc/init.d/xdm and others that are set to
+	'set -e'
+
+2007-12-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: ditto
+
 2007-12-26  Luis Mondesi <lemsx1@gmail.com>
 
 	* po/index.html, po/splashy.pot: portuguese added
