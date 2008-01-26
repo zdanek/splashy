@@ -108,6 +108,7 @@ AC_OUTPUT( po/Makefile.in
           scripts/Makefile 
           scripts/initramfs-tools/hooks/libsplashy
           Doxyfile
+          splashy.pc
           )
 
 echo

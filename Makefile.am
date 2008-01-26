@@ -24,3 +24,6 @@ EXTRA_DIST = config.rpath m4/ChangeLog  \
 	HACKING 
 
 ACLOCAL_AMFLAGS = -I m4
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = splashy.pc
