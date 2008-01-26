@@ -93,7 +93,7 @@ static guint _last_x = 0;
 
 static gboolean _draw_progressbar_forward = TRUE;
 static gboolean _show_progressbar = FALSE;
-static gboolean _show_textbox_area = FALSE;     /* flag to toggle showing *
+static int	_show_textbox_area = 0;		/* flag to toggle showing *
                                                  * textbox area. @see
                                                  * splashy_function::keyevent_loop() 
                                                  */
@@ -137,7 +137,7 @@ splashy_set_progressbar_visible (gboolean visible)
 }
 
 void
-splashy_set_textbox_area_visible (gboolean visible)
+splashy_set_textbox_area_visible (int visible)
 {
         _show_textbox_area = visible;
         /*
@@ -157,7 +157,7 @@ splashy_set_textbox_area_visible (gboolean visible)
         }
 }
 
-gboolean
+int
 splashy_get_textbox_area_visible (void)
 {
         return _show_textbox_area;

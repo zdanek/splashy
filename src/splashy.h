@@ -64,12 +64,12 @@ void splashy_reset_progressbar_counters ();
  * toggles whether the textbox area will be shown for 
  * splashy_printline_s()
  */
-void splashy_set_textbox_area_visible (gboolean visible);
+void splashy_set_textbox_area_visible (int visible);
 
 /*
  * returns the status of the textbox area visibility flag
  */
-gboolean splashy_get_textbox_area_visible (void);
+int splashy_get_textbox_area_visible (void);
 
 /*
  * allows to print a single message to the center of the textbox area
