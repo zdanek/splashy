@@ -118,7 +118,7 @@ log_daemon_msg () {
 
     # Stop splashy on *dm
     case $2 in 
-	?dm) stop_splashy || return 0 ;;
+	?dm) stop_splashy || true ;;
     esac
 }
 
@@ -214,7 +214,7 @@ stop_splashy () {
     fi
 
     # Do some magic with the TTYs
-    if [ -z "$CHVT_TTY" ] && [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
+    if [ -n "$CHVT_TTY" ] && [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
         splashy_chvt $CHVT_TTY || true
     fi
 
