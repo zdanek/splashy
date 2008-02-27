@@ -1,3 +1,23 @@
+2008-02-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, configure.ac: ready for new release cycle
+
+2008-01-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* Makefile.am, configure.ac, splashy.pc.in: pkgconfig support added allows projects to link against Splashy by adding the following to
+	their configure.{ac,in} files:  PKG_CHECK_MODULES([SPLASHY],
+	splashy).  Thanks Holger Macht <hmacht@suse.de> for submitting this
+	patch
+
+2008-01-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy.h, src/splashy_video.c: removes need for glib.h on
+	libsplashy's splashy.h. Thanks Holger Macht from SuSE
+
+2008-01-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: ditto
+
 2008-01-10  Luis Mondesi <lemsx1@gmail.com>
 
 	* NEWS: honor a quien honor merece Mentions Luca here as well
