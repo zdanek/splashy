@@ -114,7 +114,7 @@ log_daemon_msg () {
     # Splashy code 
    
     # send log to splashy. it will show if F2 is pressed
-    pidof splashy > /dev/null && splashy_update "scroll $1: $2"
+    pidof splashy > /dev/null && splashy_update "scroll $1: $2" || true
 
     # Stop splashy on *dm
     case $2 in 
