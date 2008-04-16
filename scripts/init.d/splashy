@@ -155,7 +155,13 @@ case "$1" in
             pidof $NAME > /dev/null || \
             echo "$0: Splashy not running?" >> $STEPS_DIR/splashy.log
         fi
-        pidof $NAME > /dev/null || /sbin/$NAME boot
+        if (pidof $NAME > /dev/null); then
+            # as suggested by John Hughes <john@calva.com> Bug# 462626
+            # Splashy is running and we want to avoid our TTY to be corrupted
+            stty -icanon -clocal
+        else
+            /sbin/$NAME boot
+        fi
         log_end_msg $?
     ;;
     stop)
