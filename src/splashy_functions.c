@@ -86,7 +86,7 @@ static gint arg_progress = 0;   /* value to be sent to last_progress from
 
 static gboolean exiting = FALSE;        /* threads should read this before
                                          * doing anything at all. this is set 
-                                         * * * to true at cmd_exit() */
+                                         * * * * * to true at cmd_exit() */
 static gboolean read_console = FALSE;   /* flag to turn on/off reading the
                                          * /dev/vcs* files */
 static gboolean switched_to_verbose = FALSE;    /* flag to know when verbose
@@ -221,7 +221,7 @@ search_pattern (const gchar * perr_pattern, const gchar * filename,
                                                                  * function
                                                                  * fread()
                                                                  * thread
-                                                                 * safe */
+                                                                 * safe (to use, but with care) */
                 fclose (fp);
                 buffer[max_buf - 1] = '\0';
                 ret = search_pattern (perr_pattern, buffer, use_ignore);
@@ -1187,7 +1187,7 @@ _splashy_child (const gchar * seq)
                                          * SplashyClient handler */
         pthread_t p_thread_c, p_thread_d;       /* we need thread C and D to
                                                  * manage our keyboard events 
-                                                 * and SplashyClient */
+                                                 * * * and SplashyClient */
 
         /*
          * gint thr_id_f; * Handles /dev/vcs1 text to be displayed to *
