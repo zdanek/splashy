@@ -86,7 +86,7 @@ static gint arg_progress = 0;   /* value to be sent to last_progress from
 
 static gboolean exiting = FALSE;        /* threads should read this before
                                          * doing anything at all. this is set 
-                                         * to true at cmd_exit() */
+                                         * * to true at cmd_exit() */
 static gboolean read_console = FALSE;   /* flag to turn on/off reading the
                                          * /dev/vcs* files */
 static gboolean switched_to_verbose = FALSE;    /* flag to know when verbose
@@ -107,7 +107,7 @@ pthread_mutex_t key_mut = PTHREAD_MUTEX_INITIALIZER;
 void
 splashy_chvt (gint vt_no)
 {
-        gint fd = g_open ("/dev/tty0", O_RDONLY|O_WRONLY);
+        gint fd = g_open ("/dev/tty0", O_RDONLY | O_WRONLY);
         if (fd < 0)
                 return;
         if (!ioctl (fd, VT_ACTIVATE, vt_no))
@@ -122,56 +122,73 @@ splashy_chvt (gint vt_no)
  * @return true if pattern was found
  */
 inline gboolean
-search_pattern_str (const gchar * perr_pattern, const gchar * str, gshort use_ignore)
+search_pattern_str (const gchar * perr_pattern, const gchar * str,
+                    gshort use_ignore)
 {
         gboolean ret = FALSE;   /* assumes we will fail */
-        gshort ignore_error = 0; /* we assume that we will be ignoring patterns */
-        /* by default we ignore our own errors and loading kernel modules */
-        const gchar* ignore_pattern = "(splashy|Cannot[[:space:]]+test[[:space:]]+file|load[[:space:]]+module|fatal:[[:space:]]+module[[:space:]].*[[:space:]]not[[:space:]]found|fatal:[[:space:]]+error[[:space:]]+inserting[[:space:]].*|warning:[[:space:]]+error[[:space:]]+inserting.*)";
+        gshort ignore_error = 0;        /* we assume that we will be ignoring 
+                                         * patterns */
+        /*
+         * by default we ignore our own errors and loading kernel modules 
+         */
+        const gchar *ignore_pattern =
+                "(splashy|Cannot[[:space:]]+test[[:space:]]+file|load[[:space:]]+module|fatal:[[:space:]]+module[[:space:]].*[[:space:]]not[[:space:]]found|fatal:[[:space:]]+error[[:space:]]+inserting[[:space:]].*|warning:[[:space:]]+error[[:space:]]+inserting.*)";
         regex_t ignore_preg;
         regex_t preg;
 
         if (perr_pattern == NULL || str == NULL)
                 return FALSE;
 
-        /* ignore_error should be zero */
+        /*
+         * ignore_error should be zero 
+         */
         if (use_ignore)
         {
                 ignore_error = regcomp (&ignore_preg, ignore_pattern,
-                                REG_EXTENDED | REG_ICASE | REG_NEWLINE |
-                                REG_NOSUB);
+                                        REG_EXTENDED | REG_ICASE | REG_NEWLINE
+                                        | REG_NOSUB);
 
-                /* 
+                /*
                  * make sure we are not ignoring this type of errors before
                  * we continue 
                  */
-                if ( !ignore_error )
+                if (!ignore_error)
                 {
                         if (regexec (&ignore_preg, str, 0, NULL, 0) == 0)
                         {
-                                /* we ignore this and return FALSE */
+                                /*
+                                 * we ignore this and return FALSE 
+                                 */
                                 regfree (&ignore_preg);
                                 goto end;
                         }
                         regfree (&ignore_preg);
-                } else {
-                        DEBUG_PRINT ("There was an error compiling the ignore_pattern regex: %s",ignore_pattern);
                 }
-        } 
-        
+                else
+                {
+                        DEBUG_PRINT
+                                ("There was an error compiling the ignore_pattern regex: %s",
+                                 ignore_pattern);
+                }
+        }
+
         if (regcomp (&preg, perr_pattern,
-                                REG_EXTENDED | REG_ICASE | REG_NEWLINE |
-                                REG_NOSUB) == 0)
+                     REG_EXTENDED | REG_ICASE | REG_NEWLINE | REG_NOSUB) == 0)
         {
                 if (regexec (&preg, str, 0, NULL, 0) == 0)
                         ret = TRUE;
                 regfree (&preg);
-        } else {
-                DEBUG_PRINT ("There was an error compiling the perr_pattern regex: %s",perr_pattern);
         }
-end:
+        else
+        {
+                DEBUG_PRINT
+                        ("There was an error compiling the perr_pattern regex: %s",
+                         perr_pattern);
+        }
+      end:
         return ret;
 }
+
 /**
  * @desc reads file for pattern for known failure text messages
  * @param perr_pattern a valid regular expression pattern. @see man regex
@@ -179,7 +196,8 @@ end:
  * @return true if pattern was found
  */
 inline gboolean
-search_pattern (const gchar * perr_pattern, const gchar * filename, gshort use_ignore)
+search_pattern (const gchar * perr_pattern, const gchar * filename,
+                gshort use_ignore)
 {
         FILE *fp;
         gchar *buffer = NULL;
@@ -214,18 +232,13 @@ search_pattern (const gchar * perr_pattern, const gchar * filename, gshort use_i
 }
 
 /*
-int open_nb(char *buf)
-{
-	int	fd, n;
-
-	if ((fd = open(buf, O_WRONLY|O_NONBLOCK|O_NOCTTY)) < 0)
-		return -1;
-	n = fcntl(fd, F_GETFL);
-	n &= ~(O_NONBLOCK);
-	fcntl(fd, F_SETFL, n);
-
-	return fd;
-}*/
+ * int open_nb(char *buf) { int fd, n;
+ * 
+ * if ((fd = open(buf, O_WRONLY|O_NONBLOCK|O_NOCTTY)) < 0) return -1; n =
+ * fcntl(fd, F_GETFL); n &= ~(O_NONBLOCK); fcntl(fd, F_SETFL, n);
+ * 
+ * return fd; }
+ */
 
 /*
  * cmd_functions 
@@ -252,12 +265,13 @@ cmd_exit (void **args)
          * directfb option there as this breaks splashy. - Luis Mondesi
          * <lemsx1@gmail.com> 
          */
-        if ( exiting == TRUE ) 
-                return -1; /* do not allow this function to be called more than once */
+        if (exiting == TRUE)
+                return -1;      /* do not allow this function to be called
+                                 * more than once */
         exiting = TRUE;
         DEBUG_PRINT ("exiting set to TRUE");
 
-        /* 
+        /*
          * TODO
          * splashy_allow_vt_switching ();
          */
@@ -337,7 +351,7 @@ cmd_chvt (void **args)
          */
         if (*(gint *) args[0] < 1 || *(gint *) args[0] > 7)
                 return -1;
-        splashy_allow_vt_switching ();    /* tell libdirectfb that's ok to
+        splashy_allow_vt_switching ();  /* tell libdirectfb that's ok to *
                                          * allow vt switching */
         splashy_chvt (*(gint *) args[0]);
         return 0;
@@ -375,27 +389,42 @@ cmd_repaint (void **args)
 gint
 cmd_getstring (void **args)
 {
-        /* Get the key event loop give up its lock */
+        /*
+         * Get the key event loop give up its lock 
+         */
         splashy_wake_up ();
 
-        pthread_mutex_lock(&key_mut);
-        splashy_get_string((char *) args[1],*(int *) args[2], (char *) args[0]);
-        pthread_mutex_unlock(&key_mut);
+        pthread_mutex_lock (&key_mut);
+        splashy_get_string ((char *) args[1], *(int *) args[2],
+                            (char *) args[0]);
+        pthread_mutex_unlock (&key_mut);
 
-	return 0;
+        return 0;
 }
 
 gint
 cmd_getpass (void **args)
 {
-        /* Get the key event loop give up its lock */
+        /*
+         * Get the key event loop give up its lock 
+         */
         splashy_wake_up ();
 
-        pthread_mutex_lock(&key_mut);
-        splashy_get_password((char *) args[1],*(int *) args[2], (char *) args[0]);
-        pthread_mutex_unlock(&key_mut);
+        pthread_mutex_lock (&key_mut);
+        splashy_get_password ((char *) args[1], *(int *) args[2],
+                              (char *) args[0]);
+        pthread_mutex_unlock (&key_mut);
 
-	return 0;
+        return 0;
+}
+
+gint
+cmd_chroot (void **args)
+{
+        char *dir = args[0];
+        chdir (dir);
+        chroot (dir);
+        return 0;
 }
 
 /**
@@ -406,7 +435,7 @@ cmd_getpass (void **args)
 struct
 {
         const gchar *cmd;
-        gint (*handler) (void **);
+          gint (*handler) (void **);
         gint args;
         gchar *specs;
 } known_cmds[] =
@@ -426,11 +455,13 @@ struct
         {
         .cmd = "print",.handler = cmd_print,.args = 1,.specs = "s"},
         {
-        .cmd = "TEXT",.handler = cmd_print,.args = 1,.specs = "s"}, 
+        .cmd = "TEXT",.handler = cmd_print,.args = 1,.specs = "s"},
         {
-        .cmd = "scroll",.handler = cmd_print_scroll,.args = 1,.specs = "s"},
+        .cmd = "scroll",.handler = cmd_print_scroll,.args = 1,.specs =
+                        "s"},
         {
-        .cmd = "SCROLL",.handler = cmd_print_scroll,.args = 1,.specs = "s"},
+        .cmd = "SCROLL",.handler = cmd_print_scroll,.args = 1,.specs =
+                        "s"},
         {
         .cmd = "CLEAR",.handler = cmd_print_clear,.args =
                         0,.specs = NULL},
@@ -446,9 +477,10 @@ struct
         .cmd = "exit",.handler = cmd_exit,.args = 0,.specs = NULL},
         {
         .cmd = "QUIT",.handler = cmd_exit,.args = 0,.specs = NULL},
-	{
-        .cmd = "getstring",.handler = cmd_getstring,.args = 1,.specs = "s"},
-	{
+        {
+        .cmd = "getstring",.handler = cmd_getstring,.args = 1,.specs =
+                        "s"},
+        {
         .cmd = "getpass",.handler = cmd_getpass,.args = 1,.specs = "s"}
 
 };
@@ -490,48 +522,53 @@ sig_hup_handler (gint sig)
 inline void
 spl_read_socket (int sock)
 {
-        DEBUG_PRINT ("Reading socket %s...\n",SPL_SOCKET);
+        DEBUG_PRINT ("Reading socket %s...\n", SPL_SOCKET);
         int i, j, k;
 
-        /* FIXME make buf_len=1024 a define */
-        int fd, buf_len=1024;
+        /*
+         * FIXME make buf_len=1024 a define 
+         */
+        int fd, buf_len = 1024;
 
         struct ucred cred;
         struct sockaddr cli_addr;
-        socklen_t cl=sizeof(cred), cli_len = sizeof(cli_addr);
+        socklen_t cl = sizeof (cred), cli_len = sizeof (cli_addr);
         char buf[buf_len], r_buf[buf_len];
-        
-        if ((fd = accept (sock, &cli_addr, &cli_len)) < 0) {
-                ERROR_PRINT("Error in accept: %s", strerror(errno));
+
+        if ((fd = accept (sock, &cli_addr, &cli_len)) < 0)
+        {
+                ERROR_PRINT ("Error in accept: %s", strerror (errno));
                 return;
         }
 
-        if (getsockopt(fd, SOL_SOCKET, SO_PEERCRED, &cred, &cl) < 0) {
-                ERROR_PRINT("Couldn't get credentials");
+        if (getsockopt (fd, SOL_SOCKET, SO_PEERCRED, &cred, &cl) < 0)
+        {
+                ERROR_PRINT ("Couldn't get credentials");
                 goto out;
         }
-        
-        DEBUG_PRINT("From: pid %d, uid %d, gid %d",
-			cred.pid, cred.uid, cred.gid);
 
-        if (cred.uid != 0) 
+        DEBUG_PRINT ("From: pid %d, uid %d, gid %d",
+                     cred.pid, cred.uid, cred.gid);
+
+        if (cred.uid != 0)
                 goto out;
-        
-        if (read(fd, &buf, buf_len) <= 0) {
-                ERROR_PRINT("Couldn't read from socket");
+
+        if (read (fd, &buf, buf_len) <= 0)
+        {
+                ERROR_PRINT ("Couldn't read from socket");
                 goto out;
         }
-        
-        buf[buf_len-1]='\0';                 
-       
-        DEBUG_PRINT("Message payload: %s", buf);
+
+        buf[buf_len - 1] = '\0';
+
+        DEBUG_PRINT ("Message payload: %s", buf);
 
 
         /*
          * Read Socket and call functor to handle exceptions 
-	 */
+         */
 
-        if ( strlen(buf) > 0 )
+        if (strlen (buf) > 0)
         {
                 gchar *t;
                 int args_i[4];
@@ -573,8 +610,10 @@ spl_read_socket (int sock)
                                 {
 
                                 case 's':
-                                        /* [Tim] is it me, or will this only work if
-                                         * 's' is the last arg in the specification?
+                                        /*
+                                         * [Tim] is it me, or will this only
+                                         * work if 's' is the last arg in the 
+                                         * specification? 
                                          */
                                         args[j] = &(buf[k]);
                                         for (; buf[k] != ' '; k++);
@@ -595,13 +634,15 @@ spl_read_socket (int sock)
                                         break;
                                 }
                         }
-                        /* We add 'r_buf' to the args in case cmd_ wants to return 
-                         * anything. update_splashy drops the connection in case it
-                         * doesn't expect an answer back.
+                        /*
+                         * We add 'r_buf' to the args in case cmd_ wants to
+                         * return anything. update_splashy drops the
+                         * connection in case it doesn't expect an answer
+                         * back. 
                          */
-                        r_buf[0]='\0';
+                        r_buf[0] = '\0';
                         args[j] = r_buf;
-                        args[j+1] = &buf_len;
+                        args[j + 1] = &buf_len;
                         /**                        
                          * cmds should be used for everything
                          * @see known_cmds
@@ -609,13 +650,14 @@ spl_read_socket (int sock)
                          */
                         known_cmds[i].handler (args);
 
-                        if ((strlen(r_buf) > 0) && (write (fd, &r_buf, strlen(r_buf)+1) < 0))
-                                DEBUG_PRINT("Writing to socket failed");
+                        if ((strlen (r_buf) > 0)
+                            && (write (fd, &r_buf, strlen (r_buf) + 1) < 0))
+                                DEBUG_PRINT ("Writing to socket failed");
                 }
         }
-out:
+      out:
         close (fd);
-	return;
+        return;
 }
 
 
@@ -623,12 +665,13 @@ inline void
 _switch_to_verbose_image ()
 {
         const gchar *background =
-	        splashy_image_path ("/splashy/background/errorimg");
+                splashy_image_path ("/splashy/background/errorimg");
 
-	if (!g_file_test (background, G_FILE_TEST_IS_REGULAR)) {
-		ERROR_PRINT("Can't find %s ",background);
-		return;
-	}
+        if (!g_file_test (background, G_FILE_TEST_IS_REGULAR))
+        {
+                ERROR_PRINT ("Can't find %s ", background);
+                return;
+        }
 
         splashy_change_splash (background);
 }
@@ -659,7 +702,7 @@ verbose_text_loop (void *data)
 
         dev_vcs = NULL;
         switched_to_verbose = FALSE;    /* verbose image flag */
-        splashy_set_textbox_area_visible(FALSE);
+        splashy_set_textbox_area_visible (FALSE);
 
         autoverbose = FALSE;    /* assume we don't need verbose mode for now */
         read_console = TRUE;    /* assume we will be able to read from a
@@ -677,7 +720,8 @@ verbose_text_loop (void *data)
          * accordingly 
          */
         if (g_ascii_strncasecmp
-            (splashy_get_config_string (SPL_AUTO_VERBOSE_ON_ERROR), "yes", 3) == 0)
+            (splashy_get_config_string (SPL_AUTO_VERBOSE_ON_ERROR), "yes",
+             3) == 0)
                 autoverbose = TRUE;
 
         /*
@@ -735,7 +779,7 @@ verbose_text_loop (void *data)
                         }
                         while (fgets_unlocked (buf, 81, dev_vcs))
                         {
-				if (strlen (buf) < 8)
+                                if (strlen (buf) < 8)
                                         continue;
                                 /*
                                  * we need to find where the spaces end 
@@ -765,8 +809,8 @@ verbose_text_loop (void *data)
                                  * if (strlen(buf) < 8)
                                  */
                                 if (search_pattern_str
-                                                ("[^a-zA-Z0-9]", buf_str->str,
-                                                 0) == FALSE)
+                                    ("[^a-zA-Z0-9]", buf_str->str,
+                                     0) == FALSE)
                                 {
 
                                         g_string_free (buf_str, TRUE);
@@ -777,7 +821,8 @@ verbose_text_loop (void *data)
                                  * look for error messages only if we weren't asked
                                  * to display text right the way
                                  */
-                                if (splashy_get_textbox_area_visible() != TRUE)
+                                if (splashy_get_textbox_area_visible () !=
+                                    TRUE)
                                 {
                                         /*
                                          * we only look for errors if autoverbose
@@ -797,12 +842,18 @@ verbose_text_loop (void *data)
                                                                  buf, 1);
                                                 }
 
-                                                /* when the user presses F2 we want to show
-                                                 * the buffer in the textbox anyway. regardless
-                                                 * of whether an error was found or not */
+                                                /*
+                                                 * when the user presses F2
+                                                 * we want to show the buffer 
+                                                 * in the textbox anyway.
+                                                 * regardless of whether an
+                                                 * error was found or not 
+                                                 */
                                                 if (F2_toggle_pressed != TRUE)
                                                 {
-                                                        g_string_free (buf_str, TRUE);
+                                                        g_string_free
+                                                                (buf_str,
+                                                                 TRUE);
                                                         continue;
                                                 }
                                         }
@@ -813,7 +864,8 @@ verbose_text_loop (void *data)
                                                  * and allow the textbox area to be shown
                                                  */
                                                 found_error = TRUE;
-                                                splashy_set_textbox_area_visible(TRUE);
+                                                splashy_set_textbox_area_visible
+                                                        (TRUE);
 
                                                 if (autoverbose == TRUE
                                                     && switched_to_verbose ==
@@ -842,8 +894,8 @@ verbose_text_loop (void *data)
                                 {
                                         if (!exiting)
                                                 splashy_printline_s ((char *)
-                                                                   buf_str->
-                                                                   str);
+                                                                     buf_str->
+                                                                     str);
 
                                         sched_yield ();
 
@@ -862,7 +914,7 @@ verbose_text_loop (void *data)
                                 }
                                 g_string_free (buf_str, TRUE);
                         }
-			fclose(dev_vcs);
+                        fclose (dev_vcs);
                 }
         }
         g_string_free (device, TRUE);   /* never reached */
@@ -879,8 +931,8 @@ socket_loop (void *data)
         struct pollfd pfd;
 
         int sock;
-        struct sockaddr sock_addr = {AF_UNIX, SPL_SOCKET};
-        
+        struct sockaddr sock_addr = { AF_UNIX, SPL_SOCKET };
+
         gboolean forward_flag = TRUE;   /* this is only used when testing. we 
                                          * always start forward when testing */
 
@@ -894,29 +946,33 @@ socket_loop (void *data)
          * communication to this is done through a socket.
          */
 
-        /* Open the socket */
-        if ( (sock = socket(PF_UNIX, SOCK_STREAM, 0)) < 0) 
+        /*
+         * Open the socket 
+         */
+        if ((sock = socket (PF_UNIX, SOCK_STREAM, 0)) < 0)
         {
-		ERROR_PRINT("%s",strerror(errno));
-		pthread_exit(NULL);
-        }
-                                                                                
-        if (bind(sock, &sock_addr, sizeof(sock_addr)) < 0) 
-        {
-		ERROR_PRINT("%s",strerror(errno));
-		pthread_exit(NULL);
-        }
-        
-        if (listen (sock, 100) < 0)
-        {
-		ERROR_PRINT("%s",strerror(errno));
-		pthread_exit(NULL);
+                ERROR_PRINT ("%s", strerror (errno));
+                pthread_exit (NULL);
         }
 
-        /* I don't want to die if the client drops the connection */
-        signal(SIGPIPE, SIG_IGN);
-        
-         /*
+        if (bind (sock, &sock_addr, sizeof (sock_addr)) < 0)
+        {
+                ERROR_PRINT ("%s", strerror (errno));
+                pthread_exit (NULL);
+        }
+
+        if (listen (sock, 100) < 0)
+        {
+                ERROR_PRINT ("%s", strerror (errno));
+                pthread_exit (NULL);
+        }
+
+        /*
+         * I don't want to die if the client drops the connection 
+         */
+        signal (SIGPIPE, SIG_IGN);
+
+        /*
          * 0 seconds and 10 nano seconds: 10 x 1x10^-9 
          */
         _sleep.tv_sec = 0;
@@ -966,11 +1022,12 @@ socket_loop (void *data)
                                  */
 
                                 splashy_reset_progressbar_counters ();
-                                splashy_set_progressbar_forward (forward_flag);
+                                splashy_set_progressbar_forward
+                                        (forward_flag);
                                 /*
                                  * re-draw the image so that we can get our
                                  * progressbar filled 
-				  */
+                                 */
                                 splashy_reset_splash ();
                                 sched_yield ();
                                 nanosleep (&_sleep, NULL);
@@ -986,31 +1043,32 @@ socket_loop (void *data)
                          * if no special keys were pressed, read from our
                          * socket and continue waiting for events 
                          */
-                        if ( (err = poll ( &pfd, 1, timeout * 1000)) == -1) 
+                        if ((err = poll (&pfd, 1, timeout * 1000)) == -1)
                         {
                                 ERROR_PRINT
-                                    ("Error while selecting poll event: %s",
-                                      strerror(errno));
+                                        ("Error while selecting poll event: %s",
+                                         strerror (errno));
                                 splashy_child_exit ();
                         }
-                        else if (err == 0) 
+                        else if (err == 0)
                         {
                                 /*
                                  * Timeout
                                  */
                                 ERROR_PRINT
-                                    ("Timeout (%d sec) occurred while waiting for a message on the Splashy socket",timeout);
+                                        ("Timeout (%d sec) occurred while waiting for a message on the Splashy socket",
+                                         timeout);
                                 splashy_child_exit ();
                         }
 
-                        spl_read_socket(sock);
-                    
+                        spl_read_socket (sock);
+
                 }
                 pthread_testcancel ();
                 sched_yield ();
                 nanosleep (&_sleep, NULL);
         }                       /* ends while(1) */
-        close(sock); /* FIXME: Do we ever get here? */
+        close (sock);           /* FIXME: Do we ever get here? */
         pthread_exit (NULL);    /* never reached */
 }
 inline void *
@@ -1046,52 +1104,54 @@ keyevent_loop (void *data)
                 }
                 /*
                  * sub-parent (we are a fork after all). init is our parent 
-		 */
-                pthread_mutex_lock(&key_mut);
+                 */
+                pthread_mutex_lock (&key_mut);
                 splashy_wait_for_event ();
                 /*
                  * get all events from our event buffer (fifo queue) and
                  * process them. 
-		 */
-		while ((key = splashy_get_key_event ()) > 0)
+                 */
+                while ((key = splashy_get_key_event ()) > 0)
                 {
                         /*
                          * exit if ESC or F2 is pressed also kill our
                          * sub_child while at it 
                          */
-			if (key == DIKS_ESCAPE)
-			{
-				splashy_child_exit ();
-			}
-			else if (key == DIKS_F2)
-			{
-				/*
-				 * when F2 is pressed we display a
-				 * small theme-defined surface where 
-				 * text scrolls showing the currect
-				 * /dev/vcs[1,2,3,4,5,6,7] text 
-				 * @see verbose_text_loop
-				 */
-				if (F2_toggle_pressed != TRUE)
-				{
-					F2_toggle_pressed = TRUE;
-					splashy_set_textbox_area_visible(TRUE);
-				}
-				else
-				{
-					F2_toggle_pressed = FALSE;
-                                        splashy_set_textbox_area_visible(FALSE);
-					/*
-					 * pressing F2 also clears the 
-					 * switched_to_verbose flag
-					 * @see verbose_text_loop
-					 * we need to re-draw the screen
-					 */
-					splashy_reset_splash ();
-				}
-			}
+                        if (key == DIKS_ESCAPE)
+                        {
+                                splashy_child_exit ();
+                        }
+                        else if (key == DIKS_F2)
+                        {
+                                /*
+                                 * when F2 is pressed we display a
+                                 * small theme-defined surface where 
+                                 * text scrolls showing the currect
+                                 * /dev/vcs[1,2,3,4,5,6,7] text 
+                                 * @see verbose_text_loop
+                                 */
+                                if (F2_toggle_pressed != TRUE)
+                                {
+                                        F2_toggle_pressed = TRUE;
+                                        splashy_set_textbox_area_visible
+                                                (TRUE);
+                                }
+                                else
+                                {
+                                        F2_toggle_pressed = FALSE;
+                                        splashy_set_textbox_area_visible
+                                                (FALSE);
+                                        /*
+                                         * pressing F2 also clears the 
+                                         * switched_to_verbose flag
+                                         * @see verbose_text_loop
+                                         * we need to re-draw the screen
+                                         */
+                                        splashy_reset_splash ();
+                                }
+                        }
                 }               /* ends splashy_get_key_event */
-		pthread_mutex_unlock(&key_mut);
+                pthread_mutex_unlock (&key_mut);
 
                 /*
                  * every 100 tries check to see if the thread has been
@@ -1123,19 +1183,22 @@ _splashy_child (const gchar * seq)
         gint thr_id_c, thr_id_d;        /* thread ID for the newly * created
                                          * thread: c - keyboard events d -
                                          * SplashyClient handler */
-        pthread_t p_thread_c, p_thread_d;       /* we need thread C  and D
-                                                 * to manage  our keyboard  
+        pthread_t p_thread_c, p_thread_d;       /* we need thread C and D to
+                                                 * manage our keyboard
                                                  * events and SplashyClient */
 
-        /*gint thr_id_f;          * Handles /dev/vcs1 text to be displayed to
-                                 * splashy overlay textbox ... when pressing
-                                 * F2 we launch a thread to handle the
-                                 * console text */
-        /*pthread_t p_thread_f;*/
+        /*
+         * gint thr_id_f; * Handles /dev/vcs1 text to be displayed to *
+         * splashy overlay textbox ... when pressing * F2 we launch a thread
+         * to handle the * console text 
+         */
+        /*
+         * pthread_t p_thread_f;
+         */
 
         gboolean _preview = FALSE;
 
-	int ret;
+        int ret;
 
 
         /*
@@ -1156,18 +1219,23 @@ _splashy_child (const gchar * seq)
          */
         (void) signal (SIGABRT, sig_exit_safe);
 
-        if (strncmp("preview",seq,7) == 0) {
+        if (strncmp ("preview", seq, 7) == 0)
+        {
                 _preview = TRUE;
-	    if ((ret = splashy_init(SPL_CONFIG_FILE, "boot")) < 0) {
-		ERROR_PRINT("Problems boot. Error %d",ret);
-		return 1;
+                if ((ret = splashy_init (SPL_CONFIG_FILE, "boot")) < 0)
+                {
+                        ERROR_PRINT ("Problems boot. Error %d", ret);
+                        return 1;
+                }
+
         }
-                
-        } else {
-	    if((ret = splashy_init(SPL_CONFIG_FILE, seq)) < 0) {
-		ERROR_PRINT("Problems %s, Error %d",seq,ret);
-		return 1;
-        }
+        else
+        {
+                if ((ret = splashy_init (SPL_CONFIG_FILE, seq)) < 0)
+                {
+                        ERROR_PRINT ("Problems %s, Error %d", seq, ret);
+                        return 1;
+                }
         }
 
 
@@ -1179,14 +1247,16 @@ _splashy_child (const gchar * seq)
         {
                 if (i == 2)
                         continue;       /* never close stderr */
-                //DEBUG_PRINT ("Filehandle closed %d", i);
+                // DEBUG_PRINT ("Filehandle closed %d", i);
                 close (i);
         }
 
-        if ((ret = splashy_start_splash()) < 0) {
-		ERROR_PRINT("Couldn't splashy_start_splashy(). Error %d\n", ret);
-		return 1;
-	}
+        if ((ret = splashy_start_splash ()) < 0)
+        {
+                ERROR_PRINT ("Couldn't splashy_start_splashy(). Error %d\n",
+                             ret);
+                return 1;
+        }
 
         /*
          * thread C (main)
@@ -1205,8 +1275,10 @@ _splashy_child (const gchar * seq)
          */
         thr_id_d = pthread_create (&p_thread_d, NULL, keyevent_loop, NULL);
 
-        /*thr_id_f =
-                pthread_create (&p_thread_f, NULL, verbose_text_loop, NULL);*/
+        /*
+         * thr_id_f = pthread_create (&p_thread_f, NULL, verbose_text_loop,
+         * NULL);
+         */
 
         /*
          * Wait till thread is finished reading the socket... ie 'forever' 
@@ -1299,4 +1371,3 @@ splashy_child_test ()
 /**
  * @desc allows switching virtual terminals
  */
-
