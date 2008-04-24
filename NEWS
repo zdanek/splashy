@@ -4,7 +4,10 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 
 Changes between 0.3.9 and 0.3.10
 -------------------------------
-
+ 
+ * plenty of bug fixes (Thanks Niko Araya for helping us sort them out) (See ChangeLog)
+ * Splashy works better with encrypted hard disk and getstring/getpass prompts early at boot
+ * Lots of bug/thinko fixes from John Hughes, for which we are very glad!
 
 Changes between 0.3.8 and 0.3.9
 -------------------------------
