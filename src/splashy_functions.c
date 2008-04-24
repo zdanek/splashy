@@ -389,32 +389,26 @@ cmd_repaint (void **args)
 gint
 cmd_getstring (void **args)
 {
-        /*
-         * Get the key event loop give up its lock 
-         */
-        splashy_wake_up ();
-
+        /* We want the keyboard */
         pthread_mutex_lock (&key_mut);
+        /* Tell keyevent_loop to stop waiting for keyboard input */
+        splashy_wake_up ();
         splashy_get_string ((char *) args[1], *(int *) args[2],
                             (char *) args[0]);
         pthread_mutex_unlock (&key_mut);
-
         return 0;
 }
 
 gint
 cmd_getpass (void **args)
 {
-        /*
-         * Get the key event loop give up its lock 
-         */
-        splashy_wake_up ();
-
+        /* We want the keyboard */
         pthread_mutex_lock (&key_mut);
+        /* Tell keyevent_loop to stop waiting for keyboard input */
+        splashy_wake_up ();
         splashy_get_password ((char *) args[1], *(int *) args[2],
                               (char *) args[0]);
         pthread_mutex_unlock (&key_mut);
-
         return 0;
 }
 
@@ -1107,8 +1101,10 @@ keyevent_loop (void *data)
                 /*
                  * sub-parent (we are a fork after all). init is our parent 
                  */
-                pthread_mutex_lock (&key_mut);
+                /* Wait for keyboard input or getstring/getpass */
                 splashy_wait_for_event ();
+                /* seize the keyboard, blocking if getstring/getpass running */
+                pthread_mutex_lock (&key_mut);
                 /*
                  * get all events from our event buffer (fifo queue) and
                  * process them. 
@@ -1153,6 +1149,7 @@ keyevent_loop (void *data)
                                 }
                         }
                 }               /* ends splashy_get_key_event */
+                /* Let getstring or getpass run */
                 pthread_mutex_unlock (&key_mut);
 
                 /*
