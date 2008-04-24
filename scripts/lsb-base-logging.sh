@@ -35,6 +35,12 @@ log_end_msg () {
     if [ -z "${RUNLEVEL:-}" ]; then
         # we need only the current level
         RUNLEVEL=`runlevel | sed 's/^. //'`
+        # Bug # 470816
+        if [ -z "$RUNLEVEL" ]; then
+            # if we can't figure out the runlevel (such as when run
+            # from a cron job) then don't do anything with Splashy
+            exit $1
+        fi
     fi
 
     STEPS_DIR=/lib/init/rw/splashy
