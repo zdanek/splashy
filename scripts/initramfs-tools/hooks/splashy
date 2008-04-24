@@ -29,4 +29,5 @@ copy_exec /sbin/splashy_chvt /sbin
 
 # Luis Mondesi
 # we don't need splashy_update in initramfs yet
-#copy_exec /sbin/splashy_update /sbin
+# and now we do! #473109. Luks needs it to prompt for passwords
+copy_exec /sbin/splashy_update /sbin
