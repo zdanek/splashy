@@ -1,133 +1,11 @@
 # This file is sourced by /lib/lsb/init-fuctions
 # it redefines the log_end_message function to
 # call splashy_update.
+# See /lib/lsb/init-functions for usage help.
 #
 # KNOWN BUGS
-# Splashy and console-screen.sh don't work together.
-
-# int log_end_message (int exitstatus)
-log_end_msg () {
-    # If no arguments were passed, return
-    [ -z "${1:-}" ] && return 1
-
-    # Only do the fancy stuff if we have an appropriate terminal
-    # and if /usr is already mounted
-    if log_use_fancy_output; then
-        RED=`$TPUT setaf 1`
-        NORMAL=`$TPUT op`
-        if [ $1 -eq 0 ]; then
-            echo "."
-        else
-            /bin/echo -e " ${RED}failed!${NORMAL}"
-        fi
-    else
-        if [ $1 -eq 0 ]; then
-            echo "."
-        else
-            echo " failed!"
-        fi
-    fi
-
-    ##############################################################
-    # Start splashy code 
-
-    # Bug #400598,#401999
-    if [ -z "${RUNLEVEL:-}" ]; then
-        # we need only the current level
-        RUNLEVEL=`runlevel | sed 's/^. //'`
-        # Bug # 470816
-        if [ -z "$RUNLEVEL" ]; then
-            # if we can't figure out the runlevel (such as when run
-            # from a cron job) then don't do anything with Splashy
-            exit $1
-        fi
-    fi
-
-    STEPS_DIR=/lib/init/rw/splashy
-    SPL_UPD=/sbin/splashy_update
-    # load some default variables
-    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
-    
-    [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
-
-    SPL_PRG=$STEPS_DIR/$RUNLEVEL-progress
-
-    [ -x $SPL_UPD ] || return $1;
-    [ -f $SPL_PRG ] || return $1; 
-
-    # It makes no sense for us to send this step if splashy is not running
-    # Although then splashy_update would just return
-    pidof splashy > /dev/null || return $1; 
-
-    # Get progress percentage of this script
-    # was calculated by update-progress-steps
-    PER=`sed -n 's+'${0}' ++ p' $SPL_PRG`
-
-    # This can not happen ...
-    [ -n "$PER" ] || return $1;
-
-    # in Sid 2006-10-08 05:57 EDT the scripts after S99rc.local
-    # do not call lsb* functions. So we don't know when the boot process 
-    # is done
-    [ "${0##*/}" = "S99rc.local" ] && PER=100
-
-    # Update progress bar 
-    $SPL_UPD "progress $PER" || true
-
-    if [ "x$PER" != "x100" ]; then
-        # Set $PER to 100% if X is started or about to be started
-        #
-        # Actually we should have already been stopped by log_daemon_msg
-        case ${0} in 
-	    ?dm) PER=100;;
-        esac
-    fi
-
-    if [ "x$PER" != "x100" ]; then
-        pidof X > /dev/null && PER=100
-    fi
-
-    if [ "x$PER" != "x100" ]; then
-        pidof Xgl > /dev/null && PER=100
-    fi
-
-    # Write to log (for testing)
-    if [ "x$DEBUG" != "x0" ]; then
-	cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
-	echo "print ${0##*/} $PER" >> $STEPS_DIR/splashy.log
-    fi
-
-    # If we're at 100% stop splashy nicely
-    [ "$PER" = "100" ] && stop_splashy
-
-    return $1
-}
-
-# We have to stop _before_ ?dm starts
-log_daemon_msg () {
-    if [ -z "${1:-}" ]; then
-        return 1
-    fi
-
-    if [ -z "${2:-}" ]; then
-        echo -n "$1:"
-        return
-    fi
-
-    echo -n "$1: $2"
-
-    ##############################################################
-    # Splashy code 
-   
-    # send log to splashy. it will show if F2 is pressed
-    pidof splashy > /dev/null && splashy_update "scroll $1: $2" || true
-
-    # Stop splashy on *dm
-    case $2 in 
-	?dm) stop_splashy || true ;;
-    esac
-}
-
+# * Splashy and console-screen.sh don't work together
+# * This script assumes binary paths do not contain spaces
 
 stop_splashy () { 
     # 
@@ -220,8 +98,17 @@ stop_splashy () {
     fi
 
     # Do some magic with the TTYs
-    if [ -n "$CHVT_TTY" ] && [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
-        splashy_chvt $CHVT_TTY || true
+    if [ -n "$CHVT_TTY" ]; then
+        if [ "x$CHVT_TTY" = "xauto" ]; then
+            # find the number of the TTY where X is running and switch to this console
+            XTTY=`ps -ef|grep X|grep tty| awk '{print $6}'|sort|head -1|sed 's,[^[:digit:]],,g'`
+            splashy_chvt ${XTTY:-7} || true
+        elif [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
+            splashy_chvt $CHVT_TTY || true
+        else
+            # fall back to tty1
+            splashy_chvt 1 || true
+        fi
     fi
 
     # splashy is now stopped. cleanup
@@ -235,3 +122,285 @@ stop_splashy () {
     fi
 }
 
+log_use_splashy () {
+    if [ "${loop:-n}" = y ]; then
+        return 1
+    fi
+    pidof splashy > /dev/null && return 0
+}
+
+log_to_console () {
+    [ "${loop:-n}" != y ] || return 0
+    [ "${QUIET:-no}" != yes ] || return 0
+
+    # Only output to the console when we're given /dev/null
+    stdin=`readlink /proc/self/fd/0`
+    [ "${stdin#/dev/null}" != "$stdin" ] || return 0
+
+    func=$1
+    shift
+
+    loop=y $func "$@" </dev/console >/dev/console 2>&1 || true
+}
+
+log_success_msg () {
+    if log_use_splashy; then
+        SPL_UPD=/sbin/splashy_update
+        # load some default variables
+        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
+        [ -x $SPL_UPD ] || return $1;
+
+        $SPL_UPD "scroll $*" || true # STATUS
+    fi
+
+    log_to_console log_success_msg "$@"
+
+    echo " * $@"
+}
+
+log_failure_msg () {
+    if log_use_splashy; then
+        SPL_UPD=/sbin/splashy_update
+        # load some default variables
+        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
+        [ -x $SPL_UPD ] || return $1;
+
+        $SPL_UPD "scroll $*" || true # STATUS
+    fi
+
+    log_to_console log_failure_msg "$@"
+
+    if log_use_fancy_output; then
+        RED=`$TPUT setaf 1`
+        NORMAL=`$TPUT op`
+        echo " $RED*$NORMAL $@"
+    else
+        echo " * $@"
+    fi
+}
+
+log_warning_msg () {
+    if log_use_splashy; then
+        SPL_UPD=/sbin/splashy_update
+        # load some default variables
+        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
+        [ -x $SPL_UPD ] || return $1;
+
+        $SPL_UPD "scroll $*" || true # STATUS
+    fi
+
+    log_to_console log_warning_msg "$@"
+
+    if log_use_fancy_output; then
+        YELLOW=`$TPUT setaf 3`
+        NORMAL=`$TPUT op`
+        echo " $YELLOW*$NORMAL $@"
+    else
+        echo " * $@"
+    fi
+}
+
+log_begin_msg () {
+    log_daemon_msg "$1"
+}
+
+# We have to stop _before_ ?dm starts
+log_daemon_msg () {
+    if [ -z "$1" ]; then
+        return 1
+    fi
+
+    if log_use_splashy; then
+        SPL_UPD=/sbin/splashy_update
+        # load some default variables
+        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
+        [ -x $SPL_UPD ] || return $1;
+
+        $SPL_UPD "scroll $*" || true
+    fi
+
+    log_to_console log_daemon_msg "$@"
+
+    if log_use_fancy_output && $TPUT xenl >/dev/null 2>&1; then
+        COLS=`$TPUT cols`
+        if [ "$COLS" ] && [ "$COLS" -gt 6 ]; then
+            COL=`$EXPR $COLS - 7`
+        else
+	    COLS=80
+            COL=73
+        fi
+        # We leave the cursor `hanging' about-to-wrap (see terminfo(5)
+        # xenl, which is approximately right). That way if the script
+        # prints anything then we will be on the next line and not
+        # overwrite part of the message.
+
+        # Previous versions of this code attempted to colour-code the
+        # asterisk but this can't be done reliably because in practice
+        # init scripts sometimes print messages even when they succeed
+        # and we won't be able to reliably know where the colourful
+        # asterisk ought to go.
+
+        printf " * $*       "
+        # Enough trailing spaces for ` [fail]' to fit in; if the message
+        # is too long it wraps here rather than later, which is what we
+        # want.
+        $TPUT hpa `$EXPR $COLS - 1`
+        printf ' '
+    else
+        echo " * $@"
+        COL=
+    fi
+
+    ##############################################################
+    # Splashy code 
+    # Stop splashy on *dm
+    case $2 in 
+	?dm) stop_splashy || true ;;
+    esac
+}
+
+log_progress_msg () {
+    :
+}
+
+log_end_msg () {
+    if [ -z "$1" ]; then
+        return 1
+    fi
+
+    if log_use_splashy; then
+        SPL_UPD=/sbin/splashy_update
+        # load some default variables
+        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
+        [ -x $SPL_UPD ] || return $1;
+
+        if [ "$1" -eq 0 ]; then
+            $SPL_UPD "scroll OK" || true # SUCCESS
+        else
+            $SPL_UPD "scroll failed" || true # FAILURE
+        fi
+    fi
+
+    log_to_console log_end_msg "$@"
+
+    if [ "$COL" ] && [ -x "$TPUT" ]; then
+        printf "\r"
+        $TPUT hpa $COL
+        if [ "$1" -eq 0 ]; then
+            echo "[ OK ]"
+        else
+            printf '['
+            $TPUT setaf 1 # red
+            printf fail
+            $TPUT op # normal
+            echo ']'
+        fi
+    else
+        if [ "$1" -eq 0 ]; then
+            echo "   ...done."
+        else
+            echo "   ...fail!"
+        fi
+    fi
+    ##############################################################
+    # Start splashy code 
+
+    # Bug #400598,#401999
+    if [ -z "${RUNLEVEL:-}" ]; then
+        # we need only the current level
+        RUNLEVEL=`runlevel | sed 's/^. //'`
+        # Bug # 470816
+        if [ -z "$RUNLEVEL" ]; then
+            # if we can't figure out the runlevel (such as when run
+            # from a cron job) then don't do anything with Splashy
+            exit $1
+        fi
+    fi
+
+    STEPS_DIR=/lib/init/rw/splashy
+    SPL_UPD=/sbin/splashy_update
+    # load some default variables
+    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
+    
+    [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
+
+    SPL_PRG=$STEPS_DIR/$RUNLEVEL-progress
+
+    [ -x $SPL_UPD ] || return $1;
+    [ -f $SPL_PRG ] || return $1; 
+
+    # It makes no sense for us to send this step if splashy is not running
+    # Although then splashy_update would just return
+    pidof splashy > /dev/null || return $1; 
+
+    # Get progress percentage of this script
+    # was calculated by update-progress-steps
+    PER=`sed -n 's+'${0}' ++ p' $SPL_PRG`
+
+    # This can not happen ...
+    [ -n "$PER" ] || return $1;
+
+    # in Sid 2006-10-08 05:57 EDT the scripts after S99rc.local
+    # do not call lsb* functions. So we don't know when the boot process 
+    # is done
+    [ "${0##*/}" = "S99rc.local" ] && PER=100
+
+    # Update progress bar 
+    $SPL_UPD "progress $PER" || true
+
+    if [ "x$PER" != "x100" ]; then
+        # Set $PER to 100% if X is started or about to be started
+        #
+        # Actually we should have already been stopped by log_daemon_msg
+        case ${0} in 
+	    ?dm) PER=100;;
+        esac
+    fi
+
+    if [ "x$PER" != "x100" ]; then
+        pidof X > /dev/null && PER=100
+    fi
+
+    if [ "x$PER" != "x100" ]; then
+        pidof Xgl > /dev/null && PER=100
+    fi
+
+    # Write to log (for testing)
+    if [ "x$DEBUG" != "x0" ]; then
+	cat /proc/loadavg >> $STEPS_DIR/splashy.log 2>&1
+	echo "print ${0##*/} $PER" >> $STEPS_DIR/splashy.log
+    fi
+
+    # If we're at 100% stop splashy nicely
+    [ "$PER" = "100" ] && stop_splashy
+
+    return $1
+}
+
+log_action_msg () {
+    if log_use_splashy; then
+        SPL_UPD=/sbin/splashy_update
+        # load some default variables
+        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
+        [ -x $SPL_UPD ] || return $1;
+ 
+        $SPL_UPD "scroll $*" || true
+    fi
+
+    log_to_console log_action_msg "$@"
+
+    echo " * $@"
+}
+
+log_action_begin_msg () {
+    log_daemon_msg "$@..."
+}
+
+log_action_cont_msg () {
+    log_daemon_msg "$@..."
+}
+
+log_action_end_msg () {
+    # In the future this may do something with $2 as well.
+    log_end_msg "$1" || true
+}
