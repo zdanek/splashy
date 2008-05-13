@@ -102,7 +102,7 @@ stop_splashy () {
         if [ "x$CHVT_TTY" = "xauto" ]; then
             # find the number of the TTY where X is running and switch to this console
             XTTY=`ps -ef|grep X|grep tty| awk '{print $6}'|sort|head -1|sed 's,[^[:digit:]],,g'`
-            splashy_chvt ${XTTY:-7} || true
+            splashy_chvt ${XTTY:-1} || true
         elif [ "$(fgconsole 2>/dev/null)" != "$CHVT_TTY" ]; then 
             splashy_chvt $CHVT_TTY || true
         else
