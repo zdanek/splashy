@@ -416,6 +416,13 @@ gint
 cmd_chroot (void **args)
 {
         char *dir = args[0];
+        if (!g_file_test (dir, G_FILE_TEST_IS_DIR))
+        {
+                /* TODO translate string? */
+                ERROR_PRINT ("Cannot chroot to non existing directory %s\n", dir);
+                return 1;
+        }
+
         chdir (dir);
         chroot (dir);
         return 0;
