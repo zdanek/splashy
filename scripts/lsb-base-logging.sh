@@ -348,6 +348,11 @@ log_end_msg () {
     # Update progress bar 
     $SPL_UPD "progress $PER" || true
 
+    # if we are shutting down or rebooting, there is no need to go further
+    if [ "x$RUNLEVEL" = "x6" ] || [ "x$RUNLEVEL" = "x0" ]; then
+	return $1
+    fi
+
     if [ "x$PER" != "x100" ]; then
         # Set $PER to 100% if X is started or about to be started
         #
