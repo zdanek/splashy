@@ -173,6 +173,8 @@ case "$1" in
         pidof $NAME > /dev/null || /sbin/$NAME shutdown
         # tell killall5 to not kill us too early at shutdown/restart:
         pidof $NAME >> /var/run/sendsigs.omit
+        # log_end_msg calls splashy_update, so we need to allow Splashy to start
+        sleep 1
         log_end_msg $?
 
     ;;
