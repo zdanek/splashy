@@ -147,7 +147,6 @@ case "$1" in
 
 	# We start splashy in rcS.d if we haven't already in initramfs
 	[ "x$RUNLEVEL" = "xN S" -o "x$RUNLEVEL" = "xS" ] || exit 0
-
         calculate_steps
 
         log_daemon_msg "Starting $DESC" $NAME
@@ -166,15 +165,24 @@ case "$1" in
     ;;
     stop)
 	check_to_enable
+        
+        # avoid displaying ugly text at shutdown
+        clear >/dev/tty8
+        clear >/dev/tty1 
+        /sbin/splashy_chvt 8 
 
 	calculate_steps
 
+        # sanity check, kill Splashy if running (old bug)
+        pidof $NAME > /dev/null && splashy_update "exit" && pkill -9 splashy
+
         log_daemon_msg "Starting $DESC" $NAME
-        pidof $NAME > /dev/null || /sbin/$NAME shutdown
+        /sbin/$NAME shutdown
+        sleep 0.2
         # tell killall5 to not kill us too early at shutdown/restart:
         pidof $NAME >> /var/run/sendsigs.omit
         # log_end_msg calls splashy_update, so we need to allow Splashy to start
-        sleep 1
+        sleep 0.5 
         log_end_msg $?
 
     ;;
