@@ -1,6 +1,9 @@
-2008-02-26  Luis Mondesi <lemsx1@gmail.com>
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+	* scripts/lsb-base-logging.sh: fixes kilall think0 Thanks lexiw (from ArchLinux. on Splashy IRC channel) for reporting
 
+2008-02-26  Luis Mondesi <lemsx1@gmail.com>
 	* NEWS, configure.ac: ready for new release cycle
+	this.
 
 2008-01-26  Luis Mondesi <lemsx1@gmail.com>
 
