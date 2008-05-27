@@ -56,7 +56,7 @@ stop_splashy () {
 	sleep 0.2
 
 	#echo "calling killall -9 splashy" >> $STEPS_DIR/splashy.log
-	killall -9 `pidof splashy` > /dev/null 2>&1
+	kill -9 `pidof splashy` > /dev/null 2>&1
     done
 
     # clear tty8 of console messages
