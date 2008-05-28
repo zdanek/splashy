@@ -253,7 +253,21 @@ log_daemon_msg () {
 
     ##############################################################
     # Splashy code 
-    # Stop splashy on *dm
+    # Stop splashy on *dm but not if we are rebooting/shutting down
+    if [ -z "${RUNLEVEL:-}" ]; then
+        # we need only the current level
+        RUNLEVEL=`runlevel | sed 's/^. //'`
+        # Bug # 470816
+        if [ -z "$RUNLEVEL" ]; then
+            # if we can't figure out the runlevel (such as when run
+            # from a cron job) then don't do anything with Splashy
+            exit $1
+        fi
+    fi
+    if [ "x$RUNLEVEL" = "x6" ] || [ "x$RUNLEVEL" = "x0" ]; then
+        return $1
+    fi
+
     case $2 in 
 	?dm) stop_splashy || true ;;
     esac
