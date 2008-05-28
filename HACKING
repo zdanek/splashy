@@ -35,28 +35,28 @@ When talking to the Splashy server you can use the following commands:
   ------------+----------+----------------------------------------------------------
   COMMAND       ARGS      NOTE
   ------------+----------+----------------------------------------------------------
-  allowchvt               Splashy ignores all "chvt" commands until this command is
-                          sent
+  allowchvt               (ignore this) Splashy ignores all "chvt" commands until 
+                          this command is sent.
   chroot        <string>  <string> is a valid path to which Splashy will be chroot'd
-  chvt          <number>  Switch to vt <number>. See "allowchvt"
-  clear                   Clears the text box area
-  CLEAR                   Same as "clrprint". For compatibility with usplash
-  exit                    Exits Splashy server
+  chvt          <number>  Switch to vt <number>. See "allowchvt".
+  clear                   Clears the text box area.
+  CLEAR                   Same as "clrprint". For compatibility with usplash.
+  exit                    Exits Splashy server.
   getstring	<string>  Makes splashy prompt for a string. The first argument will
 			  be the prompt displayed.
   getpass	<string>  Same as getstring except that the characters typed will no
 			  be shown, like in a password box.
   progress      <number>  Updates the progress bar to <number>%, where N is a number
-                          between 0 and 100
+                          between 0 and 100.
   PROGRESS      <number>  Same as "progress". For compatibility with usplash
-  print         <string>  Print <string> in the text box
-  scroll        <string>  Print <string> in the text box and scroll down
-  repaint                 Redraw the background image
-  TEXT          <string>  Same as "print". For compatibility with usplash
-  SCROLL        <string>  Same as "print_scroll"
+  print         <string>  Print <string> in the text box.
+  scroll        <string>  Print <string> in the text box and scroll down.
+  repaint                 Redraw the background image.
+  TEXT          <string>  Same as "print". For compatibility with usplash.
+  SCROLL        <string>  Same as "scroll".
   timeout       <number>  Sets the amount of seconds splashy waits for new commands
-                          in the fifo file. If that time is exceeded, it exits
-  QUIT                    Same as "exit". For compatibility with usplash
+                          in the fifo file. If that time is exceeded, it exits.
+  QUIT                    Same as "exit". For compatibility with usplash.
   ------------+----------+----------------------------------------------------------
 
 Sending commands to the Splashy server is then as simple as:

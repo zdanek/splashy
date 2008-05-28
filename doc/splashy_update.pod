@@ -37,45 +37,69 @@ Sends text to Splashy socket.
 
 =over 8
 
-=item B<progress NN>
+=item B<chroot> <string>
 
-Example:
+<string> is a valid path to which Splashy will be chroot'd.
 
-splashy_update progress 20
+=item B<chvt> <number>
 
-Sets the progress bar to 20%
+Switch to vt <number>.
 
-=item B<print STRING>
+=item B<clear>
 
-Tells Splashy to print the given message to an overlayed window. Useful when displaying status.
+Clears the text box area.
 
-Alias: text
+=item B<CLEAR>
 
-=item B<clrprint>
-
-Clears the text box
-
-Alias: clear
-
-=item B<repaint>
-
-Tells Splashy to redraw the background image. Useful when removing overlayed windows.
-
-=item B<chvt N>
-
-Switch working console to N. Needs "allowchvt"
-
-=item B<allowchvt>
-
-Tells Splashy that is Ok to allow itself to be removed from focus by other applications
-
-=item B<timeout N>
-
-This tells Splashy to exit if it has not received any input for N seconds
+Same as "clrprint". For compatibility with usplash.
 
 =item B<exit>
 
-Quits Splashy
+Exits Splashy server.
+
+=item B<getstring> <string>
+
+Makes splashy prompt for a string. The first argument will be the prompt displayed.
+
+=item B<getpass> <string>
+
+Same as getstring except that the characters typed will no be shown, like in a password box.
+
+=item B<progress> <number>
+
+Updates the progress bar to <number>%, where N is a number between 0 and 100.
+
+=item B<PROGRESS> <number>
+
+Same as "progress". For compatibility with usplash.
+
+=item B<print> <string>
+
+Print <string> in the text box.
+
+=item B<scroll> <string>
+
+Print <string> in the text box and scroll down.
+
+=item B<repaint>
+
+Redraw the background image.
+
+=item B<TEXT> <string>
+
+Same as "print". For compatibility with usplash.
+
+=item B<SCROLL> <string>
+
+Same as "scroll".
+
+=item B<timeout> <number>
+
+Sets the amount of seconds splashy waits for new commands. If that time is exceeded, it exits.
+
+=item B<QUIT>
+
+Same as "exit". For compatibility with usplash.
 
 =back
 
@@ -100,7 +124,6 @@ Quits Splashy
 =item I</etc/splashy/config.xml>
 
 Main configuration. defines how splashy should be setup.
-
 
 =back
 
