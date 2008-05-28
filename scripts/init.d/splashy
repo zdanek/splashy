@@ -68,16 +68,16 @@ check_to_enable () {
 	for x in $(cat /proc/cmdline); do
 	    case $x in
 		single)
-		    SINGLE=true
+		    SINGLE="true"
 		;;
 		splash)
-		    SPLASH=true
+		    SPLASH="true"
 		;;
 		nosplash)
-		    SPLASH=false
+		    SPLASH="false"
 		;;
 		vga=*|video=*)
-		    FBMODESET=true
+		    FBMODESET="true"
 		;;
 	    esac
 	done
@@ -110,11 +110,11 @@ calculate_steps () {
         # While booting rcS will also be executed
         # we only care about the scripts that actually call log_end_msg
         # if not we could end up never completing our progressbar!
-        grep -l log_end_msg /etc/rcS.d/S* > $TMP 2> /dev/null || /bin/true
+        grep -l log_end_msg /etc/rcS.d/S* > $TMP 2> /dev/null || true
 
         for ILVL in ${RLVL:=2} 0 6; do
             # in debian rc.local runs log_end_msg conditionally. we simply skip that
-            grep -l log_end_msg /etc/rc$ILVL.d/[KS]* 2> /dev/null | grep -v rc.local >> $TMP  || /bin/true
+            grep -l log_end_msg /etc/rc$ILVL.d/[KS]* 2> /dev/null | grep -v rc.local >> $TMP  || true
             
             NR=`sed -n -e '$=' $TMP`
 	    I=1
