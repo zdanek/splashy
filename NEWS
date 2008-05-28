@@ -9,6 +9,12 @@ Changes between 0.3.9 and 0.3.10
  * Splashy works better with encrypted hard disk and getstring/getpass prompts early at boot
  * Lots of bug/thinko fixes from John Hughes, for which we are very glad!
 
+ KNOWN BUGS:
+ * (debian/ubuntu) if the user uninstalls gdm/kdm/xdm but do not purge the package, Splashy
+   waits for the calling of log_end_msg or log_daemon_msg which never happen, because
+   these scripts attempt to detect whether they are the default display manager and
+   exit without calling any LSB log_* functions. (Thanks blathijs for pointing this out)
+
 Changes between 0.3.8 and 0.3.9
 -------------------------------
  * hu translation added (Thanks Miklos Vajna)

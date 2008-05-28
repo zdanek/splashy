@@ -136,37 +136,9 @@ like:
   update-initramfs -u -t -k `uname -r`
 
 
-Notes: (On Ubuntu and Debian) you might have to change /etc/init.d/keymap.sh like:
-#!/bin/sh
-pidof splashy > /dev/null && exit 0
-...
-In other words, if splashy is running, do not bother to run keymap.sh
-(which stops splashy and waits for input in tty2).
-/etc/lsb-base-logging.sh will do the right thing and run these scripts
-again when the percentage goes to 100% (when gdm/kdm/xdm calls
-log_msg_end() or when X is detected running, our percentage goes to
-100% automatically)
-
 There is a known issue when running from initramfs that directfb 0.9.25 and 1.1.x will go into an endless loop trying to read the keyboard event buffer after udev initializes a new /dev/tty* device. The solution to this problem is to tell directfb to sleep for a bit when reading the buffer. Please refer to:
 
 http://splashy.alioth.debian.org/wiki/faq#when_running_from_initramfs_splashy_takes_100_of_the_cpu_and_boot_process_stops_using_init_only._not_upstart
-
-The simplest solution is to patch directfb with the following:
------ START DIFF -----
---- directfb-0.9.25.1.orig/inputdrivers/keyboard/keyboard.c
-+++ directfb-0.9.25.1/inputdrivers/keyboard/keyboard.c
-@@ -279,6 +279,8 @@
- 
-            keyboard_set_lights( data, evt.locks );
-        }
-+          if (readlen <= 0)
-+                usleep(2000);
-    }
-
-if (readlen <= 0 && errno != EINTR)
------ END DIFF -----
-
-Note that this last patch was applied to upstream sources. Try updating directfb to the latest version supplied by your distribution.
 
 Themes
 ======
