@@ -181,6 +181,8 @@ case "$1" in
         sleep 0.2
         # tell killall5 to not kill us too early at shutdown/restart:
         pidof $NAME >> /var/run/sendsigs.omit
+        mkdir -p /lib/init/rw/sendsigs.omit.d
+        pidof $NAME >> /lib/init/rw/sendsigs.omit.d/splashy
         # log_end_msg calls splashy_update, so we need to allow Splashy to start
         sleep 0.5 
         log_end_msg $?
