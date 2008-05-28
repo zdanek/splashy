@@ -254,16 +254,15 @@ gint
 cmd_exit (void **args)
 {
         /*
-         * TODO: getting splashy to switch consoles (tty's) automatically
-         * after finishing booting turned out to be a bad idea. I'm living
-         * the code here commented out just in case we find a solution for
+         * TODO: getting splashy to switch consoles (tty's)
+         * after booting turned out to be a bad idea. I'm leaving
+         * the code here (commented out) just in case we find a solution for
          * this issue later. For now, we wait until we exit, and then send a
-         * chvt from splashy99 when splashy has already exited. Users should
-         * customize the tty to which splashy will be switched from
-         * /etc/default/splashy (on debian). Nonetheless, we let
+         * chvt from an init script after splashy has exited. Users should
+         * customize the tty number to which splashy will be switched from
+         * /etc/default/splashy (on linux). Nonetheless, we let
          * splashy_allow_vt_switching() here just don't set vt-switching
-         * directfb option there as this breaks splashy. - Luis Mondesi
-         * <lemsx1@gmail.com> 
+         * directfb option as this breaks splashy. - Luis Mondesi
          */
         if (exiting == TRUE)
                 return -1;      /* do not allow this function to be called
