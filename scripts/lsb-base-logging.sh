@@ -265,7 +265,7 @@ log_daemon_msg () {
         fi
     fi
     if [ "x$RUNLEVEL" = "x6" ] || [ "x$RUNLEVEL" = "x0" ]; then
-        return $1
+        return 0
     fi
 
     case $2 in 
