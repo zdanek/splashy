@@ -1,10 +1,10 @@
 dnl $Revision:  $
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([splashy], [0.3.10], [splashy-devel@alioth.debian.org])
+AC_INIT([splashy], [0.3.11], [splashy-devel@alioth.debian.org])
 AC_CONFIG_SRCDIR(src/splashy_main.c)
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([splashy], [0.3.10], [splashy-devel@alioth.debian.org])
+AM_INIT_AUTOMAKE([splashy], [0.3.11], [splashy-devel@alioth.debian.org])
 
 AC_PREREQ(2.59)
 AC_LANG_C
