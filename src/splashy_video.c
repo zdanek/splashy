@@ -664,11 +664,9 @@ splashy_update_progressbar_quick (gint perc)
                  */
                 video.primary_surface->FillRectangle (video.
                                                       primary_surface,
-                                                      _w,
+                                                      progressbar->x + (progressbar->w - _w),
                                                       progressbar->y,
-                                                      progressbar->w - (_w -
-                                                                        progressbar->
-                                                                        x),
+                                                      _w,
                                                       progressbar->h);
                 _last_x = progressbar->x + (progressbar->w - _w);
         }
