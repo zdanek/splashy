@@ -6,8 +6,12 @@ Changes between 0.3.9 and 0.3.10
 -------------------------------
  
  * plenty of bug fixes (Thanks Niko Araya for helping us sort them out) (See ChangeLog)
- * Splashy works better with encrypted hard disk and getstring/getpass prompts early at boot
- * Lots of bug/thinko fixes from John Hughes, for which we are very glad!
+ * Splashy works better with encrypted hard disk (LUKS) and getstring/getpass prompts early at boot
+ * lots of bug/thinko fixes from John Hughes, for which we are very glad!
+ * fixes issues with progress bar during shutdown (Thanks to Matthijs Kooijman)
+ * lsb-base-logging.sh LSB functions are a bit more complete
+ * clears TTYs properly whenever Splashy is about to exit
+ * detects display managers better (gdm, kdm, xdm)
 
  KNOWN BUGS:
  * (debian/ubuntu) if the user uninstalls gdm/kdm/xdm but do not purge the package, Splashy

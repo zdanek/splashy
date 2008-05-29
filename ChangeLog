@@ -1,9 +1,158 @@
+2008-05-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: fixes jumpy progressbar at shutdown Thanks Matthijs Kooijman for submitting this to us.
+
+2008-05-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy, scripts/lsb-base-logging.sh: attempts to
+	be more efficient at shutdown there is no need to call pidof splashy more than once also, we need
+	to return a digit from log_* functions
+
 2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* HACKING: removes allowchvt as this is not needed
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_functions.c: comment fixed goodness what was I drinking when I wrote this!
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* HACKING, doc/splashy_update.pod: updates documentation fixes typos and adds new commands and their description
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, README: updates documentation
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: during shutdown do not set progress
+	to 100% to early if KDM, XDM or GDM scripts are called, we don't want the progress to
+	grow to 100% before the system is done shuttingdown/rebooting.
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: minor cleanups very aesthethic changes...
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: using new interface to omit PIDs from
+	being kill by killall Thanks Petter Reinholdtsen for submitting this to us. DBTS#482017
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: ditto
+
+2008-05-27  Luis Mondesi <lemsx1@gmail.com>
+
 	* scripts/lsb-base-logging.sh: fixes kilall think0 Thanks lexiw (from ArchLinux. on Splashy IRC channel) for reporting
+	this.
+
+2008-05-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: attempts to hide the text when switching
+	from X11 tty to Splashy when gdm stops and Splashy is about to start, sometimes there is
+	ugly text displayed on the screen. This attempts to clear the tty
+	and changing to it before proceeding.
+
+2008-05-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: stop progress when shutting down if we are shutting down, we don't want to set progress to 100% too
+	early (like if we find X running). This could make the ugly effect
+	of having the progress bar "jump" from 100 and back to the prev
+	number (at this point the bar moves backwards). It looks odd
+
+2008-05-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: changed default from 7 to 1 1 is a more sane default for TTYs. users running X should set this
+	to their prefer methods if they ever see some text in the console...
+	sorry about this but there is no middle ground for non-X users and
+	those who do
+
+2008-05-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/default/splashy: defaults to auto tty let lsb-base-logging.sh detect if X is running and automatically
+	switch to that TTY. if no X, then we go to tty 1 by default
+
+2008-05-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_functions.c: tests for directory existance do not chroot if dir do not exist
+
+2008-05-12  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: sleep for a bit to allow Splashy to start if we don't sleep we get a message "Splashy ERROR: Connection
+	refused"
+
+2008-05-10  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: new LSB functions added. This needs
+	more testing
+
+2008-04-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS: getting ready to release
+
+2008-04-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: Fixes Bug # 470816 If running a a initrc script from cron and RUNLEVEL can't be
+	defined, we simply exit. Hopefully this will fix a plethora of weird
+	problems (and perhaps not introduce anything too serious)
+
+2008-04-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_functions.c: Fixes getstring/getpass locks (Bug
+	#473101) Thanks to John Hughes for submitting this patch to us.
+
+2008-04-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/hooks/splashy: Bug #473109 Splashy + LUKS need to cooperate. This allows splashy_update to be
+	included in initramfs so other systems can call for ways to update
+	the password during boot
+
+2008-04-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/default/splashy: Bug# 459729 There is no good number as default for tty's. Assuming that Splashy
+	will run on desktops, we are changing the default to tty7.
+
+2008-04-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_functions.c: fixed comment
+
+2008-04-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: Bug # 459447. Thanks John Hughes
+
+2008-04-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_functions.c: adds new chroot command thanks to John
+	Hughes. See Bug#462626
+
+2008-04-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* HACKING, src/splashy_functions.c: adds information about new
+	command for chrooting Splashy
+
+2008-04-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/init-bottom/splashy: init-bottom
+	script needed to chroot splashy. See DBTS Bug#462626. Thanks John!
+
+2008-04-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: as suggested on Bug# 462626 by John Hughes
 
 2008-02-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: fixes minor bug with CHVT_TTY is
+	blank in /etc/default/splashy this tests to make sure we don't try to change to this tty
+
+2008-02-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: new mark
+
+2008-02-26  Luis Mondesi <lemsx1@gmail.com>
+
 	* NEWS, configure.ac: ready for new release cycle
-	this.
 
 2008-01-26  Luis Mondesi <lemsx1@gmail.com>
 

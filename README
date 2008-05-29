@@ -18,27 +18,25 @@ What makes Splashy special over other boot-splash systems is:
   * Multiple and easy to create themes
   * Lots of effects (animations, fade in/out, smooth progress, etc)
   * TrueType2 fonts support
-  * And many other features, too numerous to list here...
+  * And many other features...
 
 Requirements
 ============
 
 In order to start using Splashy you will need to have the following:
   * A video card
-  * A kernel that supports framebuffers (default for the mayority of Linux
-    distributors)
-  * On Linux, a 2.6 kernel or later is requiered (because directfb requires it)
+  * A kernel that supports framebuffers (directfb)
   * Splashy itself
 
 In order to compile Splashy you will also need to have the following:
   * glib2
-  * directfb 0.9.22 or later
-  * libjpeg and/or libpng (optional)
+  * directfb 1.0.1 or later
+  * libpng
 
 Installation (Quick)
 ====================
 
-1. Install Splashy as you normally would (see INSTALL)
+1. Install Splashy as you normally would any other GNU source code (see INSTALL)
 
 2. Add "splash vga=791 quiet" to the append= line on your bootloader configuration
 
