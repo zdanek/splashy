@@ -120,6 +120,13 @@ stop_splashy () {
             && umount $STEPS_DIR 2> /dev/null \
             || true
     fi
+
+    # Before X starts we need to turn off the cursor to avoid artifacts:
+    for i in 7 8 9 10 11 12; do
+        if [ -c /dev/tty$i ]; then
+            setterm -cursor off > /dev/tty$i || true
+        fi
+    done
 }
 
 log_use_splashy () {
