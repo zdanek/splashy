@@ -2,7 +2,7 @@
 ### BEGIN INIT INFO
 # Provides:          splashy
 # Required-Start:    mountkernfs
-# Required-Stop:     $all
+# Required-Stop:
 # Default-Start:     S
 # Default-Stop:      0 6
 # Short-Description: A script to calculate the progress percentage for init scripts
