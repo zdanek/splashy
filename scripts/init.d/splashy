@@ -6,12 +6,14 @@
 # Default-Start:     S
 # Default-Stop:      0 6
 # Short-Description: A script to calculate the progress percentage for init scripts
-# Description:       This calculates the progress percentage 
-#                    for the scripts in /etc/rcS.d and 
-#                    /etc/rc$CURRENT_RUNLEVEL.d.
+# Description:       This calculates the progress percentage for the scripts in
+#                    /etc/rcS.d and /etc/rc$CURRENT_RUNLEVEL.d. This will also
+#                    start Splashy at boot (if not already started from initramfs),
+#                    and at shutdown (yes, when "stop" argument is given,
+#                    which is really counter-intuitive).
 ### END INIT INFO
 
-# Author: Tim Dijkstra <newsuser@famdijkstra.org>, 
+# Author: Tim Dijkstra <tim@famdijkstra.org>, 
 #         Luis Mondesi <lemsx1@gmail.com> 
 #         Luca Capello <luca@pca.it>
 #
