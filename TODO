@@ -14,19 +14,19 @@ Bugs
 * [DONE: Jacobo221] Read /dev/tty7 and see if X or any X-like program is holding it
   when splashy exits. If it is. Attempt to switch to vt7 before splashy exits
 * splashy_config needs gen_theme_xml fixed
-* Extra themes must be moved out of the trunk
+* [DONE: Luis] Extra themes must be moved out of the trunk
 * [DONE; Jacobo221] Extra themes must be updated according to the theme.xsd schema
 * [DONE: Luis] Fade-in effect saw twice when using with initramfs support
-* initramfs theme isn't functional if other than default is selected
-* When theme has shutdown image it's not used
-* Verbose mode doesn't seek to error place
+* [DONE: Luis]initramfs theme isn't functional if other than default is selected
+* [DONE: Luis]When theme has shutdown image it's not used
+* [DONE: Luis]Verbose mode doesn't seek to error place
 * [DONE] When we have console-tools installed and it's set to latin1 language, splashy
   block to set the font in console. Probably something related to directfb font
   now -- This is a bug in unicode_start and unicode_stop.
-* when splashy goes into verbose mode the progress bar is not setup correctly at
+* [DONE] when splashy goes into verbose mode the progress bar is not setup correctly at
   shutdown. video_update_progress_quick() needs fixing
-* Try compiling splashy withough libjpeg support and use that from initramfs
-* /etc/inittab does not exist on systems running upstart (Edgy and newer systems). Check source code for places were this file is used and deal accordingly with it
+* [DEFERRED]Try compiling splashy withough libjpeg support and use that from initramfs
+* [DONE: Luis] /etc/inittab does not exist on systems running upstart (Edgy and newer systems). Check source code for places were this file is used and deal accordingly with it
 
 Features
 ========
