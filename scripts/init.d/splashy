@@ -160,7 +160,14 @@ case "$1" in
             stty -icanon -clocal
         else
             /sbin/$NAME boot
+            sleep 0.2
         fi
+        # Before X starts we need to turn off the cursor to avoid artifacts:
+        for i in 7 8 9 10 11 12; do
+            if [ -c /dev/tty$i ]; then
+                setterm -cursor off > /dev/tty$i || true
+            fi
+        done
         log_end_msg $?
     ;;
     stop)
@@ -185,7 +192,7 @@ case "$1" in
         [ -d /lib/init/rw/sendsigs.omit.d ] || mkdir -p /lib/init/rw/sendsigs.omit.d
         cat /var/run/sendsigs.omit >> /lib/init/rw/sendsigs.omit.d/splashy
         # log_end_msg calls splashy_update, so we need to allow Splashy to start
-        sleep 0.5 
+        sleep 0.5
         log_end_msg $RET
 
     ;;
