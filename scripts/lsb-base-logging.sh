@@ -268,9 +268,11 @@ log_daemon_msg () {
         return 0
     fi
 
-    case $2 in 
-	?dm) stop_splashy || true ;;
-    esac
+    if [ ! -z "${2:-}" ]; then
+        case $2 in 
+	    ?dm) stop_splashy || true ;;
+        esac
+    fi
 }
 
 log_progress_msg () {
