@@ -29,15 +29,15 @@
 #define _GNU_SOURCE
 #endif
 #include <stdio.h>
-#include <stdlib.h>                /* exit */
-#include <string.h>                /* strlen */
-#include <unistd.h>                /* getuid */
-#include <sys/types.h>             /* fork */
-#include <sys/wait.h>              /* waitpid */
+#include <stdlib.h>             /* exit */
+#include <string.h>             /* strlen */
+#include <unistd.h>             /* getuid */
+#include <sys/types.h>          /* fork */
+#include <sys/wait.h>           /* waitpid */
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
-#include <libgen.h>                /* basename */
-#include <magic.h>                 /* magic_* , mime type detection */
+#include <libgen.h>             /* basename */
+#include <magic.h>              /* magic_* , mime type detection */
 
 #include "common_macros.h"
 #include "splashycnf.h"
@@ -64,6 +64,14 @@ gint
 set_new_theme (gchar * theme_name)
 {
         need_root ();
+
+        /*
+         * TODO: - determine whether initramfs needs updating before printing
+         * - figure out the command to run (per distro) before printing (set
+         * to Debian for now) 
+         */
+        const gchar *_initramfs_cmd = "update-initramfs -u";
+
         gint ret = RETURN_ERROR;
         GString *new_theme =
                 g_string_new (splashy_get_config_string (SPL_THEMES_DIR));
@@ -95,8 +103,11 @@ set_new_theme (gchar * theme_name)
                 PRINT_DONE;
         else
                 PRINT_FAIL;
-              
+
         g_string_free (new_theme, TRUE);
+ 
+        g_print (_("Run %s to update your initrd image\n"), _initramfs_cmd);
+
         return ret;
 }
 
@@ -165,15 +176,16 @@ install_theme (gchar * tarball_path)
                 gchar *tmp_dir = g_build_filename (g_get_tmp_dir (),
                                                    "splashy-theme-XXXXXX",
                                                    NULL);
-                tmp_dir = mkdtemp (g_strdup (tmp_dir));        // Create a temporary directory
+                tmp_dir = mkdtemp (g_strdup (tmp_dir)); // Create a temporary 
+                                                        // directory
 
 
-                tar_options[i++] =  tarball_path;
+                tar_options[i++] = tarball_path;
                 tar_options[i++] = "--directory";
                 tar_options[i++] = g_strdup (tmp_dir);
                 tar_options[i--] = NULL;
 
-                if (tar(tar_options) != 0)
+                if (tar (tar_options) != 0)
                 {
                         PRINT_FAIL;
                         g_printerr (_("An error occurred checking theme \n"));
@@ -196,12 +208,13 @@ install_theme (gchar * tarball_path)
                         _theme = g_strdup (g_dir_read_name (_dir));
                         g_dir_close (_dir);
 
-                        // Remove the temporary directory                        
+                        // Remove the temporary directory 
                         const gchar *file = NULL;
                         gchar *tmp_theme =
                                 g_build_filename (tmp_dir, _theme, NULL);
 
-                        // check if the archive contains SPL_THEME_CONFIG_FILE_NAME
+                        // check if the archive contains
+                        // SPL_THEME_CONFIG_FILE_NAME
                         if (g_file_test
                             (g_build_filename
                              (tmp_theme, SPL_THEME_CONFIG_FILE_NAME, NULL),
@@ -224,8 +237,8 @@ install_theme (gchar * tarball_path)
                                         (tmp_theme, G_DIR_SEPARATOR_S, file,
                                          NULL));
                         }
-                        rmdir (tmp_theme); // Clean the tmp dir
-                        rmdir (tmp_dir);   // Clean
+                        rmdir (tmp_theme);      // Clean the tmp dir
+                        rmdir (tmp_dir);        // Clean
                         g_dir_close (_dir);
                         g_free (tmp_theme);
 
@@ -259,10 +272,12 @@ install_theme (gchar * tarball_path)
                 if (archive_is_valid)
                 {
                         // Change the destination 
-                        tar_options[i] = g_strdup( splashy_get_config_string (SPL_THEMES_DIR));
-                      
+                        tar_options[i] =
+                                g_strdup (splashy_get_config_string
+                                          (SPL_THEMES_DIR));
+
                         // Really install the theme
-                        if (tar(tar_options) != 0)
+                        if (tar (tar_options) != 0)
                         {
                                 PRINT_FAIL;
                                 g_print (_
@@ -547,7 +562,9 @@ create_theme (XmlFields * NewTheme)
                 // Check the font file
                 if (NewTheme->textfont_file == NULL)
                 {
-                        NewTheme->textfont_file = "FreeSans.ttf";        // A dummy name
+                        NewTheme->textfont_file = "FreeSans.ttf";       // A
+                                                                        // dummy 
+                                                                        // name
                 }
                 else
                 {
@@ -574,15 +591,17 @@ create_theme (XmlFields * NewTheme)
                 // Create the target directory
                 if (g_mkdir (theme_path, 0755) != 0)
                 {
-                        g_printerr (_("Error! Can't create theme directory %s\n"),
-                                 theme_path);
-                        g_printerr (_("Writing theme %s to current directory\n"),
-                                 NewTheme->name);
+                        g_printerr (_
+                                    ("Error! Can't create theme directory %s\n"),
+                                    theme_path);
+                        g_printerr (_
+                                    ("Writing theme %s to current directory\n"),
+                                    NewTheme->name);
                         if (g_mkdir (NewTheme->name, 0755) != 0)
                         {
                                 g_printerr (_
-                                         ("Error! Can't create directory %s\n"),
-                                         NewTheme->name);
+                                            ("Error! Can't create directory %s\n"),
+                                            NewTheme->name);
                                 exit (RETURN_ERROR);
                         }
                         else
@@ -601,8 +620,8 @@ create_theme (XmlFields * NewTheme)
                 if (!copy_file (NewTheme->bg_boot, dest))
                 {
                         g_printerr (_
-                                 ("Error! Unable to use the picture %s.\nAborting\n"),
-                                 dest);
+                                    ("Error! Unable to use the picture %s.\nAborting\n"),
+                                    dest);
                         remove_theme (NewTheme->name);
                         return RETURN_ERROR;
                 }
@@ -625,8 +644,8 @@ create_theme (XmlFields * NewTheme)
                 if (!copy_file (NewTheme->bg_shutdown, dest))
                 {
                         g_printerr (_
-                                 ("Error! Unable to use the picture %s.\nAborting\n"),
-                                 dest);
+                                    ("Error! Unable to use the picture %s.\nAborting\n"),
+                                    dest);
                         remove_theme (NewTheme->name);
                         return RETURN_ERROR;
                 }
@@ -649,8 +668,8 @@ create_theme (XmlFields * NewTheme)
                 if (!copy_file (NewTheme->bg_error, dest))
                 {
                         g_printerr (_
-                                 ("Error! Unable to use the picture %s.\nAborting\n"),
-                                 dest);
+                                    ("Error! Unable to use the picture %s.\nAborting\n"),
+                                    dest);
                         remove_theme (NewTheme->name);
                         return RETURN_ERROR;
                 }
@@ -663,7 +682,7 @@ create_theme (XmlFields * NewTheme)
                         NewTheme->bg_error =
                                 g_strdup (g_basename (NewTheme->bg_error));
                 }
-                
+
                 /*
                  * upload the resume image 
                  */
@@ -673,8 +692,8 @@ create_theme (XmlFields * NewTheme)
                 if (!copy_file (NewTheme->bg_resume, dest))
                 {
                         g_printerr (_
-                                 ("Error! Unable to use the picture %s.\nAborting\n"),
-                                 dest);
+                                    ("Error! Unable to use the picture %s.\nAborting\n"),
+                                    dest);
                         remove_theme (NewTheme->name);
                         return RETURN_ERROR;
                 }
@@ -687,7 +706,7 @@ create_theme (XmlFields * NewTheme)
                         NewTheme->bg_resume =
                                 g_strdup (g_basename (NewTheme->bg_resume));
                 }
-                
+
                 /*
                  * upload the suspend image 
                  */
@@ -697,8 +716,8 @@ create_theme (XmlFields * NewTheme)
                 if (!copy_file (NewTheme->bg_suspend, dest))
                 {
                         g_printerr (_
-                                 ("Error! Unable to use the picture %s.\nAborting\n"),
-                                 dest);
+                                    ("Error! Unable to use the picture %s.\nAborting\n"),
+                                    dest);
                         remove_theme (NewTheme->name);
                         return RETURN_ERROR;
                 }
@@ -724,8 +743,8 @@ create_theme (XmlFields * NewTheme)
                         if (!copy_file (NewTheme->textfont_file, dest))
                         {
                                 g_printerr (_
-                                         ("Error! Unable to use the picture %s.\nAborting\n"),
-                                         dest);
+                                            ("Error! Unable to use the picture %s.\nAborting\n"),
+                                            dest);
                                 remove_theme (NewTheme->name);
                                 return RETURN_ERROR;
                         }
@@ -760,7 +779,8 @@ create_theme (XmlFields * NewTheme)
         else
         {
                 PRINT_FAIL;
-                g_printerr (_("You tried to create a theme without a name\n"));
+                g_printerr (_
+                            ("You tried to create a theme without a name\n"));
                 return RETURN_ERROR;
         }
 }
@@ -849,7 +869,7 @@ get_fields (void)
         }
         while (check_image (NewTheme->bg_suspend) != 0);
 
-        // Ask if the height & width of the background must be set        
+        // Ask if the height & width of the background must be set 
         gchar *resolution = "no";
         ask_string (_
                     ("Do you want to set the resolution (height & width) of these images ? (yes|no)"),
@@ -869,7 +889,7 @@ get_fields (void)
 
         }
 
-        // Version         
+        // Version 
         ask_string (_("Version"), &NewTheme->version);
 
         // Description
@@ -1032,8 +1052,8 @@ get_fields (void)
                         // Alpha
                         ask_uint (_("  Alpha"), &NewTheme->pb_border_alpha);
 
-                }                // if border
-        }                        // if progressbar
+                }               // if border
+        }                       // if progressbar
 
         // Auto verbose
         ask_string (_("Pass in verbose mode on error? (yes|no)"),
@@ -1214,7 +1234,7 @@ copy_file (gchar * src_path, gchar * dest_path)
                 filesize = file.st_size;
 
         content = (gchar *) g_malloc (filesize);
-        
+
         return_count = fread (content, 1, filesize, src_file);
         if (return_count < filesize)
         {
@@ -1226,7 +1246,8 @@ copy_file (gchar * src_path, gchar * dest_path)
 
         if ((dest_file = fopen (dest_path, "w+")) == NULL)
         {
-                g_critical (_("Error opening destination file %s\n"), dest_path);
+                g_critical (_("Error opening destination file %s\n"),
+                            dest_path);
                 return FALSE;
         }
 
@@ -1635,7 +1656,7 @@ ask_string (const gchar * message, gchar ** value)
         size_t nbytes = 0;
         __ssize_t bytes_read = 0;
 
-        if (*value != NULL)        // show the default value
+        if (*value != NULL)     // show the default value
                 display = g_strconcat (message, " [%s]: ", NULL);
         else
                 display = g_strconcat (message, " : ", NULL);
@@ -1643,9 +1664,10 @@ ask_string (const gchar * message, gchar ** value)
         g_print (display, *value);
         bytes_read = getline (&tmp, &nbytes, stdin);
 
-        if (bytes_read > 1)        // we don't modify the value if only \n is in tmp
+        if (bytes_read > 1)     // we don't modify the value if only \n is in 
+                                // tmp
         {
-                tmp[bytes_read - 1] = '\0';        // Remove the \n
+                tmp[bytes_read - 1] = '\0';     // Remove the \n
                 *value = tmp;
         }
 
@@ -1680,9 +1702,10 @@ ask_uint (gchar * message, guint * value)
                 if (bytes_read == 1)
                         break;
 
-                if (bytes_read > 1)        // we don't modify the value if only \n is in tmp
+                if (bytes_read > 1)     // we don't modify the value if only
+                                        // \n is in tmp
                 {
-                        tmp[bytes_read - 1] = '\0';        // remove the \n
+                        tmp[bytes_read - 1] = '\0';     // remove the \n
                         d_tmp = strtod (tmp, 0);
 
                         if (d_tmp >= 0)
@@ -1715,12 +1738,13 @@ tar (gchar * argv[])
                 }
         }
         if (pid == -1)
-                fprintf (stderr, "fork() failed, the back end hasn't been launched.");
-        
+                fprintf (stderr,
+                         "fork() failed, the back end hasn't been launched.");
+
         /*
          * Waiting the child...
          */
         waitpid (pid, &status, 0);
-        
+
         return WEXITSTATUS (status);
 }
