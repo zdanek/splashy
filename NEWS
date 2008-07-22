@@ -5,6 +5,13 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 Changes between 0.3.10 and 0.3.11
 -------------------------------
 
+ * implements chroot() as a command passed from splashy_update
+ * works better with resume-from-RAM/Disk when uswsusp is used from initramfs
+ * suggests to run update-initramfs -u when a theme is changed with splashy_config
+ * removes boot dependency argument $all from initrc script (for LSB)
+ * turns off cursor in TTY consoles to avoid showing artifacts when X starts
+ * other bug fixes
+
 Changes between 0.3.9 and 0.3.10
 -------------------------------
  
