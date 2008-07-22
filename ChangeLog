@@ -1,3 +1,72 @@
+2008-07-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/init-top/splashy: if resume is
+	set, we do not start Splashy suspend software like uswsusp knows how to start Splashy and it
+	creates a conflict. Thanks Eric Doviak for reporting this, and
+	suggest a solution, on Bug#486400
+
+2008-07-09  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_config-functions.c: adds suggestion to run
+	update-initramfs -u - code beautified - adds a new string to inform users that updating initrd is needed
+	whenever Splashy runs from initramsf that is. We still need to
+	figure out if this is set to true from /etc/default/splashy, and the
+	correct command string to use on a per-distro basis.
+
+2008-07-09  Luis Mondesi <lemsx1@gmail.com>
+
+	* README: new note about update-initramfs -u. even though this is
+	debian specific
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: fixes script description
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* AUTHORS: fixes Tim email
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: removes $all this does not behave intuitively according to Petter's comment on
+	Bug#485307
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: turn off cursor on TTY consoles This avoids strange artifacts after Splashy exits and X starts
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* AUTHORS: new developer added Matthijs Kooijman added
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* AUTHORS: Adds Lexiw New developer
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: fixes artifacts under Xorg/Xserver For some people when Splashy stops and X starts, some strange black
+	artifacts are shown on the screen. This is a quick fix to avoid this
+	problem. Thanks Anton Fiuman for suggesting this fix.
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* TODO: updates TODO
+
+2008-06-13  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: closes Bug#486139 if log_daemon_message has a second argument that's empty, it breaks
+	our printing of the log message. This patch by Alban Browaeys checks
+	whether this parameter is empty before checking for "?dm"
+
+2008-05-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, configure.ac: ready for new release cycle
+
+2008-05-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog, NEWS, README: updated documentation
+
 2008-05-29  Luis Mondesi <lemsx1@gmail.com>
 
 	* src/splashy_video.c: fixes jumpy progressbar at shutdown Thanks Matthijs Kooijman for submitting this to us.
