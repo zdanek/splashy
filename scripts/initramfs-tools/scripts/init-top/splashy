@@ -67,5 +67,11 @@ if [ -x /sbin/splashy_chvt ]; then
 	/sbin/splashy_chvt 8
 fi
 
+# if resume is set we assume Splashy starts from there by uswsusp or
+# similar software:
+if [ "x${resume}" = "x" ]; then
+	exit
+fi
+
 /sbin/splashy boot
 
