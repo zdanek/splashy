@@ -939,10 +939,11 @@ _clear_offscreen (void)
         video.textbox->offscreen->Blit (video.textbox->offscreen,
                                         video.primary_surface,
                                         &video.textbox->area, 0, 0);
-
+/* lemsx1: Do we need to flip this too? 
+ * blathijs: No. I get artifacts when this happens.
         video.textbox->offscreen->Blit (video.primary_surface,
                                         video.textbox->offscreen,
-                                        &video.textbox->area, 0, 0);
+                                        &video.textbox->area, 0, 0);*/
 
         /*
          * Tint the box in the off-screen surface 
