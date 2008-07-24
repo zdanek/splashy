@@ -69,7 +69,7 @@ fi
 
 # if resume is set we assume Splashy starts from there by uswsusp or
 # similar software:
-if [ "x${resume}" = "x" ]; then
+if [ "x${resume}" != "x" ]; then
 	exit
 fi
 
