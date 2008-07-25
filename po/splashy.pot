@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: splashy-devel@lists.alioth.debian.org\n"
-"POT-Creation-Date: 2007-12-26 14:08-0500\n"
+"POT-Creation-Date: 2008-07-25 07:03-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,357 +16,362 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/splashy_config-functions.c:73
+#: src/splashy_config-functions.c:81
 msgid ">Set theme as: "
 msgstr ""
 
-#: src/splashy_config-functions.c:113
+#: src/splashy_config-functions.c:109
+#, c-format
+msgid "Run %s to update your initrd image\n"
+msgstr ""
+
+#: src/splashy_config-functions.c:124
 msgid ">Install theme"
 msgstr ""
 
-#: src/splashy_config-functions.c:119
+#: src/splashy_config-functions.c:130
 msgid "This format is invalid\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:156
+#: src/splashy_config-functions.c:167
 msgid "Did you really give me a tarball ?\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:179
+#: src/splashy_config-functions.c:191
 msgid "An error occurred checking theme \n"
 msgstr ""
 
-#: src/splashy_config-functions.c:248 src/splashy_config-functions.c:460
+#: src/splashy_config-functions.c:261 src/splashy_config-functions.c:475
 msgid "This theme already exists\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:269
+#: src/splashy_config-functions.c:284
 msgid "An error occurred installing theme \n"
 msgstr ""
 
-#: src/splashy_config-functions.c:287
+#: src/splashy_config-functions.c:302
 msgid "The tarball does not exist!\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:302
+#: src/splashy_config-functions.c:317
 msgid ">Remove theme"
 msgstr ""
 
-#: src/splashy_config-functions.c:315
+#: src/splashy_config-functions.c:330
 msgid "The theme does not exist!\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:322
+#: src/splashy_config-functions.c:337
 msgid "This theme is currently used!\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:378
+#: src/splashy_config-functions.c:393
 msgid ">Theme currently used:\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:381
+#: src/splashy_config-functions.c:396
 #, c-format
 msgid "                      version %s\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:385
+#: src/splashy_config-functions.c:400
 #, c-format
 msgid "                      URLs %s\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:387
+#: src/splashy_config-functions.c:402
 #, c-format
 msgid "                      by %s\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:390
+#: src/splashy_config-functions.c:405
 msgid ">Installed themes:\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:430
+#: src/splashy_config-functions.c:445
 msgid ""
 "<!> Insufficient priviledges <!>\n"
 "Root priviledges required for this function\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:443
+#: src/splashy_config-functions.c:458
 msgid ">Create theme "
 msgstr ""
 
-#: src/splashy_config-functions.c:448
+#: src/splashy_config-functions.c:463
 #, c-format
 msgid "This file does not exist: %s\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:476
+#: src/splashy_config-functions.c:491
 msgid "The boot image does not seem to be an image\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:493
+#: src/splashy_config-functions.c:508
 msgid "The shutdown image does not seem to be an image\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:509
+#: src/splashy_config-functions.c:524
 msgid "The error image does not seem to be an image\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:526
+#: src/splashy_config-functions.c:541
 msgid "The resume image does not seem to be an image\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:543
+#: src/splashy_config-functions.c:558
 msgid "The suspend image does not seem to be an image\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:577
+#: src/splashy_config-functions.c:595
 #, c-format
 msgid "Error! Can't create theme directory %s\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:579
+#: src/splashy_config-functions.c:598
 #, c-format
 msgid "Writing theme %s to current directory\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:584
+#: src/splashy_config-functions.c:603
 #, c-format
 msgid "Error! Can't create directory %s\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:604 src/splashy_config-functions.c:628
-#: src/splashy_config-functions.c:652 src/splashy_config-functions.c:676
-#: src/splashy_config-functions.c:700 src/splashy_config-functions.c:727
+#: src/splashy_config-functions.c:623 src/splashy_config-functions.c:647
+#: src/splashy_config-functions.c:671 src/splashy_config-functions.c:695
+#: src/splashy_config-functions.c:719 src/splashy_config-functions.c:746
 #, c-format
 msgid ""
 "Error! Unable to use the picture %s.\n"
 "Aborting\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:763
+#: src/splashy_config-functions.c:783
 msgid "You tried to create a theme without a name\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:788
+#: src/splashy_config-functions.c:808
 msgid "* Name"
 msgstr ""
 
-#: src/splashy_config-functions.c:800
+#: src/splashy_config-functions.c:820
 msgid "* Boot image"
 msgstr ""
 
-#: src/splashy_config-functions.c:812
+#: src/splashy_config-functions.c:832
 msgid "* Shutdown image"
 msgstr ""
 
-#: src/splashy_config-functions.c:824
+#: src/splashy_config-functions.c:844
 msgid "* Error image"
 msgstr ""
 
-#: src/splashy_config-functions.c:836
+#: src/splashy_config-functions.c:856
 msgid "* Resume image"
 msgstr ""
 
-#: src/splashy_config-functions.c:848
+#: src/splashy_config-functions.c:868
 msgid "* Suspend image"
 msgstr ""
 
-#: src/splashy_config-functions.c:855
+#: src/splashy_config-functions.c:875
 msgid ""
 "Do you want to set the resolution (height & width) of these images ? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:864
+#: src/splashy_config-functions.c:884
 msgid " Width"
 msgstr ""
 
-#: src/splashy_config-functions.c:868
+#: src/splashy_config-functions.c:888
 msgid " Height"
 msgstr ""
 
 #. Version
-#: src/splashy_config-functions.c:873
+#: src/splashy_config-functions.c:893
 msgid "Version"
 msgstr ""
 
 #. Description
-#: src/splashy_config-functions.c:876
+#: src/splashy_config-functions.c:896
 msgid "Description"
 msgstr ""
 
 #. URLs
-#: src/splashy_config-functions.c:879
+#: src/splashy_config-functions.c:899
 msgid "URLs"
 msgstr ""
 
 #. Author
-#: src/splashy_config-functions.c:882
+#: src/splashy_config-functions.c:902
 msgid "Author"
 msgstr ""
 
 #. Progressbaronboot
-#: src/splashy_config-functions.c:885
+#: src/splashy_config-functions.c:905
 msgid "Do you want to see a progress bar on boot ? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:890 src/splashy_config-functions.c:900
 #: src/splashy_config-functions.c:910 src/splashy_config-functions.c:920
+#: src/splashy_config-functions.c:930 src/splashy_config-functions.c:940
 msgid " Direction ? (forward|backward)"
 msgstr ""
 
-#: src/splashy_config-functions.c:895
+#: src/splashy_config-functions.c:915
 msgid "Do you want to see a progress bar on shutdown ? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:905
+#: src/splashy_config-functions.c:925
 msgid "Do you want to see a progress bar on resume ? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:915
+#: src/splashy_config-functions.c:935
 msgid "Do you want to see a progress bar on suspend ? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:929
+#: src/splashy_config-functions.c:949
 msgid "Progress bar\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:934 src/splashy_config-functions.c:1055
+#: src/splashy_config-functions.c:954 src/splashy_config-functions.c:1075
 msgid " X position in pixel units"
 msgstr ""
 
-#: src/splashy_config-functions.c:939 src/splashy_config-functions.c:1060
+#: src/splashy_config-functions.c:959 src/splashy_config-functions.c:1080
 msgid " X position in percentage"
 msgstr ""
 
-#: src/splashy_config-functions.c:946 src/splashy_config-functions.c:1068
+#: src/splashy_config-functions.c:966 src/splashy_config-functions.c:1088
 msgid " Y position in pixel units"
 msgstr ""
 
-#: src/splashy_config-functions.c:951 src/splashy_config-functions.c:1073
+#: src/splashy_config-functions.c:971 src/splashy_config-functions.c:1093
 msgid " Y position in percentage"
 msgstr ""
 
-#: src/splashy_config-functions.c:960 src/splashy_config-functions.c:1082
+#: src/splashy_config-functions.c:980 src/splashy_config-functions.c:1102
 msgid " Width in pixel units"
 msgstr ""
 
-#: src/splashy_config-functions.c:965 src/splashy_config-functions.c:1087
+#: src/splashy_config-functions.c:985 src/splashy_config-functions.c:1107
 msgid " Width in percentage"
 msgstr ""
 
-#: src/splashy_config-functions.c:975 src/splashy_config-functions.c:1097
+#: src/splashy_config-functions.c:995 src/splashy_config-functions.c:1117
 msgid " Height in pixel units"
 msgstr ""
 
-#: src/splashy_config-functions.c:980 src/splashy_config-functions.c:1102
+#: src/splashy_config-functions.c:1000 src/splashy_config-functions.c:1122
 msgid " Height in percentage"
 msgstr ""
 
-#: src/splashy_config-functions.c:985 src/splashy_config-functions.c:1107
+#: src/splashy_config-functions.c:1005 src/splashy_config-functions.c:1127
 msgid " Color\n"
 msgstr ""
 
 #. Red
-#: src/splashy_config-functions.c:988 src/splashy_config-functions.c:1002
-#: src/splashy_config-functions.c:1024 src/splashy_config-functions.c:1110
-#: src/splashy_config-functions.c:1131 src/splashy_config-functions.c:1169
+#: src/splashy_config-functions.c:1008 src/splashy_config-functions.c:1022
+#: src/splashy_config-functions.c:1044 src/splashy_config-functions.c:1130
+#: src/splashy_config-functions.c:1151 src/splashy_config-functions.c:1189
 msgid "  Red"
 msgstr ""
 
 #. Green
-#: src/splashy_config-functions.c:991 src/splashy_config-functions.c:1005
-#: src/splashy_config-functions.c:1027 src/splashy_config-functions.c:1113
-#: src/splashy_config-functions.c:1134 src/splashy_config-functions.c:1172
+#: src/splashy_config-functions.c:1011 src/splashy_config-functions.c:1025
+#: src/splashy_config-functions.c:1047 src/splashy_config-functions.c:1133
+#: src/splashy_config-functions.c:1154 src/splashy_config-functions.c:1192
 msgid "  Green"
 msgstr ""
 
 #. Blue
-#: src/splashy_config-functions.c:994 src/splashy_config-functions.c:1008
-#: src/splashy_config-functions.c:1030 src/splashy_config-functions.c:1116
-#: src/splashy_config-functions.c:1138 src/splashy_config-functions.c:1175
+#: src/splashy_config-functions.c:1014 src/splashy_config-functions.c:1028
+#: src/splashy_config-functions.c:1050 src/splashy_config-functions.c:1136
+#: src/splashy_config-functions.c:1158 src/splashy_config-functions.c:1195
 msgid "  Blue"
 msgstr ""
 
 #. Alpha
-#: src/splashy_config-functions.c:997 src/splashy_config-functions.c:1011
-#: src/splashy_config-functions.c:1033 src/splashy_config-functions.c:1119
-#: src/splashy_config-functions.c:1142 src/splashy_config-functions.c:1178
+#: src/splashy_config-functions.c:1017 src/splashy_config-functions.c:1031
+#: src/splashy_config-functions.c:1053 src/splashy_config-functions.c:1139
+#: src/splashy_config-functions.c:1162 src/splashy_config-functions.c:1198
 msgid "  Alpha"
 msgstr ""
 
-#: src/splashy_config-functions.c:999
+#: src/splashy_config-functions.c:1019
 msgid " Background color\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:1015
+#: src/splashy_config-functions.c:1035
 msgid " Do you want a border around the progress bar? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:1021
+#: src/splashy_config-functions.c:1041
 msgid " Border color\n"
 msgstr ""
 
 #. if border
 #. if progressbar
 #. Auto verbose
-#: src/splashy_config-functions.c:1039
+#: src/splashy_config-functions.c:1059
 msgid "Pass in verbose mode on error? (yes|no)"
 msgstr ""
 
 #. Text box or not
-#: src/splashy_config-functions.c:1043
+#: src/splashy_config-functions.c:1063
 msgid "Do you want to see a text box? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:1050
+#: src/splashy_config-functions.c:1070
 msgid "Text box\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:1123
+#: src/splashy_config-functions.c:1143
 msgid " Do you want a border around the text box ? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:1128
+#: src/splashy_config-functions.c:1148
 msgid "  Border color\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:1154
+#: src/splashy_config-functions.c:1174
 msgid " Text font file"
 msgstr ""
 
-#: src/splashy_config-functions.c:1163
+#: src/splashy_config-functions.c:1183
 msgid " Font size"
 msgstr ""
 
-#: src/splashy_config-functions.c:1166
+#: src/splashy_config-functions.c:1186
 msgid " Text color\n"
 msgstr ""
 
 #. Fade in ?
-#: src/splashy_config-functions.c:1183
+#: src/splashy_config-functions.c:1203
 msgid "Do you want a fade-in? (yes|no)"
 msgstr ""
 
 #. Fade out ?
-#: src/splashy_config-functions.c:1186
+#: src/splashy_config-functions.c:1206
 msgid "Do you want a fade-out? (yes|no)"
 msgstr ""
 
-#: src/splashy_config-functions.c:1221
+#: src/splashy_config-functions.c:1241
 #, c-format
 msgid "Failed to read the file: %s"
 msgstr ""
 
-#: src/splashy_config-functions.c:1229
+#: src/splashy_config-functions.c:1249
 #, c-format
 msgid "Error opening destination file %s\n"
 msgstr ""
 
-#: src/splashy_config-functions.c:1236
+#: src/splashy_config-functions.c:1257
 #, c-format
 msgid "Failed to write the file: %s"
 msgstr ""
 
-#: src/splashy_config-functions.c:1338
+#: src/splashy_config-functions.c:1359
 msgid "Author <author@mail.com>"
 msgstr ""
 
