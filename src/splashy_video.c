@@ -1344,21 +1344,31 @@ splashy_stop_splash ()
         /*
          * Also release textarea ? 
          */
-        /*
-         * TODO Do we need to check if keyboard and ev_buffer were init'd ?
-         */
-
-        DEBUG_PRINT ("Releasing %s\n", "ev_buffer");
-        video.ev_buffer->Release (video.ev_buffer);     /* input buffer */
-        DEBUG_PRINT ("Releasing %s\n", "keyboard");
-        video.keyboard->Release (video.keyboard);       /* keyevents gone */
-        DEBUG_PRINT ("Releasing %s\n", "primary_surface");
-        video.primary_surface->Release (video.primary_surface); /* pix holder 
-                                                                 */
-        DEBUG_PRINT ("Releasing %s\n", "primary_window");
-        video.primary_window->Release (video.primary_window);
-        DEBUG_PRINT ("Releasing %s\n", "dfb");
-        video.dfb->Release (video.dfb); /* kill it ! */
+        if (video.ev_buffer)
+        {
+                DEBUG_PRINT ("Releasing %s\n", "ev_buffer");
+                video.ev_buffer->Release (video.ev_buffer);     /* input buffer */
+        }
+        if (video.keyboard)
+        {
+                DEBUG_PRINT ("Releasing %s\n", "keyboard");
+                video.keyboard->Release (video.keyboard);       /* keyevents gone */
+        }
+        if (video.primary_surface)
+        {
+                DEBUG_PRINT ("Releasing %s\n", "primary_surface");
+                video.primary_surface->Release (video.primary_surface); /* pix holder */
+        }
+        if (video.primary_window)
+        {
+                DEBUG_PRINT ("Releasing %s\n", "primary_window");
+                video.primary_window->Release (video.primary_window);
+        }
+        if (video.dfb)
+        {
+                DEBUG_PRINT ("Releasing %s\n", "dfb");
+                video.dfb->Release (video.dfb); /* kill it ! */
+        }
         DEBUG_PRINT ("done Releasing %s\n", "dfb");
 }
 
