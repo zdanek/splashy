@@ -1,3 +1,43 @@
+2008-07-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: fixes crash when video driver not init this is a long standing TODO item. Thanks Olivier Blin (Mandriva)
+	for submitting this to us.
+
+2008-07-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/index.html, po/splashy.pot: minor udpate
+
+2008-07-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/es.po: translates latest strings
+
+2008-07-25  Luis Mondesi <lemsx1@gmail.com>
+
+	* po/splashy.pot: new string added
+
+2008-07-24  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/init-top/splashy: when resume is
+	set we bail out reverts the wrong logic
+
+2008-07-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/Makefile.am: chroot at initramfs
+
+2008-07-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: fixes problems with artifacts when themes
+	move textbox to other areas Matthijs reported and fixed this for us.
+
+2008-07-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog, scripts/initramfs-tools/scripts/init-bottom/splashy: 
+	new log entries
+
+2008-07-22  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS: gets ready for 0.3.11
+
 2008-07-22  Luis Mondesi <lemsx1@gmail.com>
 
 	* scripts/initramfs-tools/scripts/init-top/splashy: if resume is
