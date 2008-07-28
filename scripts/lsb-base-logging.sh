@@ -17,6 +17,10 @@ stop_splashy () {
     #   console-screen.sh sets the fonts for the console and it cannot be done while in 
     #   graphics mode
     # - umount our STEPS_DIR
+    #
+    # Note:
+    # - this function is only called after doing sanity checks 
+    #   to insure that Splashy is installed
     STEPS_DIR=/lib/init/rw/splashy
     SPL_UPD=/sbin/splashy_update
     # load some default variables
@@ -151,12 +155,11 @@ log_to_console () {
 }
 
 log_success_msg () {
+    SPL_UPD=/sbin/splashy_update
+    # load some default variables
+    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        SPL_UPD=/sbin/splashy_update
-        # load some default variables
-        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
         [ -x $SPL_UPD ] || return $1;
-
         $SPL_UPD "scroll $*" || true # STATUS
     fi
 
@@ -166,10 +169,10 @@ log_success_msg () {
 }
 
 log_failure_msg () {
+    SPL_UPD=/sbin/splashy_update
+    # load some default variables
+    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        SPL_UPD=/sbin/splashy_update
-        # load some default variables
-        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
         [ -x $SPL_UPD ] || return $1;
 
         $SPL_UPD "scroll $*" || true # STATUS
@@ -187,10 +190,10 @@ log_failure_msg () {
 }
 
 log_warning_msg () {
+    SPL_UPD=/sbin/splashy_update
+    # load some default variables
+    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        SPL_UPD=/sbin/splashy_update
-        # load some default variables
-        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
         [ -x $SPL_UPD ] || return $1;
 
         $SPL_UPD "scroll $*" || true # STATUS
@@ -217,12 +220,11 @@ log_daemon_msg () {
         return 1
     fi
 
+    SPL_UPD=/sbin/splashy_update
+    # load some default variables
+    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        SPL_UPD=/sbin/splashy_update
-        # load some default variables
-        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
         [ -x $SPL_UPD ] || return $1;
-
         $SPL_UPD "scroll $*" || true
     fi
 
@@ -261,6 +263,11 @@ log_daemon_msg () {
     ##############################################################
     # Splashy code 
     # Stop splashy on *dm but not if we are rebooting/shutting down
+
+    # sanity check:
+    # yes, check again to see if Splashy is installed before we proceed
+    [ -x $SPL_UPD ] || return $1;
+
     if [ -z "${RUNLEVEL:-}" ]; then
         # we need only the current level
         RUNLEVEL=`runlevel | sed 's/^. //'`
@@ -291,12 +298,12 @@ log_end_msg () {
         return 1
     fi
 
+    STEPS_DIR=/lib/init/rw/splashy
+    SPL_UPD=/sbin/splashy_update
+    # load some default variables
+    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        SPL_UPD=/sbin/splashy_update
-        # load some default variables
-        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
         [ -x $SPL_UPD ] || return $1;
-
         if [ "$1" -eq 0 ]; then
             $SPL_UPD "scroll OK" || true # SUCCESS
         else
@@ -327,6 +334,11 @@ log_end_msg () {
     fi
     ##############################################################
     # Start splashy code 
+    # sanity check:
+    [ -x $SPL_UPD ] || return $1;
+    [ -f $SPL_PRG ] || return $1; 
+    [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
+    SPL_PRG=$STEPS_DIR/$RUNLEVEL-progress
 
     # Bug #400598,#401999
     if [ -z "${RUNLEVEL:-}" ]; then
@@ -339,19 +351,7 @@ log_end_msg () {
             exit $1
         fi
     fi
-
-    STEPS_DIR=/lib/init/rw/splashy
-    SPL_UPD=/sbin/splashy_update
-    # load some default variables
-    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     
-    [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
-
-    SPL_PRG=$STEPS_DIR/$RUNLEVEL-progress
-
-    [ -x $SPL_UPD ] || return $1;
-    [ -f $SPL_PRG ] || return $1; 
-
     # It makes no sense for us to send this step if splashy is not running
     # Although then splashy_update would just return
     pidof splashy > /dev/null || return $1; 
@@ -406,10 +406,10 @@ log_end_msg () {
 }
 
 log_action_msg () {
+    SPL_UPD=/sbin/splashy_update
+    # load some default variables
+    [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        SPL_UPD=/sbin/splashy_update
-        # load some default variables
-        [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
         [ -x $SPL_UPD ] || return $1;
  
         $SPL_UPD "scroll $*" || true
