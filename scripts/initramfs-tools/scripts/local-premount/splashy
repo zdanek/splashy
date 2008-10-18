@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# This scripts starts splashy on boot. It depends on libsplashy, but also
+# on uswsusp because it should get the opportunity to resume before we start.
+
+PREREQ="libsplashy uswsusp"
+prereqs()
+{
+	echo "$PREREQ"
+}
+case $1 in
+# get pre-requisites
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+test -x /sbin/splashy || exit
+SPLASH=false
+SINGLE=false
+for x in $(cat /proc/cmdline); do
+    case $x in
+        splash*)
+            SPLASH=true
+        ;;
+        single=*)
+            SINGLE=true
+        ;;
+    esac
+done
+test $SINGLE = "false" || exit
+test $SPLASH = "true" || exit
+
+grep -q '\(VESA\|VGA\)' /proc/fb || exit
+
+/sbin/splashy boot

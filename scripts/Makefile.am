@@ -13,7 +13,8 @@ sysconf_DATA =\
 
 # This will canonically be installed in /usr/share
 nobase_data_DATA = \
-	initramfs-tools/scripts/init-top/splashy \
+ 	initramfs-tools/scripts/local-premount/splashy \
+ 	initramfs-tools/scripts/local-premount/libsplashy \
 	initramfs-tools/scripts/init-bottom/splashy \
 	initramfs-tools/hooks/splashy \
 	initramfs-tools/hooks/libsplashy \
