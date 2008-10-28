@@ -41,6 +41,7 @@
 #include <unistd.h>             /* getuid */
 #include <getopt.h>             /* getopt_long */
 #include <glib/gi18n.h>
+#include <locale.h>             /* DBTS bug# 501997 */
 
 #include "common_macros.h"
 #include "splashycnf.h"
