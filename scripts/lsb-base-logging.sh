@@ -368,6 +368,15 @@ log_end_msg () {
     # is done
     [ "${0##*/}" = "S99rc.local" ] && PER=100
 
+    # ugly hack to work around /etc/init.d/kdm bugs:
+    # - in Sid 2008-10-28 12:23 EDT S99kdm does not use LSB functions
+    #   this breaks kdm
+    # - if the end-user moves /etc/rc2.d/S99kdm to any other number
+    #   our PER variable might not be greater than 90 and this will break
+    #   You better know what you are doing if you use KDM and change
+    #   the order of the startup script
+    [ $PER -gt 90 ] && [ -x /etc/rc$RUNLEVEL.d/S*kdm ] && PER=100
+
     # Update progress bar 
     $SPL_UPD "progress $PER" || true
 
