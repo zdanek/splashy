@@ -1,3 +1,60 @@
+2008-10-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/local-premount/libsplashy: test
+	char devices before we create /dev/fb0 or any other char device under /dev, we
+	check to see whether they already exist
+
+2008-10-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: fixes issues with /etc/init.d/kdm this is a very ugly work around to the fact that /etc/init.d/kdm
+	does not use LSB functions to start up.
+
+2008-10-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_config-main.c: fixes DBTS 501997 needs to include locale.h when building without optimization
+
+2008-10-18  Tim Dijkstra <tim@knolraap.drs.p>
+
+	* scripts/Makefile.am,
+	scripts/initramfs-tools/scripts/init-top/splashy,
+	scripts/initramfs-tools/scripts/local-premount/libsplashy,
+	scripts/initramfs-tools/scripts/local-premount/splashy: Make splashy
+	start later during boot to give uswsusp the opportunity to start
+	resume (and with it libsplashy).
+
+2008-09-12  Fathi BOUDRA <fabo@debian.org>
+
+	* po/fr.po: Update french translation.
+
+2008-07-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/init-top/splashy: reverts $resume
+	hack as a few people point out, having this does not really fix the
+	problem of uswsusp+splashy conflict. this just makes splashy start
+	late from the boot process as initramfs never actually starts
+	splashy. Thanks Niko Cavallini Araya for helping iron this one out.
+
+2008-07-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/scripts/init-top/splashy: chvt 8 only if
+	Splashy is doing the work and not resuming by swsusp as suggested by Matthijs
+
+2008-07-28  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/lsb-base-logging.sh: only run splashy-related functions
+	when Splashy (package) is installed as suggested on the DBTS and mailinglist by Tim, if somebody
+	uninstalls Splashy but does not purge the package, we do not want
+	/etc/lsb-base-logging.sh to stop the boot process in anyway. This
+	safely bails out from doing anything that's related to Splashy only.
+
+2008-07-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, configure.ac: Splashy 0.3.12 starts another iteration
+
+2008-07-26  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: ready for 0.3.11
+
 2008-07-26  Luis Mondesi <lemsx1@gmail.com>
 
 	* src/splashy_video.c: fixes crash when video driver not init this is a long standing TODO item. Thanks Olivier Blin (Mandriva)

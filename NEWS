@@ -5,6 +5,10 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 Changes between 0.3.11 and 0.3.12
 -------------------------------
 
+ * closes a number of bugs from bugs.debian.org/splashy which apply to other distros also
+ * fixes problems with uswsusp
+ * fixes problems with kdm
+ * no major C changes, mostly scripts
 
 Changes between 0.3.10 and 0.3.11
 -------------------------------
