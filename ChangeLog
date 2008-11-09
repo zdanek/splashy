@@ -1,3 +1,8 @@
+2008-11-09  Fathi BOUDRA <fabo@debian.org>
+
+	* doc/config.xml.in: Update themes path. Themes were moved
+	in /usr/share/splashy/themes since Splashy 0.3.6 release.
+
 2008-10-29  Luis Mondesi <lemsx1@gmail.com>
 
 	* scripts/initramfs-tools/scripts/local-premount/libsplashy: test
