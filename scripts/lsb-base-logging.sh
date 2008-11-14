@@ -336,9 +336,9 @@ log_end_msg () {
     # Start splashy code 
     # sanity check:
     [ -x $SPL_UPD ] || return $1;
-    [ -f $SPL_PRG ] || return $1; 
     [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
     SPL_PRG=$STEPS_DIR/$RUNLEVEL-progress
+    [ -f $SPL_PRG ] || return $1;
 
     # Bug #400598,#401999
     if [ -z "${RUNLEVEL:-}" ]; then
