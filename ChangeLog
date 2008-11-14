@@ -1,7 +1,22 @@
-2008-11-09  Fathi BOUDRA <fabo@debian.org>
+2008-11-14  Luis Mondesi <lemsx1@gmail.com>
 
-	* doc/config.xml.in: Update themes path. Themes were moved
-	in /usr/share/splashy/themes since Splashy 0.3.6 release.
+	* scripts/lsb-base-logging.sh: fixes bug with mysqld when upgrading
+	mysql-server-5.0 This is the error: * Stopping MySQL database server mysqld
+	 [ OK ] /etc/lsb-base-logging.sh: line 339: SPL_PRG: unbound variable  invoke-rc.d: initscript mysql, action "stop" failed.   invoke-rc.d returned 1  There is a MySQL server running, but we failed in our attempts to
+	 stop it.  Stop it yourself and try again! Ouch!
+
+2008-11-09  Fathi Boudra <fabo@debian.org>
+
+	* ChangeLog, doc/config.xml.in: Update themes path. Themes were
+	moved in /usr/share/splashy/themes since Splashy 0.3.6 release.
+
+2008-10-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS, configure.ac: ready for 0.3.13
+
+2008-10-29  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog, NEWS: now we are ready for 0.3.12
 
 2008-10-29  Luis Mondesi <lemsx1@gmail.com>
 
