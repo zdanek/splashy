@@ -36,6 +36,13 @@ mkdir -p "${DESTDIR}/etc/splashy/"
 
 cp /etc/splashy/config.xml "${DESTDIR}/etc/splashy/"
 cp -r "${CURRENT_THEME_DIR}" "${DESTDIR}/${THEMES_DIR}/"
+cp -r "${THEMES_DIR}/default" "${DESTDIR}/${THEMES_DIR}/"
+
+# make sure there is a symlink from ${DESTDIR}/etc/splashy/themes -> ${THEMES_DIR}
+CPWD=`pwd`
+cd ${DESTDIR}/etc/splashy/
+ln -s ${THEMES_DIR} themes
+cd $CPWD
 
 if [ -f /etc/directfbrc ]; then
     cp /etc/directfbrc "${DESTDIR}/etc"
