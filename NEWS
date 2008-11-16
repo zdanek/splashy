@@ -5,10 +5,14 @@ Splashy Developers <splashy-devel@lists.alioth.debian.org>
 Changes between 0.3.12 and 0.3.13
 -------------------------------
 
+ * adds default theme to initramfs so we can fall back in case of problems with 
+   a newer theme
+
 Changes between 0.3.11 and 0.3.12
 -------------------------------
 
- * closes a number of bugs from bugs.debian.org/splashy which apply to other distros also
+ * closes a number of bugs from bugs.debian.org/splashy which apply to other 
+   distros also
  * fixes problems with uswsusp
  * fixes problems with kdm
  * no major C changes, mostly scripts
