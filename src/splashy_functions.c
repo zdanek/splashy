@@ -1026,11 +1026,26 @@ socket_loop (void *data)
                                 splashy_reset_progressbar_counters ();
                                 splashy_set_progressbar_forward
                                         (forward_flag);
+                               
                                 /*
-                                 * re-draw the image so that we can get our
-                                 * progressbar filled 
+                                 * It looks like if we press ESC when the bar is 100%
+                                 * Splashy is sent a signal 11 by the kernel
+                                 * as it tries to free memory that it doesn't
+                                 * belong to it.
+                                 * We check for "exiting" again before doing
+                                 * this operation.
+                                 * This is a work-around.
+                                 * The real fix will be to lock and not allow
+                                 * exiting at all. Luis Mondesi <lemsx1@gmail.com>
                                  */
-                                splashy_reset_splash ();
+                                if (! exiting)
+                                {
+                                        /*
+                                         * re-draw the image so that we can get our
+                                         * progressbar filled 
+                                         */
+                                        splashy_reset_splash ();
+                                }
                                 sched_yield ();
                                 nanosleep (&_sleep, NULL);
                         }
