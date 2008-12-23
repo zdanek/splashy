@@ -1,3 +1,45 @@
+2008-12-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/init.d/splashy: applies patch from Tim Richardson
+
+2008-12-23  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_video.c: when using fonts, try the full path it looks like we were never using the font supply by the theme. this
+	fixes this problem by building a path to the full file
+
+2008-12-04  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/splashy_functions.c: when splashy test runs we can't exit too
+	quickly this is a work around to a signal 11 crash that we get when we press
+	ESC when the bar is 100%. exiting splashy goes into a race condition
+	against re-drawing the background/progressbar. this is simply a
+	workaround to this problem. a better solution should be more robust
+
+2008-12-04  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/hooks/libsplashy.in: fixes paths inside
+	initrd symlinks are not allowed in cpio, go figure; and since we don't need
+	them, we skip this part
+
+2008-12-04  Luis Mondesi <lemsx1@gmail.com>
+
+	* src/xml_format.h.in: themes directory is now under
+	/usr/share/splashy/themes this makes sure that splashy_config generates the right XML files
+
+2008-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* NEWS: adds note about fall back theme
+
+2008-11-16  Luis Mondesi <lemsx1@gmail.com>
+
+	* scripts/initramfs-tools/hooks/libsplashy.in: copy the "default"
+	theme also when users switch to a new theme, the "default" theme should be copy
+	also as this is the fall-back theme for Splashy
+
+2008-11-14  Luis Mondesi <lemsx1@gmail.com>
+
+	* ChangeLog: ditto
+
 2008-11-14  Luis Mondesi <lemsx1@gmail.com>
 
 	* scripts/lsb-base-logging.sh: fixes bug with mysqld when upgrading
