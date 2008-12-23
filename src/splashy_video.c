@@ -883,17 +883,21 @@ init_font ()
         _get_divider (&divider_width, &divider_height);
 
         video.fontdesc.flags = DFDESC_HEIGHT;
-        fontface =
-                splashy_get_config_string ("/splashy/textbox/text/font/file");
+
+        fontface = g_build_filename (splashy_get_config_string (SPL_THEMES_DIR), splashy_get_config_string ("/splashy/textbox/text/font/file"), NULL);
         temp = splashy_get_config_int ("/splashy/textbox/text/font/height",
                                        10);
 
         video.fontdesc.height = temp * screen_height / divider_height;
         video.dfb->CreateFont (video.dfb, fontface,
                                &video.fontdesc, &video.font);
+        /* we are in trouble, let's try to use any default font by
+         * libdirectfb 
+         */
         if (video.font == NULL)
                 video.dfb->CreateFont (video.dfb, NULL, NULL, &video.font);
 
+        /* ouch */
         if (video.font == NULL)
                 return -1;
 
