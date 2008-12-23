@@ -7,6 +7,10 @@ Changes between 0.3.12 and 0.3.13
 
  * adds default theme to initramfs so we can fall back in case of problems with 
    a newer theme
+ * fixes font problem with libdirectfb
+ * fixes LSB script issue that prevented some applications to install 
+   correctly if Splashy was removed/missing (mysql server, etc...)
+ * no major C changes, minor bug fixes
 
 Changes between 0.3.11 and 0.3.12
 -------------------------------
