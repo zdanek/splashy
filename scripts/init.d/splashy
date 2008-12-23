@@ -177,7 +177,26 @@ case "$1" in
         
         # avoid displaying ugly text at shutdown
         clear >/dev/tty8
-        clear >/dev/tty1 
+        clear >/dev/tty1
+        # wait for all gdm servers to exit (DBTS# 504389)
+        COUNTER=0
+        ATTEMPTS=10
+        set +e
+        while [ $COUNTER -lt $ATTEMPTS ]; do
+            ps -C "gdm"
+            if [ $? -eq 0 ]; then
+                sleep 0.5
+                COUNTER=`expr $COUNTER + 1` #works in dash
+            else
+                break
+            fi
+        done
+        set -e
+        if [ $COUNTER -eq $ATTEMPTS ]; then
+            echo "$NAME stopping because gdm is still active"
+            exit
+        fi
+
         /sbin/splashy_chvt 8 
 
 	calculate_steps
