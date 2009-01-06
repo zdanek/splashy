@@ -35,11 +35,40 @@
 #include <glib.h>
 #include <glib/gstdio.h>        /* g_fopen() */
 
+#include <signal.h>             /* kill() handle SIGCHLD SIGUSR2 */ /* ter_added */
+
 #include "common_macros.h"
 #include "splashy_functions.h"
 #include "splashycnf.h"
 
 #define USAGE "usage: splashy <boot|shutdown|test> | splashy_chvt <N>"
+
+/* 
+ * signal handler. The signal SIGUSR2 is sent by the child process (_splashy_child)
+ * if directfb initialisation succeeded
+ * this means "ok to exit and let init continue"
+ */
+
+void
+sig_exit_boot(gint sig)
+{
+        switch( sig )
+        {
+                case SIGCHLD:  g_printerr ("Splashy boot: splashy setup via child process failed (SIGCHLD received). Exiting...");
+                               break;
+
+                case  SIGUSR2:  g_printerr ("Splashy boot: splashy setup succeeded (SIGUSR2 received).");
+                                break;
+
+                default: g_printerr ("Splashy boot: Unexpected signal received.");
+                         break;
+        }
+
+        DEBUG_PRINT ("Splashy boot caught signal number %d. Exiting...", sig);
+
+        exit(0);
+        return;               /* we never reach this */
+}
 
 int
 main (int argc, char *argv[])
@@ -103,6 +132,16 @@ main (int argc, char *argv[])
                 return 1;
         }
 
+        /* register signal handlers if we are doing splashy boot */
+          if (g_ascii_strncasecmp (argv[1], "boot", 4) == 0) {
+                 (void) signal (SIGCHLD, sig_exit_boot);   /* this signal is sent when a child process exits */
+                 (void) signal (SIGUSR2, sig_exit_boot);   /* this is the signal sent by _splashy_child indicating directfb is fully initialised */
+                                                                                     /* so the parent process can exit, letting init continue. We lock initramfs from */
+                                                                                      /* being unmounted while the child process is still setting up directfb. */
+                                                                                     /* some machines had a race condition causing splashy failure */
+                                                                                     /* This fixes bug 505270 */
+        }
+        
         DEBUG_PRINT ("before child, my pid is %d\n", getpid ());
         gint child = fork ();
         if (child < 0)
@@ -141,6 +180,8 @@ main (int argc, char *argv[])
                 {
                         DEBUG_PRINT ("Calling splashy_child_start()");
                         splashy_child_start ();
+                    
+                        
                 }
                 else if (g_ascii_strncasecmp (argv[1], "shutdown", 8) == 0)
                 {
@@ -165,5 +206,25 @@ main (int argc, char *argv[])
          */
         DEBUG_PRINT ("After child, my pid is %d\n", getpid ());
         DEBUG_PRINT ("After child, my child pid is %d\n", child);
-        return 0;
+        {
+                if (g_ascii_strncasecmp (argv[1], "boot", 4) == 0)
+                {
+                        /*
+                         * Wait 1s for signal. There are two possible signals.
+                         * The child may die (splashy failed), or the child process
+                         * signals that directfb is setup. If the exit signal
+                         * does not come in this time, then exit anyway the
+                         * signal should come very quickly, so this approach
+                         * saves most of a second.
+                         */
+
+                        g_usleep(1000000); /* 1s */
+                        ERROR_PRINT ("%s",
+                                        "Splashy boot terminated. Timed out waiting for Splashy to initialise\n");
+                }
+                return 0;
+        }
 }
+
+
+

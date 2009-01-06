@@ -35,4 +35,3 @@ test $SPLASH = "true" || exit
 grep -q '\(VESA\|VGA\)' /proc/fb || exit
 
 /sbin/splashy boot
-sleep 1

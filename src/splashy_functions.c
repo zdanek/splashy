@@ -1225,18 +1225,10 @@ _splashy_child (const gchar * seq)
          * handle exit signals
          * man 7 signal
          */
-        /*
-         * (void) signal (SIGUSR1, sig_progress_update); (void) signal
-         * (SIGUSR2, sig_progress_update);
-         */
         (void) signal (SIGHUP, sig_hup_handler);
         (void) signal (SIGTERM, SIG_IGN);
         (void) signal (SIGINT, sig_exit_safe);
         (void) signal (SIGQUIT, sig_exit_safe);
-        /*
-         * TODO handling SIGABRT causes
-         * "libgcc_s.so.1 must be installed for pthread_cancel to work" ?
-         */
         (void) signal (SIGABRT, sig_exit_safe);
 
         if (strncmp ("preview", seq, 7) == 0)
@@ -1277,7 +1269,24 @@ _splashy_child (const gchar * seq)
                              ret);
                 return 1;
         }
+        else 
+        {
+                /* 
+                 * send a SIGUSR2 signal to parent process. This signal lets the parent
+                 * process exit so that init can continue stalling init until this
+                 * point is necessary to avoid the race condition causing DBTS#505270
+                 * the signal handler is defined in splashy_main.c
+                 */
 
+                /*****  for testing *****
+                 *               ERROR_PRINT("deliberate failure for testing purposes");
+                 *               g_usleep(2000000);
+                 *****/
+                pid_t parentID = getppid();
+                kill(parentID,SIGUSR2);
+
+        }
+        
         /*
          * thread C (main)
          * takes care of reading the messages from SplashyClient and updating 
