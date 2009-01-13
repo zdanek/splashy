@@ -145,7 +145,7 @@ splashy_set_textbox_area_visible (int visible)
          * as F2 is pressed. Let's give'm a show for their
          * money!
          */
-        if (visible)
+        if (visible && video.textbox)  /* close #473230 thanks John Hughes */
         {
                 video.textbox->offscreen->Blit (video.textbox->surface,
                                                 video.textbox->offscreen,
