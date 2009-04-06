@@ -159,7 +159,7 @@ log_success_msg () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        [ -x $SPL_UPD ] || return $1;
+        [ -x $SPL_UPD ] || return 1;
         $SPL_UPD "scroll $*" || true # STATUS
     fi
 
@@ -173,7 +173,7 @@ log_failure_msg () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        [ -x $SPL_UPD ] || return $1;
+        [ -x $SPL_UPD ] || return 1;
 
         $SPL_UPD "scroll $*" || true # STATUS
     fi
@@ -194,7 +194,7 @@ log_warning_msg () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        [ -x $SPL_UPD ] || return $1;
+        [ -x $SPL_UPD ] || return 1;
 
         $SPL_UPD "scroll $*" || true # STATUS
     fi
@@ -224,7 +224,7 @@ log_daemon_msg () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        [ -x $SPL_UPD ] || return $1;
+        [ -x $SPL_UPD ] || return 1;
         $SPL_UPD "scroll $*" || true
     fi
 
@@ -266,7 +266,7 @@ log_daemon_msg () {
 
     # sanity check:
     # yes, check again to see if Splashy is installed before we proceed
-    [ -x $SPL_UPD ] || return $1;
+    [ -x $SPL_UPD ] || return 1;
 
     if [ -z "${RUNLEVEL:-}" ]; then
         # we need only the current level
@@ -275,7 +275,7 @@ log_daemon_msg () {
         if [ -z "$RUNLEVEL" ]; then
             # if we can't figure out the runlevel (such as when run
             # from a cron job) then don't do anything with Splashy
-            exit $1
+            exit 1
         fi
     fi
     if [ "x$RUNLEVEL" = "x6" ] || [ "x$RUNLEVEL" = "x0" ]; then
@@ -303,7 +303,7 @@ log_end_msg () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        [ -x $SPL_UPD ] || return $1;
+        [ -x $SPL_UPD ] || return 1;
         if [ "$1" -eq 0 ]; then
             $SPL_UPD "scroll OK" || true # SUCCESS
         else
@@ -335,10 +335,10 @@ log_end_msg () {
     ##############################################################
     # Start splashy code 
     # sanity check:
-    [ -x $SPL_UPD ] || return $1;
+    [ -x $SPL_UPD ] || return 1;
     [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
     SPL_PRG=$STEPS_DIR/$RUNLEVEL-progress
-    [ -f $SPL_PRG ] || return $1;
+    [ -f $SPL_PRG ] || return 1;
 
     # Bug #400598,#401999
     if [ -z "${RUNLEVEL:-}" ]; then
@@ -348,20 +348,20 @@ log_end_msg () {
         if [ -z "$RUNLEVEL" ]; then
             # if we can't figure out the runlevel (such as when run
             # from a cron job) then don't do anything with Splashy
-            exit $1
+            exit 1
         fi
     fi
     
     # It makes no sense for us to send this step if splashy is not running
     # Although then splashy_update would just return
-    pidof splashy > /dev/null || return $1; 
+    pidof splashy > /dev/null || return 1; 
 
     # Get progress percentage of this script
     # was calculated by update-progress-steps
     PER=`sed -n 's+'${0}' ++ p' $SPL_PRG`
 
-    # This can not happen ...
-    [ -n "$PER" ] || return $1;
+    # This cannot happen ...
+    [ -n "$PER" ] || return 1;
 
     # in Sid 2006-10-08 05:57 EDT the scripts after S99rc.local
     # do not call lsb* functions. So we don't know when the boot process 
@@ -382,7 +382,7 @@ log_end_msg () {
 
     # if we are shutting down or rebooting, there is no need to go further
     if [ "x$RUNLEVEL" = "x6" ] || [ "x$RUNLEVEL" = "x0" ]; then
-	return $1
+	return 0
     fi
 
     if [ "x$PER" != "x100" ]; then
@@ -411,7 +411,7 @@ log_end_msg () {
     # If we're at 100% stop splashy nicely
     [ "$PER" = "100" ] && stop_splashy
 
-    return $1
+    return 0
 }
 
 log_action_msg () {
@@ -419,7 +419,7 @@ log_action_msg () {
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
     if log_use_splashy; then
-        [ -x $SPL_UPD ] || return $1;
+        [ -x $SPL_UPD ] || return 1;
  
         $SPL_UPD "scroll $*" || true
     fi
