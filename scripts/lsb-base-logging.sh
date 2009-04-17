@@ -266,7 +266,7 @@ log_daemon_msg () {
 
     # sanity check:
     # yes, check again to see if Splashy is installed before we proceed
-    [ -x $SPL_UPD ] || return 1;
+    [ -x $SPL_UPD ] || return 0;
 
     if [ -z "${RUNLEVEL:-}" ]; then
         # we need only the current level
@@ -335,10 +335,10 @@ log_end_msg () {
     ##############################################################
     # Start splashy code 
     # sanity check:
-    [ -x $SPL_UPD ] || return 1;
+    [ -x $SPL_UPD ] || return 0;
     [ ! -d $STEPS_DIR ] && mkdir -p $STEPS_DIR
     SPL_PRG=$STEPS_DIR/$RUNLEVEL-progress
-    [ -f $SPL_PRG ] || return 1;
+    [ -f $SPL_PRG ] || return 0;
 
     # Bug #400598,#401999
     if [ -z "${RUNLEVEL:-}" ]; then
@@ -354,14 +354,14 @@ log_end_msg () {
     
     # It makes no sense for us to send this step if splashy is not running
     # Although then splashy_update would just return
-    pidof splashy > /dev/null || return 1; 
+    pidof splashy > /dev/null || return 0; 
 
     # Get progress percentage of this script
     # was calculated by update-progress-steps
     PER=`sed -n 's+'${0}' ++ p' $SPL_PRG`
 
     # This cannot happen ...
-    [ -n "$PER" ] || return 1;
+    [ -n "$PER" ] || return 0;
 
     # in Sid 2006-10-08 05:57 EDT the scripts after S99rc.local
     # do not call lsb* functions. So we don't know when the boot process 
