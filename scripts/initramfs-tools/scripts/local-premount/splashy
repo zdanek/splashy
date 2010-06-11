@@ -32,6 +32,9 @@ done
 test $SINGLE = "false" || exit
 test $SPLASH = "true" || exit
 
-grep -q '\(VESA\|VGA\)' /proc/fb || exit
+# newer kernels use inteldrmfb. allowing splashy to fail
+# if framebuffer is not set might be a better option:
+# users can actually see an error and report this to us
+#grep -q '\(VESA\|VGA\)' /proc/fb || exit
 
 /sbin/splashy boot
