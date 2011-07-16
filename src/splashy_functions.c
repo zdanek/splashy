@@ -1265,7 +1265,7 @@ _splashy_child (const gchar * seq)
 
         if ((ret = splashy_start_splash ()) < 0)
         {
-                ERROR_PRINT ("Couldn't splashy_start_splashy(). Error %d\n",
+                ERROR_PRINT ("Couldn't splashy_start_splash(). Error %d\n",
                              ret);
                 return 1;
         }
