@@ -7,7 +7,7 @@
 # LICENSE: GPL
 
 NAME="splashy"
-STEPS_DIR=/lib/init/rw/splashy
+STEPS_DIR=/run/splashy
 [ -r "/etc/default/$NAME" ] && . "/etc/default/$NAME"
 
 if pidof $NAME > /dev/null; then

@@ -21,7 +21,7 @@ stop_splashy () {
     # Note:
     # - this function is only called after doing sanity checks 
     #   to insure that Splashy is installed
-    STEPS_DIR=/lib/init/rw/splashy
+    STEPS_DIR=/run/splashy
     SPL_UPD=/sbin/splashy_update
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"
@@ -298,7 +298,7 @@ log_end_msg () {
         return 1
     fi
 
-    STEPS_DIR=/lib/init/rw/splashy
+    STEPS_DIR=/run/splashy
     SPL_UPD=/sbin/splashy_update
     # load some default variables
     [ -r "/etc/default/splashy" ] && . "/etc/default/splashy"

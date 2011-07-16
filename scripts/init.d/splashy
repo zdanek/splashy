@@ -102,7 +102,7 @@ calculate_steps () {
 	# Mount a tmpfs on $STEPS_DIR
 	#
 	# on Ubuntu our Steps dir gets umounted if using /dev/shm/splashy
-	# we will always use /lib/init/rw/splashy and mount a tmpfs there
+	# we will always use /run/splashy and mount a tmpfs there
 	SHM_OPT=
 	[ "${SHM_SIZE:=$TMPFS_SIZE}" ] && SHM_OPT="-osize=$SHM_SIZE"
 	mount -n -t tmpfs shmfs $STEPS_DIR
@@ -210,8 +210,8 @@ case "$1" in
         # tell killall5 to not kill us too early at shutdown/restart:
         pidof $NAME >> /var/run/sendsigs.omit
         RET=$?
-        [ -d /lib/init/rw/sendsigs.omit.d ] || mkdir -p /lib/init/rw/sendsigs.omit.d
-        cat /var/run/sendsigs.omit >> /lib/init/rw/sendsigs.omit.d/splashy
+        [ -d /run/sendsigs.omit.d ] || mkdir -p /run/sendsigs.omit.d
+        cat /var/run/sendsigs.omit >> /run/sendsigs.omit.d/splashy
         # log_end_msg calls splashy_update, so we need to allow Splashy to start
         sleep 0.5
         log_end_msg $RET

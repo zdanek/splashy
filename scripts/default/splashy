@@ -4,8 +4,8 @@
 # splashy can be enabled by adding splash to your kernel's command line
 
 # Directory where Splashy will write files during boot (It will be created if doesn't exist)
-# default "/lib/init/rw/splashy"
-#STEPS_DIR=/lib/init/rw/splashy
+# default "/run/splashy"
+#STEPS_DIR=/run/splashy
 
 # Splashy will switch to this TTY after finishing at boot
 # gdm/kdm/xdm should switch to 7 or so automatically.
