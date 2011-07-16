@@ -884,7 +884,7 @@ init_font ()
 
         video.fontdesc.flags = DFDESC_HEIGHT;
 
-        fontface = g_build_filename (splashy_get_config_string (SPL_THEMES_DIR), splashy_get_config_string ("/splashy/textbox/text/font/file"), NULL);
+        fontface = g_build_filename (splashy_get_config_string (SPL_THEMES_DIR), splashy_get_config_string (SPL_CURRENT_THEME), splashy_get_config_string ("/splashy/textbox/text/font/file"), NULL);
         temp = splashy_get_config_int ("/splashy/textbox/text/font/height",
                                        10);
 
