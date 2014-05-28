@@ -45,12 +45,15 @@ AH_TEMPLATE(DEBUG,[Define to enable debugging messages])
 AC_ARG_ENABLE(debug,AC_HELP_STRING([--enable-debug],[enable debugging messages]),AC_DEFINE(DEBUG))
 # END EXTRA ARGS
 
+#disable unsued vars warning
+CFLAGS="$CFLAGS -Wno-unused-variable"
+
 # All warnings are errors.
 # when in --enable-debug mode, we need to enable assert in glib...
 if test x$enable_debug = x1; then
     CFLAGS="$CFLAGS -Wall -Werror"
 else
-    CFLAGS="$CFLAGS -Wall -Werror -DG_DISABLE_ASSERT -DG_DISABLE_CHECKS"
+    CFLAGS="$CFLAGS -Wall -DG_DISABLE_ASSERT -DG_DISABLE_CHECKS"
 fi
 
 # we used to compile splashy statically
