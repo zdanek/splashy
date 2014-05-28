@@ -265,7 +265,7 @@ case $REQUIRED_AUTOMAKE_VERSION in
     1.6*) automake_progs="automake-1.6 automake-1.7 automake-1.8 automake-1.9 automake-1.10" ;;
     1.7*) automake_progs="automake-1.7 automake-1.8 automake-1.9 automake-1.10" ;;
     1.8*) automake_progs="automake-1.8 automake-1.9 automake-1.10" ;;
-    1.9*) automake_progs="automake-1.9 automake-1.10" ;;
+    1.9*) automake_progs="automake-1.9 automake-1.10 automake-1.11 automake-1.12 automake-1.13" ;;
    1.10*) automake_progs="automake-1.10" ;;
 esac
 version_check automake AUTOMAKE "$automake_progs" $REQUIRED_AUTOMAKE_VERSION \
